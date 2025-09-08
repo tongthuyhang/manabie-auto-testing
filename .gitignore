@@ -1,0 +1,6 @@
+node_modules/
+test-results/
+.vscode/launch.json
+.vscode/settings.json
+playwright-report/index.html
+package-lock.json

@@ -1,0 +1,17 @@
+[
+  
+  {
+    "eventMasterName": "test",
+    "eventType": "Free",
+    "sendTo": "Parent only",
+    "reminder": 1,
+    "maxEventPerStudent": 1
+  },
+  {
+    "eventMasterName": "demo",
+    "eventType": "Paid",
+    "sendTo": "Parent only",
+    "reminder": 5,
+    "maxEventPerStudent": 2
+  }
+]
