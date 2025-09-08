@@ -15,33 +15,35 @@
 
 ## Usage
 ```bash
-# Run all tests
-npm test
+# Basic test execution
+npm test                              # Run tests with chromium
+npm run test:headed                   # Run tests in headed mode
+npm run test:debug                    # Debug tests
+npm run test:ui                       # Run tests with UI mode
 
-# Run tests in headed mode
-npm run test:headed
+# Environment-specific tests
+npm run test:staging                  # Run tests on staging
+npm run test:preprod                  # Run tests on pre-prod
 
-# Run tests with UI mode
-npm run test:ui
+# Storage-specific tests
+npm run test:staging-with-storage     # Staging with authentication
+npm run test:staging-no-storage       # Staging without authentication
+npm run test:preprod-with-storage     # Pre-prod with authentication
+npm run test:preprod-no-storage       # Pre-prod without authentication
 
-# Run specific test file
-npx playwright test login.spec.ts
+# Reports and utilities
+npm run report                        # Show test report
+npm run refresh:storage               # Refresh authentication storage
 
-# Run with environment variables
-ENV=staging QASE_ENABLED=true npm test
-
-# Run with specific browser
+# Direct Playwright commands
+npx playwright test login.spec.ts     # Run specific test file
 npx playwright test --project=chromium
-# Run with-storage
 npx playwright test --project=with-storage
-
-# Debug tests
-npm run test:debug
 ```
 
 ## QASE Integration
 - Test results automatically reported to QASE when enabled
-- Configure API token and project code in .env file
+- Configure API token and project code in qase.env file
 - Each test case should have corresponding case_id in QASE
 
 ## Migration from Robot Framework
