@@ -45,9 +45,3 @@ npx playwright test --project=with-storage
 - Test results automatically reported to QASE when enabled
 - Configure API token and project code in qase.env file
 - Each test case should have corresponding case_id in QASE
-
-## Migration from Robot Framework
-- Robot Framework keywords → TypeScript methods
-- Resource files → Page Object classes
-- Variables → Environment configuration
-- Test cases → Playwright test functions
