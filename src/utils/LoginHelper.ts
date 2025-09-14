@@ -1,8 +1,6 @@
 import { Page } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
 import { loadUserByEnv } from "./ConfigHelpers";
-import { StorageHelper } from "./storageHelper";
-import fs from 'fs';
 
 export async function LoginAction(page: Page, userType: string) {
   const loginPage = new LoginPage(page);
@@ -20,10 +18,5 @@ export async function LoginAction(page: Page, userType: string) {
   }
   console.log(`🔑 Logging in as ${userType} (${userInfo.username})`);
   await loginPage.login(userInfo.username, userInfo.password);
-  //await page.waitForURL('**/lightning/**');
-//   await StorageHelper.saveStorage(page, storageFile);
-//   console.log(`✅ Storage saved at: ${storageFile}`);
-//   const storageContent = fs.readFileSync(storageFile, "utf-8");
-// console.log("📦 Storage content:", storageContent)
 
 }
