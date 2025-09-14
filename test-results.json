@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 4
+      "actualWorkers": 2
     },
     "preserveOutput": "always",
     "reporter": [
@@ -79,7 +79,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 2
         },
         "id": "with-storage",
         "name": "with-storage",
@@ -95,7 +95,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 2
         },
         "id": "no-storage",
         "name": "no-storage",
@@ -146,7 +146,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7059,
+                      "duration": 7253,
                       "errors": [],
                       "stdout": [
                         {
@@ -167,16 +167,16 @@
                       "steps": [
                         {
                           "title": "Create & verify Event Master \"demo\"",
-                          "duration": 4540,
+                          "duration": 4718,
                           "steps": [
                             {
                               "title": "Create event",
-                              "duration": 4538
+                              "duration": 4716
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T09:34:10.756Z",
+                      "startTime": "2025-09-14T11:27:43.743Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -233,7 +233,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4761,
+                      "duration": 5017,
                       "errors": [],
                       "stdout": [
                         {
@@ -257,16 +257,16 @@
                       "steps": [
                         {
                           "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 2445,
+                          "duration": 2727,
                           "steps": [
                             {
                               "title": "Check Mandatory files at Master Event",
-                              "duration": 2444
+                              "duration": 2725
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T09:34:10.739Z",
+                      "startTime": "2025-09-14T11:27:43.743Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -303,112 +303,13 @@
           ]
         }
       ]
-    },
-    {
-      "title": "no-storage\\permission\\login.spec.ts",
-      "file": "no-storage/permission/login.spec.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "Login Tests",
-          "file": "no-storage/permission/login.spec.ts",
-          "line": 11,
-          "column": 6,
-          "specs": [
-            {
-              "title": " Should login successfully with valid credentials",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 10000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "no-storage",
-                  "projectName": "no-storage",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 4635,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-09-14T09:34:10.422Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "8b434dd6c96e09ee84dd-16dff1de9b654306b9da",
-              "file": "no-storage/permission/login.spec.ts",
-              "line": 24,
-              "column": 7
-            },
-            {
-              "title": "Should fail login with invalid credentials",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 10000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "no-storage",
-                  "projectName": "no-storage",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1776,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"invalid@test.com\",\n  \"password\": \"wrongpass\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as invalid_user (invalid@test.com)\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-09-14T09:34:10.429Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "8b434dd6c96e09ee84dd-8966b0e7d9c8f04caeed",
-              "file": "no-storage/permission/login.spec.ts",
-              "line": 30,
-              "column": 7
-            }
-          ]
-        }
-      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-14T09:33:58.269Z",
-    "duration": 20045.999,
-    "expected": 4,
+    "startTime": "2025-09-14T11:27:30.938Z",
+    "duration": 20454.942,
+    "expected": 2,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

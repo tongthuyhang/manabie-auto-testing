@@ -1,0 +1,1 @@
+{"fields":{"description":"Ensure that the system prompts the user when the required Event Master Name is not filled.","preconditions":"User is logged in and on Event Master page"}}
