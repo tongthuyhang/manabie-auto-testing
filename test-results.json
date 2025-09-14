@@ -146,7 +146,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7810,
+                      "duration": 6895,
                       "errors": [],
                       "stdout": [
                         {
@@ -167,16 +167,16 @@
                       "steps": [
                         {
                           "title": "Create & verify Event Master \"demo\"",
-                          "duration": 5585,
+                          "duration": 4502,
                           "steps": [
                             {
                               "title": "Create event",
-                              "duration": 5584
+                              "duration": 4500
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T08:07:49.224Z",
+                      "startTime": "2025-09-14T08:15:59.210Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -233,7 +233,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4944,
+                      "duration": 4698,
                       "errors": [],
                       "stdout": [
                         {
@@ -257,16 +257,16 @@
                       "steps": [
                         {
                           "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 2525,
+                          "duration": 2561,
                           "steps": [
                             {
                               "title": "Check Mandatory files at Master Event",
-                              "duration": 2524
+                              "duration": 2559
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T08:07:49.224Z",
+                      "startTime": "2025-09-14T08:15:59.208Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -307,8 +307,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-14T08:07:42.934Z",
-    "duration": 14535.063,
+    "startTime": "2025-09-14T08:15:51.312Z",
+    "duration": 15241.401,
     "expected": 2,
     "skipped": 0,
     "unexpected": 0,
