@@ -22,6 +22,12 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: List files and folders in a specific directory
+        run: |
+          TARGET_DIR="src/Facade"
+          echo "Listing contents of: $TARGET_DIR"
+          ls -F "$TARGET_DIR
+
       # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
@@ -29,11 +35,6 @@ jobs:
       # 4. Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
-      - name: List files in current directory
-        run: |
-          echo "Listing files in the current directory:"
-          ls -la
           
       # 5. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
