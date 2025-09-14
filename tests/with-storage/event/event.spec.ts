@@ -1,11 +1,11 @@
 import { test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { EventFacade } from '@src/Facade/eventFacade';
-import { CommonHelpers } from '@src/utils/CommonHelpers';
-import { CommonConstants } from '@src/constants/commonConstants';
-import { EventData } from '@src/type/EventData';
-import testData from '@src/data/eventMasterData.json';
-import { JsonHelper } from '@src/utils/JsonHelper';
+import { EventFacade } from '../../../src/Facade/eventFacade';
+import { CommonHelpers } from '../../../src/utils/CommonHelpers';
+import { CommonConstants } from '../../../src/constants/commonConstants';
+import { EventData } from '../../../src/type/EventData';
+import testData from '../../../src/data/eventMasterData.json';
+import { JsonHelper } from '../../../src/utils/JsonHelper';
 
 const selectedEventNames = ['demo'];
 const selectedEvents: EventData[] = JsonHelper.getItemsByKey(
