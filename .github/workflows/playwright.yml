@@ -29,6 +29,11 @@ jobs:
       # 4. Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        
+       # 4.1 Debug alias before running tests
+      - name: Debug alias
+        run: |
+          npx ts-node -r tsconfig-paths/register -e "import { EventFacade } from '@src/Facade/eventFacade'; console.log('Alias OK ✅')"
 
       # 5. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
