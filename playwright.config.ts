@@ -81,7 +81,7 @@ export default defineConfig({
     baseURL: process.env.PAGE_URL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    headless: !!process.env.CI,
+    headless: process.env.CI ? true : false,
   },
   projects: [
     {
