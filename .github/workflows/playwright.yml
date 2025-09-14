@@ -34,6 +34,8 @@ jobs:
       - name: Run Playwright Tests (Dev-Staging with Qase)
         run: npm run test:dev-staging:qase
         env:
+          ENV: dev-staging
+          USER_TYPE: admin
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
 
       # 6. Upload Playwright report (HTML report)
