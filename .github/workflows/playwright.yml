@@ -30,19 +30,15 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 5. Debug alias (optional)
-      - name: Debug alias
-        run: npx ts-node -r tsconfig-paths/register -e "import { EventFacade } from '@src/Facade/eventFacade'; console.log('Alias OK ✅')"
-
-      # 6. Run Playwright tests with Qase (headless for CI)
+      # 5. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
-        run: npm run test:dev-staging:headed
+        run: npm run test:dev-staging:qase
         env:
           ENV: dev-staging
           USER_TYPE: admin
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
 
-      # 7. Upload HTML report
+      # 6. Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
