@@ -18,10 +18,9 @@ async function globalSetup(config: FullConfig) {
     // Lấy user info từ file JSON theo ENV + USER_TYPE
     await LoginAction(page, process.env.USER_TYPE as string);
     // 👉 Chờ redirect về domain chính sau khi login
-     // 👉 Chờ redirect về domain chính sau khi login
-    const header = page.locator('header#oneHeader');
-    await header.waitFor({ state: 'visible', timeout: 30000 });
-    await page.getByTitle('App Launcher').waitFor({ state: 'visible', timeout: 30000 });
+    // Đợi redirect sang domain chính (lightning.force.com)
+  await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
+  console.log("✅ Salesforce login successful. Current URL:", page.url());
     // Save storage mới
     await StorageHelper.save(page, env)
     await browser.close();
