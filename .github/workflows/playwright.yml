@@ -22,11 +22,14 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: List files and folders in a specific directory
+      - name: List files and folders in src directory
         run: |
-          TARGET_DIR="/src"
-          echo "Listing contents of: $TARGET_DIR"
-          ls -F "$TARGET_DIR
+          echo "Listing contents of src directory:"
+          ls -la src/
+          echo "\nDirectory structure:"
+          find src/ -type d
+          echo "\nAll files:"
+          find src/ -type f
 
       # 3. Install dependencies
       - name: Install dependencies
