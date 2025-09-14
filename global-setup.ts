@@ -1,4 +1,5 @@
 // // globalSetup.ts
+/// <reference types="node" />
 import { chromium, FullConfig } from '@playwright/test';
 import { loadConfig } from './src/utils/ConfigHelpers';
 import { LoginAction } from './src/utils/LoginHelper';

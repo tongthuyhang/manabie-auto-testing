@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
+import 'tsconfig-paths/register';
 
 // ==== ENV setup ====
 const ENV = process.env.ENV?.trim() || 'dev-staging';
