@@ -86,7 +86,7 @@
         "testDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests/with-storage",
         "testIgnore": [],
         "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+          "**/*.spec.ts"
         ],
         "timeout": 10000
       },
@@ -100,6 +100,22 @@
         "id": "no-storage",
         "name": "no-storage",
         "testDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests/no-storage",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 10000
+      },
+      {
+        "outputDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -146,7 +162,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7253,
+                      "duration": 7095,
                       "errors": [],
                       "stdout": [
                         {
@@ -167,16 +183,16 @@
                       "steps": [
                         {
                           "title": "Create & verify Event Master \"demo\"",
-                          "duration": 4718,
+                          "duration": 4553,
                           "steps": [
                             {
                               "title": "Create event",
-                              "duration": 4716
+                              "duration": 4551
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T11:27:43.743Z",
+                      "startTime": "2025-09-14T12:43:20.172Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -233,7 +249,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 5017,
+                      "duration": 5141,
                       "errors": [],
                       "stdout": [
                         {
@@ -257,16 +273,16 @@
                       "steps": [
                         {
                           "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 2727,
+                          "duration": 2574,
                           "steps": [
                             {
                               "title": "Check Mandatory files at Master Event",
-                              "duration": 2725
+                              "duration": 2572
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T11:27:43.743Z",
+                      "startTime": "2025-09-14T12:43:20.171Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -307,8 +323,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-14T11:27:30.938Z",
-    "duration": 20454.942,
+    "startTime": "2025-09-14T12:43:07.645Z",
+    "duration": 20050.249,
     "expected": 2,
     "skipped": 0,
     "unexpected": 0,

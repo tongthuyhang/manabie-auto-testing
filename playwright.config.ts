@@ -1,13 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
-import 'tsconfig-paths/register';
 
 // ==== ENV setup ====
 const ENV = process.env.ENV?.trim() || 'dev-staging';
 
 // Load main ENV (url, login, etc.)
-dotenv.config({ path: path.resolve(__dirname, `${ENV}.env`) });
+dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
 
 // Load Qase env
 dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });
@@ -87,16 +86,27 @@ export default defineConfig({
   projects: [
     {
       name: 'with-storage',
-      testDir: './tests/with-storage',
+      testDir: path.resolve(__dirname, 'tests/with-storage'),
+      testMatch: '**/*.spec.ts',
       use: {
+        ...devices['Desktop Chrome'],
         storageState: storagePath,
       },
     },
     {
-      name: 'no-storage',
-      testDir: './tests/no-storage',
+      name: 'no-storage', 
+      testDir: path.resolve(__dirname, 'tests/no-storage'),
+      testMatch: '**/*.spec.ts',
       use: {
+        ...devices['Desktop Chrome'],
         storageState: undefined,
+      },
+    },
+    {
+      name: 'chromium',
+      testDir: path.resolve(__dirname, 'tests'),
+      use: {
+        ...devices['Desktop Chrome'],
       },
     },
   ],
