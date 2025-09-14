@@ -23,6 +23,7 @@ async function globalSetup(config: FullConfig) {
   //await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
   await page.waitForTimeout(6000);
   console.log("✅ Salesforce login successful. Current URL:", page.url());
+  await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 })
     // Save storage mới
     await StorageHelper.save(page, env)
     await browser.close();
