@@ -19,10 +19,11 @@ async function globalSetup(config: FullConfig) {
     await LoginAction(page, process.env.USER_TYPE as string);
     // 👉 Chờ redirect về domain chính sau khi login
     //await page.waitForLoadState('networkidle');
-    //await page.waitForURL('**/lightning/**', { timeout: 15000 });
-    await page.locator('header[id="oneHeader"]').waitFor({ state: 'visible', timeout: 15000 });
-    await page.waitForTimeout(2000);
-    await page.getByTitle('App Launcher').waitFor({ state: 'visible', timeout: 15000 });
+       await page.waitForTimeout(2000);
+    await page.waitForURL('**/lightning/**', { timeout: 15000 });
+    // await page.locator('header[id="oneHeader"]').waitFor({ state: 'visible', timeout: 15000 });
+    // await page.waitForTimeout(2000);
+    // await page.getByTitle('App Launcher').waitFor({ state: 'visible', timeout: 15000 });
     // Save storage mới
     await StorageHelper.save(page, env)
     await browser.close();
