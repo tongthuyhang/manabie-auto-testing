@@ -30,6 +30,11 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: List files in current directory
+        run: |
+          echo "Listing files in the current directory:"
+          ls -la
+          
       # 5. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
         run: npm run test:dev-staging:qase
