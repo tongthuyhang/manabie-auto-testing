@@ -146,7 +146,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7458,
+                      "duration": 7059,
                       "errors": [],
                       "stdout": [
                         {
@@ -167,16 +167,16 @@
                       "steps": [
                         {
                           "title": "Create & verify Event Master \"demo\"",
-                          "duration": 4426,
+                          "duration": 4540,
                           "steps": [
                             {
                               "title": "Create event",
-                              "duration": 4424
+                              "duration": 4538
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T09:17:56.687Z",
+                      "startTime": "2025-09-14T09:34:10.756Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -233,7 +233,7 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4873,
+                      "duration": 4761,
                       "errors": [],
                       "stdout": [
                         {
@@ -257,16 +257,16 @@
                       "steps": [
                         {
                           "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 2631,
+                          "duration": 2445,
                           "steps": [
                             {
                               "title": "Check Mandatory files at Master Event",
-                              "duration": 2629
+                              "duration": 2444
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T09:17:56.614Z",
+                      "startTime": "2025-09-14T09:34:10.739Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -333,7 +333,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 4768,
+                      "duration": 4635,
                       "errors": [],
                       "stdout": [
                         {
@@ -345,7 +345,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-09-14T09:17:56.387Z",
+                      "startTime": "2025-09-14T09:34:10.422Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -374,7 +374,7 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1591,
+                      "duration": 1776,
                       "errors": [],
                       "stdout": [
                         {
@@ -386,7 +386,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-09-14T09:17:56.389Z",
+                      "startTime": "2025-09-14T09:34:10.429Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -406,8 +406,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-14T09:17:49.942Z",
-    "duration": 14798.903999999999,
+    "startTime": "2025-09-14T09:33:58.269Z",
+    "duration": 20045.999,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,

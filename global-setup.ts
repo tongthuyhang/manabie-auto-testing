@@ -19,7 +19,8 @@ async function globalSetup(config: FullConfig) {
     await LoginAction(page, process.env.USER_TYPE as string);
     // 👉 Chờ redirect về domain chính sau khi login
     // Đợi redirect sang domain chính (lightning.force.com)
-  await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
+  //await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
+  await page.waitForTimeout(6000);
   console.log("✅ Salesforce login successful. Current URL:", page.url());
     // Save storage mới
     await StorageHelper.save(page, env)
