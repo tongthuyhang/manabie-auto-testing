@@ -3,8 +3,10 @@
 ## Setup
 1. Install dependencies: `npm install`
 2. Install Playwright browsers: `npx playwright install`
-3. Copy `.env.example` to `.env` and configure
-4. Update test URLs and selectors as needed
+3. Install playwright-qase-reporter: `npm install -D playwright-qase-reporter`
+4. nstall dotenv: `npm install dotenv --save-dev`
+5. Copy `.env.example` to `.env` and configure
+6. Update test URLs and selectors as needed
 
 ## Structure
 - `src/config/` - Configuration and environment handling
@@ -22,12 +24,12 @@ npm run test:debug                    # Debug tests
 npm run test:ui                       # Run tests with UI mode
 
 # Environment-specific tests
-npm run test:staging                  # Run tests on staging
+npm run test:dev-staging                  # Run tests on dev-staging
 npm run test:preprod                  # Run tests on pre-prod
 
 # Storage-specific tests
-npm run test:staging-with-storage     # Staging with authentication
-npm run test:staging-no-storage       # Staging without authentication
+npm run test:dev-staging-with-storage     # Staging with authentication
+npm run test:dev-staging-no-storage       # dev-staging without authentication
 npm run test:preprod-with-storage     # Pre-prod with authentication
 npm run test:preprod-no-storage       # Pre-prod without authentication
 

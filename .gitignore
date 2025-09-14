@@ -3,4 +3,8 @@ test-results/
 .vscode/launch.json
 .vscode/settings.json
 playwright-report/index.html
-package-lock.json
+test-logs.json
+build/
+logs/
+playwright-report/
+

@@ -3,7 +3,7 @@ export const CommonConstants = {
   FAIL_STATUS: 'failed',
   PASS_STATUS: 'passed',
   SITE_TITLE: 'Lightning Experience',
-  STAGING: 'staging',
+  STAGING: 'dev-staging',
   PRE_PROD: 'pre-prod',
   PAGE_EVENT_MASTER: 'event',
   PAGE_LESSONS: 'lession',

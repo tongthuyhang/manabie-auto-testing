@@ -3,12 +3,12 @@ import { chromium, FullConfig } from '@playwright/test';
 import { loadConfig } from './src/utils/ConfigHelpers';
 import { LoginAction } from './src/utils/LoginHelper';
 import { StorageHelper } from './src/utils/storageHelper';
-
+import { QaseReporterManager } from '../manabie-auto-testing/src/utils/QaseReporterManager';
 
 async function globalSetup(config: FullConfig) {
     console.log("🚀 Global setup is running via Test Explorer!");
   try {
-    const env = process.env.ENV?.trim() || 'staging';
+    const env = process.env.ENV?.trim() || 'dev-staging';
 
     console.log(`🌍 Environment: ${env}`);
     await loadConfig(env);

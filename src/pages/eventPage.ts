@@ -18,6 +18,8 @@ export class EventPage extends BasePage {
   readonly btnNew: Locator;
   readonly btnSave: Locator;
   readonly headerPrimary: Locator;
+  readonly headerSecondary: Locator;
+  readonly popupEvent: Locator
 
   constructor(page: Page) {
     super(page);
@@ -37,6 +39,8 @@ export class EventPage extends BasePage {
 
     // Header (used for validation after save)
     this.headerPrimary = page.locator(SiteLocators.HEADER_PRIMARY_FIELD);
+    this.headerSecondary = page.locator(SiteLocators.HEADER_SECONDARY_FIELD);
+    this.popupEvent = page.locator(SiteLocators.POPUP);
   }
 
   /** Clicks the "New" button */
@@ -57,7 +61,6 @@ export class EventPage extends BasePage {
    * @param reminder - Reminder count
    * @param maxEventPerStudent - Maximum events per student
    */
-    @LogStep (' Select data from listbox')
   async fillEventMasterForm(
     eventMasterName: string,
     eventType: string,
@@ -87,11 +90,7 @@ export class EventPage extends BasePage {
   async searchEventMaster(eventMasterName: string) {
     await this.type(this.inputEventMasterName, eventMasterName);
   }
-  async verifyMandatory(eventMasterName: string, eventType: string, sendTo: string, reminder: number, maxEventPerStudent: number) {
-    await this.verifyData(this.inputEventMasterName, eventMasterName);
-    await this.verifyData(this.selectEventType, eventType);
-    await this.verifyData(this.selectSendTo, sendTo);
-    await this.verifyData(this.inputReminders, reminder.toString());
-    await this.verifyData(this.inputMaxEventPerStudent, maxEventPerStudent.toString());
+  async checkMandatoryFieldValidation() {
+    await this.checkMultipleMandatoryFields(['Event Master Name', 'Event Type', 'Send To']);
   }
 }

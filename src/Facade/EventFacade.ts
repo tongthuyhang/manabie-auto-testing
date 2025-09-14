@@ -19,6 +19,7 @@ export class EventFacade {
    * Searches for an event by name
    * @param name - Event name to search
    */
+  @LogStep('Search event by name')
   async searchEvent(name: string): Promise<void> {
     await this.eventPage.searchEventMaster(name);
   }
@@ -27,8 +28,8 @@ export class EventFacade {
    * Creates a new event with provided data
    * @param data - Event data object
    */
-  @LogStep('Create Event')
-  async createEvent(data: EventData): Promise<void> {
+  @LogStep('Create event')
+  async createAndVerify(data: EventData): Promise<void> {
     await this.eventPage.clickNewButton();
     await this.eventPage.fillEventMasterForm(
       data.eventMasterName,
@@ -40,4 +41,12 @@ export class EventFacade {
     await this.eventPage.clickSaveButton();
     await this.eventPage.verifyEventMasterName(data.eventMasterName);
   }
+
+  @LogStep('Check Mandatory files at Master Event')
+  async checkMandatoryMasterEvent() {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.clickSaveButton();
+    await this.eventPage.checkMandatoryFieldValidation();
+  }
+
 }

@@ -1,6 +1,4 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { LogStep } from '../decorators/logStep';
-
 /**
  * BasePage
  * - Acts as the parent class for all Page Objects
@@ -15,8 +13,10 @@ export class BasePage {
   }
 
   /**
-   * Normalize a string selector or Locator into a Locator
-   */
+  * Convert a string selector or Locator object into a Playwright Locator
+  * - Input: can be a CSS string (e.g. "button.save") or an existing Locator
+  * - Output: always a Locator (so all actions are consistent)
+  */
   protected normalizeLocator(locator: string | Locator): Locator {
     return typeof locator === 'string' ? this.page.locator(locator) : locator;
   }
@@ -31,66 +31,49 @@ export class BasePage {
   }
 
   /**
-   * Type text into an element with option to append or fill
-   */
+  * Type text into an input field
+  * - Step 1: Convert selector/locator → Locator
+  * - Step 2: Wait until element is visible
+  * - Step 3: 
+  *    - If append=true → type characters one by one (pressSequentially)
+  *    - Else (default) → replace content completely (fill)
+  * - Extra: can set typing delay to simulate real user speed
+  */
   async type(locator: string | Locator, text: string, append = false, delay = 0) {
     const loc = this.normalizeLocator(locator);
     await loc.waitFor({ state: 'visible', timeout: 10000 });
-
     if (append) {
-      await loc.pressSequentially(text, { delay });
+      await loc.pressSequentially(text, { delay }); // simulates user typing
     } else {
-      await loc.fill(text);
+      await loc.fill(text); // clears existing and replaces with new text
     }
   }
 
   /**
-   * Verify text content (exact match or contains)
-   */
-  // async verifyData(locator: string | Locator, expectedText: string, exact = true) {
-  //   const loc = this.normalizeLocator(locator);
-  //   await loc.first().waitFor({ state: 'attached', timeout: 15000 });
-
-  //   if (exact) {
-  //     await expect(loc).toHaveText(expectedText, { timeout: 15000 });
-  //   } else {
-  //     await expect(loc).toContainText(expectedText, { timeout: 15000 });
-  //   }
-  // }
-
-  async  verifyData(
-  locator: string | Locator,
-  expectedText: string,
-  exact = true,
-  retries = 3,
-  retryDelay = 500 // ms
-) {
-  const loc: Locator = typeof locator === 'string' ? this.normalizeLocator(locator) : locator;
-
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      //await locator appear in DOM
-      await loc.first().waitFor({ state: 'attached', timeout: 5000 });
-
-      if (exact) {
-        await expect(loc).toHaveText(expectedText, { timeout: 5000 });
-      } else {
+  * Verify text content inside an element
+  * - Input: locator + expected text
+  * - Retry: up to N times with delay (handles async UI updates)
+  * - Process:
+  *   1. Wait until element is visible
+  *   2. Expect element text contains expected string
+  *   3. If failed → retry after delay
+  *   4. Throw error after max retries
+  */
+  async verifyData(locator: string | Locator, expectedText: string, retries = 3, retryDelay = 500) {
+    const loc = this.normalizeLocator(locator);
+    for (let i = 1; i <= retries; i++) {
+      try {
+        await loc.first().waitFor({ state: 'visible', timeout: 5000 });
         await expect(loc).toContainText(expectedText, { timeout: 5000 });
-      }
-
-      console.log(`✅ Verified: "${expectedText}" (${exact ? 'exact' : 'partial'})`);
-      return;
-    } catch (error) {
-      console.warn(`⚠️ Attempt ${attempt} failed for locator: ${locator}`);
-      if (attempt < retries) {
-        await new Promise(r => setTimeout(r, retryDelay));
-      } else {
-        console.error(`❌ Verification failed after ${retries} attempts`);
-        throw error;
+        console.log(`✅ Verified: "${expectedText}"`);
+        return;
+      } catch (e) {
+        console.warn(`⚠️ Attempt ${i} failed for locator: ${locator}`);
+        if (i < retries) await this.page.waitForTimeout(retryDelay);
+        else throw e;
       }
     }
   }
-}
 
   /**
    * Select an option from a dropdown (by data-value or visible text)
@@ -126,4 +109,33 @@ export class BasePage {
       await expect(dropdown).toHaveText(identifier);
     }
   }
+
+  /**
+     * Check mandatory field validation message for an LWC input
+     * @param label - Label hiển thị của field (ví dụ: "Event Master Name")
+     * @param expectedMessage - Message mong đợi (default = "Complete this field.")
+     */
+  async checkMandatoryField(label: string, expectedMessage = 'Complete this field.'): Promise<void> {
+    const errorMessage = this.page.locator('.slds-form-element', { has: this.page.getByLabel(label) }).locator('.slds-form-element__help');
+    await expect(errorMessage).toBeVisible();
+
+    // Lấy toàn bộ text thực tế
+    const actualText = await errorMessage.innerText();
+    console.log("message check", actualText);
+    // Kiểm tra xem text có chứa message không
+    expect(actualText.replace(/\s+/g, ' ').trim()).toContain(`${label} ${expectedMessage}`);
+  }
+
+  /**
+   * Check mandatory validation messages for multiple fields
+   */
+  async checkMultipleMandatoryFields(
+    labels: string[],
+    expectedMessage = 'Complete this field.'
+  ): Promise<void> {
+    for (const label of labels) {
+      await this.checkMandatoryField(label);
+    }
+  }
+
 }

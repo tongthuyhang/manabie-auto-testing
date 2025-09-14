@@ -1,0 +1,317 @@
+{
+  "config": {
+    "configFile": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\playwright.config.ts",
+    "rootDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\node_modules\\playwright-qase-reporter\\dist\\index.js",
+        {
+          "mode": "testops",
+          "fallback": "report",
+          "environment": "dev-staging",
+          "debug": "true",
+          "captureLogs": false,
+          "testops": {
+            "api": {
+              "token": "9ab1f3fdc522cede8d5fee28631b2588a4d0d90401b58740153f3bba3afc359f",
+              "host": "qase.io"
+            },
+            "project": "PX",
+            "run": {
+              "complete": true,
+              "title": "Automated Run - dev-staging",
+              "description": "Playwright automated run for dev-staging"
+            },
+            "framework": {
+              "browser": {
+                "addAsParameter": true,
+                "parameterName": "Chrome 138.0.7204.50"
+              }
+            },
+            "uploadAttachments": true
+          },
+          "report": {
+            "driver": "local",
+            "connection": {
+              "path": "./build/qase-report",
+              "format": "json"
+            }
+          }
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "with-storage",
+        "name": "with-storage",
+        "testDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests/with-storage",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 10000
+      },
+      {
+        "outputDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "no-storage",
+        "name": "no-storage",
+        "testDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests/no-storage",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 10000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.55.0",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "with-storage\\event\\event.spec.ts",
+      "file": "with-storage/event/event.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Event Tests",
+          "file": "with-storage/event/event.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Create Event Master for\"demo\"",
+              "ok": true,
+              "tags": [
+                "Regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 10000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "with-storage",
+                  "projectName": "with-storage",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8157,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate event\u001b[0m\n"
+                        },
+                        {
+                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[{ \u001b[34m\"eventMasterName\"\u001b[0m: \u001b[32m\"demo\"\u001b[0m, \u001b[34m\"eventType\"\u001b[0m: \u001b[32m\"Paid\"\u001b[0m, \u001b[34m\"sendTo\"\u001b[0m: \u001b[32m\"Parent only\"\u001b[0m, \u001b[34m\"reminder\"\u001b[0m: \u001b[36m5\u001b[0m, \u001b[34m\"maxEventPerStudent\"\u001b[0m: \u001b[36m2\u001b[0m }]\n"
+                        },
+                        {
+                          "text": "✅ Verified: \"demo\"\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Create event\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Create & verify Event Master \"demo\"",
+                          "duration": 5710,
+                          "steps": [
+                            {
+                              "title": "Create event",
+                              "duration": 5709
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2025-09-14T07:32:53.749Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJpZHMiOls2NjFdfQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJ0aXRsZSI6IkNyZWF0ZSBFdmVudCBNYXN0ZXIgZm9yIGRlbW8ifQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJwYXJhbWV0ZXJzIjp7ImlucHV0RGF0YSI6IntcImV2ZW50TWFzdGVyTmFtZVwiOlwiZGVtb1wiLFwiZXZlbnRUeXBlXCI6XCJQYWlkXCIsXCJzZW5kVG9cIjpcIlBhcmVudCBvbmx5XCIsXCJyZW1pbmRlclwiOjUsXCJtYXhFdmVudFBlclN0dWRlbnRcIjoyfSJ9fQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJWZXJpZnkgdGhhdCBhIG5ldyBFdmVudCBNYXN0ZXIgY2FuIGJlIGNyZWF0ZWQgc3VjY2Vzc2Z1bGx5IiwicHJlY29uZGl0aW9ucyI6IlVzZXIgaXMgbG9nZ2VkIGluIGFuZCBvbiBFdmVudCBNYXN0ZXIgcGFnZSJ9fQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJjb21tZW50IjoiVGhlIEV2ZW50IE1hc3RlciBzaG91bGQgYmUgY3JlYXRlZCBzdWNjZXNzZnVsbHkifQ=="
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "726f4112f73a2bafcb4b-3312e120b1f5d48c51ad",
+              "file": "with-storage/event/event.spec.ts",
+              "line": 27,
+              "column": 9
+            },
+            {
+              "title": "Validate required field \"Event Master Name\"",
+              "ok": true,
+              "tags": [
+                "Regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 10000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "with-storage",
+                  "projectName": "with-storage",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 5004,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck Mandatory files at Master Event\u001b[0m\n"
+                        },
+                        {
+                          "text": "message check Event Master Name\nComplete this field.\n"
+                        },
+                        {
+                          "text": "message check Event Type\nComplete this field.\n"
+                        },
+                        {
+                          "text": "message check Send To\nComplete this field.\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Check Mandatory files at Master Event\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "error message \"Complete this field.\" should be displayed under fields",
+                          "duration": 2705,
+                          "steps": [
+                            {
+                              "title": "Check Mandatory files at Master Event",
+                              "duration": 2704
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2025-09-14T07:32:53.749Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJpZHMiOls2NjZdfQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJ0aXRsZSI6IkVuc3VyZSB0aGF0IHRoZSBzeXN0ZW0gcHJvbXB0cyB0aGUgdXNlciB3aGVuIHRoZSByZXF1aXJlZCBFdmVudCBNYXN0ZXIgTmFtZSBpcyBub3QgZmlsbGVkLiJ9"
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJjb21tZW50IjoiTWVzc2FnZSBcIkNvbXBsZXRlIHRoaXMgZmllbGQuXCIgc2hvdWxkIGJlIGRpc3BsYXllZCB1bmRlciBmaWVsZHMifQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
+              "file": "with-storage/event/event.spec.ts",
+              "line": 44,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-09-14T07:32:44.230Z",
+    "duration": 18105.162,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

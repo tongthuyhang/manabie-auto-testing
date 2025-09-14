@@ -7,13 +7,16 @@ Playwright TypeScript automation testing framework with Page Object Model patter
 
 ```
 manabie-auto-testing/
+├── .github/                      # GitHub Actions workflows
+│   └── workflows/
+│       └── playwright.yml        # CI/CD pipeline
 ├── src/                          # Source code
 │   ├── base/                     # Base classes
 │   │   └── BasePage.ts           # Base page class
 │   ├── config/                   # Environment configurations
+│   │   ├── dev-staging.env       # Dev-staging environment
 │   │   ├── pre-prod.env          # Pre-production settings
-│   │   ├── qase.env              # QASE integration config
-│   │   └── staging.env           # Staging environment
+│   │   └── qase.env              # QASE integration config
 │   ├── constants/                # Application constants
 │   │   ├── commonConstants.ts    # Common constants
 │   │   └── userConstants.ts      # User-related constants
@@ -23,7 +26,7 @@ manabie-auto-testing/
 │   ├── decorators/               # Custom decorators
 │   │   └── logStep.ts            # Step logging decorator
 │   ├── Facade/                   # Facade pattern classes
-│   │   └── EventFacade.ts        # Event operations facade
+│   │   └── eventFacade.ts        # Event operations facade
 │   ├── locators/                 # Element locators
 │   │   ├── eventLocators.ts      # Event page locators
 │   │   ├── lessonLocators.ts     # Lesson page locators
@@ -39,7 +42,6 @@ manabie-auto-testing/
 │       ├── ConfigHelpers.ts      # Configuration helpers
 │       ├── JsonHelper.ts         # JSON manipulation
 │       ├── LoginHelper.ts        # Login utilities
-│       ├── QaseReporter.ts       # QASE test reporter
 │       ├── storageHelper.ts      # Storage management
 │       └── TestInfoHelper.ts     # Test information utilities
 ├── tests/                        # Test files
@@ -47,19 +49,29 @@ manabie-auto-testing/
 │   │   └── permission/
 │   │       └── login.spec.ts     # Login tests
 │   └── with-storage/             # Tests with authentication
-│       ├── event/
-│       │   └── event.spec.ts     # Event tests
-│       └── test-1.spec.ts        # Sample test
+│       └── event/
+│           └── event.spec.ts     # Event tests
 ├── storage/                      # Authentication storage
-│   └── storageState.staging.json # Staging auth state
+│   ├── storageState.dev-staging.json # Dev-staging auth state
+│   ├── storageState.pre-prod.json    # Pre-prod auth state
+│   └── storageState.staging.json     # Staging auth state
 ├── scripts/                      # Utility scripts
 │   └── refresh-storage.ts        # Storage refresh script
+├── logs/                         # Application logs
+│   └── log.txt                   # Log file
 ├── playwright-report/            # Test reports
 ├── test-results/                 # Test execution results
+├── .gitignore                    # Git ignore rules
 ├── global-setup.ts               # Global test setup
 ├── global-teardown.ts            # Global test teardown
 ├── playwright.config.ts          # Playwright configuration
-└── package.json                  # Dependencies and scripts
+├── package.json                  # Dependencies and scripts
+├── README.md                     # Project documentation
+├── STRUCTURE.md                  # This file
+├── TYPESCRIPT_STANDARDS.md       # TypeScript coding standards
+├── test-logs.json                # Test execution logs
+├── test-results.json             # Test results summary
+└── tsconfig.json                 # TypeScript configuration
 ```
 
 ## Key Components
@@ -78,9 +90,12 @@ manabie-auto-testing/
 - Playwright settings in `playwright.config.ts`
 
 ### Utilities
-- **QaseReporter.ts**: Test management integration
 - **storageHelper.ts**: Authentication state management
 - **CommonHelpers.ts**: Shared test utilities
+- **ConfigHelpers.ts**: Configuration management
+- **JsonHelper.ts**: JSON data manipulation
+- **LoginHelper.ts**: Login-specific utilities
+- **TestInfoHelper.ts**: Test information management
 
 ## Git Commands
 

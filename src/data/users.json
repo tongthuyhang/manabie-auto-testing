@@ -1,5 +1,5 @@
 {
-  "staging": {
+  "dev-staging": {
     "admin": {
       "username": "salesforce.manabie.dev-staging@manabie.com",
       "password": "Manabie@12345"
@@ -16,7 +16,7 @@
   "pre-prod": {
     "admin": {
       "username":"huutrung.truong@manabie.com",
-      "password": "Manabie@12345"
+      "password": "Manabie@1234"
     },
     "inavlid_user": {
       "username": "XXXXXXXXXXXXXXXX",

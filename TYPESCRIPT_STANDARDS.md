@@ -104,7 +104,7 @@ interface ApiResponse {
 }
 
 // Use union types for limited options
-type Environment = 'staging' | 'pre-prod' | 'production';
+type Environment = 'dev-staging' | 'pre-prod' | 'production';
 ```
 
 ### Function Signatures
