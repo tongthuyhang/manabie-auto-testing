@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { EventFacade } from '../../../src/Facade/eventFacade';
+import { EventFacade } from '@src/facade/eventFacade';
 import { CommonHelpers } from '../../../src/utils/CommonHelpers';
 import { CommonConstants } from '../../../src/constants/commonConstants';
 import { EventData } from '../../../src/type/EventData';
