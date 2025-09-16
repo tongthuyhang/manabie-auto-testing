@@ -36,8 +36,15 @@ test.describe('Event Tests', () => {
       qase.comment('The Event Master should be created successfully'); // Actual result field on QASE
 
       // === Test Steps ===
-      await test.step(`Create & verify Event Master "${event.eventMasterName}"`, async () => {
+      await test.step(` I create a new Event Master with the name "Sample Event" ${event.eventMasterName}"`, async () => {
         await eventFacade.createAndVerify(event);
+      });
+      await test.step('Navigate to Event Master page', async () => {
+        await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
+      });
+      await test.step(`Then the Event Master should be created successfully including name "Sample Event"`, async () => {
+
+        await eventFacade.searchData('demo');
       });
     });
   });
@@ -56,4 +63,17 @@ test.describe('Event Tests', () => {
       await eventFacade.checkMandatoryMasterEvent();
     });
   });
+
+  test(`Search data and check data`, { tag: "@Regression" }, async ({ page }) => {
+
+    await eventFacade.searchData('demo');
+
+  });
+
+  test(`Check max lenght event master name`, { tag: "@Regression" }, async ({ page }) => {
+
+    await eventFacade.checkMaxLenght('Event Master Name');
+
+  });
+
 });

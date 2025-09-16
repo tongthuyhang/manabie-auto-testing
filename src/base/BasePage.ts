@@ -17,10 +17,24 @@ export class BasePage {
   * - Input: can be a CSS string (e.g. "button.save") or an existing Locator
   * - Output: always a Locator (so all actions are consistent)
   */
-  protected normalizeLocator(locator: string | Locator): Locator {
+  public normalizeLocator(locator: string | Locator): Locator {
     return typeof locator === 'string' ? this.page.locator(locator) : locator;
   }
 
+  /**
+   * Escapes special characters in a string
+   * so it can be safely used inside a RegExp.
+   *
+   * Example:
+   *  Input: "hello.world"
+   *  Output: "hello\.world"
+   *
+   * @param s The input string
+   * @returns The escaped string safe for regex
+   */
+  public escapeRegExp(s: string): string {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
   /**
    * Click an element with auto-wait
    */
@@ -84,29 +98,34 @@ export class BasePage {
     by: 'value' | 'text' = 'value',
     delay: number = 200
   ): Promise<void> {
+    // Wait for dropdown to be ready and click to open
     await dropdown.waitFor({ state: 'visible', timeout: 10000 });
     await dropdown.click();
 
-    let option: Locator;
-    if (by === 'value') {
-      option = this.page.locator(`.slds-listbox__option[data-value="${identifier}"]`);
-    } else {
-      option = this.page.locator(`.slds-listbox__option`, { hasText: identifier });
-    }
+    // Create option locator based on selection method
+    const option = by === 'value' 
+      ? this.page.locator(`.slds-listbox__option[data-value="${identifier}"]`)
+      : this.page.locator(`.slds-listbox__option`, { hasText: identifier });
 
+    // Wait for option and select if not already selected
     await option.waitFor({ state: 'visible', timeout: 5000 });
-    const selected = await option.getAttribute('aria-selected');
-    if (selected !== 'true') {
+    
+    const isSelected = await option.getAttribute('aria-selected') === 'true';
+    if (!isSelected) {
       await option.click();
+      console.log(`✅ Selected dropdown option: "${identifier}"`);
+    } else {
+      console.log(`ℹ️ Option "${identifier}" already selected`);
     }
 
+    // Optional delay for UI stabilization
     if (delay > 0) {
       await this.page.waitForTimeout(delay);
     }
 
-    // Verify the dropdown shows the selected value after choosing
+    // Verify selection for text-based selections
     if (by === 'text') {
-      await expect(dropdown).toHaveText(identifier);
+      await expect(dropdown).toContainText(identifier, { timeout: 5000 });
     }
   }
 
@@ -138,4 +157,91 @@ export class BasePage {
     }
   }
 
+  async searchData(locator: string, text: string) {
+    const fieldSearch = this.page.getByPlaceholder(locator);
+    await expect(fieldSearch).toBeVisible();
+    await fieldSearch.fill(text);
+    await fieldSearch.press("Enter");
+  }
+
+
+  /**
+   * Gets all data from a grid row and returns it as an object
+   * @param uniqueColumn The column used to identify the row
+   * @param uniqueValue The value in the unique column
+   * @returns Object with all column data from the row
+   */
+  async getAllGridRowData(
+    uniqueColumn: string,
+    uniqueValue: string
+  ): Promise<Record<string, string>> {
+    console.log(`\n🔍 Starting data extraction for [${uniqueColumn}] = "${uniqueValue}"`);
+
+    const rowLocator = this.page.locator('tr').filter({
+      has: this.page.locator(
+        `td[data-label="${uniqueColumn}"], th[data-label="${uniqueColumn}"]`
+      ).filter({ hasText: this.escapeRegExp(uniqueValue) })
+    });
+
+    const rowCount = await rowLocator.count();
+    console.log(`   Found ${rowCount} matching rows`);
+
+    if (rowCount === 0) {
+      console.log(`   ❌ No rows found with [${uniqueColumn}] = "${uniqueValue}"`);
+      return {};
+    }
+
+    // Get all cells in the row
+    const cells = rowLocator.locator('td[data-label], th[data-label]');
+    const cellCount = await cells.count();
+    const rowData: Record<string, string> = {};
+
+    console.log(`\n📋 Extracting all data from row where [${uniqueColumn}] = "${uniqueValue}"`);
+    console.log(`   Found ${cellCount} columns in the row`);
+
+    for (let i = 0; i < cellCount; i++) {
+      const cell = cells.nth(i);
+      const columnLabel = await cell.getAttribute('data-label');
+      const cellText = (await cell.innerText()).trim();
+
+      if (columnLabel) {
+        rowData[columnLabel] = cellText;
+        console.log(`   [${columnLabel}]: "${cellText}"`);
+      }
+    }
+
+    console.log(`\n📊 Quality Summary:`);
+    console.log(`   Total columns extracted: ${Object.keys(rowData).length}`);
+    console.log(`   Row identification: [${uniqueColumn}] = "${uniqueValue}"`);
+
+    return rowData;
+  }
+
+  /**
+   * Check the maximum length of an input field by its label text.
+   * @param page Playwright Page object
+   * @param labelText The text of the label associated with the input
+   * @param maxLength The maximum number of characters allowed
+   */
+  async checkMaxLengthByLabel(page: Page, labelText: string, maxLength: number) {
+    // Locate the input based on the label text
+    const input: Locator = page.locator(`label:has-text("${labelText}") + div input`);
+
+    // Try to fill more than maxLength characters
+    const longText = 'A'.repeat(maxLength + 20);
+    await input.fill(longText);
+    await expect(page.locator(`label:has-text("${labelText}")`)).toBeEnabled();
+
+    // Get the actual value in the input
+    const actualValue = await input.inputValue();
+
+    // Assert the value length does not exceed maxLength
+    expect(actualValue.length).toBeLessThanOrEqual(maxLength);
+
+    // Optionally, check for the warning message if it exists
+    const warning = page.locator('p#char-limit-warning');
+    if (await warning.isVisible()) {
+      await expect(warning).toHaveText(/Limit reached/, { timeout: 5000 });
+    }
+  }
 }

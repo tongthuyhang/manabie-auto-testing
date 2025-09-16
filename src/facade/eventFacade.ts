@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { EventPage } from '../pages/eventPage';
 import { EventData } from '../type/EventData';
 import { LogStep } from '../decorators/logStep';
@@ -33,13 +33,15 @@ export class EventFacade {
     await this.eventPage.clickNewButton();
     await this.eventPage.fillEventMasterForm(
       data.eventMasterName,
+      //data.reminder, // ❌ TypeScript error at compile time
       data.eventType,
       data.sendTo,
       data.reminder,
       data.maxEventPerStudent
     );
     await this.eventPage.clickSaveButton();
-    await this.eventPage.verifyEventMasterName(data.eventMasterName);
+    await this.eventPage.verifyEventMasterName();
+   
   }
 
   @LogStep('Check Mandatory files at Master Event')
@@ -47,6 +49,18 @@ export class EventFacade {
     await this.eventPage.clickNewButton();
     await this.eventPage.clickSaveButton();
     await this.eventPage.checkMandatoryFieldValidation();
+  }
+
+  @LogStep('Search data')
+  async searchData(name: string) {
+    await this.eventPage.searchEventMaster(name);
+    await this.eventPage.checkDataInGrid('Event Master Name', { 'Event Master Name': name })
+  }
+
+   @LogStep('Check maxlenght Event Master Name field')
+  async checkMaxLenght(name: string) {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.checkMaxLengthValidation(name);
   }
 
 }

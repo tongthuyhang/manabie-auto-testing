@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 2
+      "actualWorkers": 1
     },
     "preserveOutput": "always",
     "reporter": [
@@ -30,42 +30,6 @@
         {
           "outputFile": "test-results.json"
         }
-      ],
-      [
-        "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\node_modules\\playwright-qase-reporter\\dist\\index.js",
-        {
-          "mode": "testops",
-          "fallback": "report",
-          "environment": "dev-staging",
-          "debug": "true",
-          "captureLogs": false,
-          "testops": {
-            "api": {
-              "token": "9ab1f3fdc522cede8d5fee28631b2588a4d0d90401b58740153f3bba3afc359f",
-              "host": "qase.io"
-            },
-            "project": "PX",
-            "run": {
-              "complete": true,
-              "title": "Automated Run - dev-staging",
-              "description": "Playwright automated run for dev-staging"
-            },
-            "framework": {
-              "browser": {
-                "addAsParameter": true,
-                "parameterName": "Chrome 138.0.7204.50"
-              }
-            },
-            "uploadAttachments": true
-          },
-          "report": {
-            "driver": "local",
-            "connection": {
-              "path": "./build/qase-report",
-              "format": "json"
-            }
-          }
-        }
       ]
     ],
     "reportSlowTests": {
@@ -79,7 +43,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "with-storage",
         "name": "with-storage",
@@ -88,14 +52,14 @@
         "testMatch": [
           "**/*.spec.ts"
         ],
-        "timeout": 10000
+        "timeout": 100000
       },
       {
         "outputDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "no-storage",
         "name": "no-storage",
@@ -104,14 +68,14 @@
         "testMatch": [
           "**/*.spec.ts"
         ],
-        "timeout": 10000
+        "timeout": 100000
       },
       {
         "outputDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "chromium",
         "name": "chromium",
@@ -120,12 +84,12 @@
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
         ],
-        "timeout": 10000
+        "timeout": 100000
       }
     ],
     "shard": null,
     "updateSnapshots": "missing",
-    "updateSourceMethod": "patch",
+    "updateSourceMethod": "3way",
     "version": "1.55.0",
     "workers": 8,
     "webServer": null
@@ -152,7 +116,7 @@
               ],
               "tests": [
                 {
-                  "timeout": 10000,
+                  "timeout": 100000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "with-storage",
@@ -162,7 +126,7 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7123,
+                      "duration": 17050,
                       "errors": [],
                       "stdout": [
                         {
@@ -172,27 +136,170 @@
                           "text": "\u001b[90m   📥 Args:\u001b[0m\n[{ \u001b[34m\"eventMasterName\"\u001b[0m: \u001b[32m\"demo\"\u001b[0m, \u001b[34m\"eventType\"\u001b[0m: \u001b[32m\"Paid\"\u001b[0m, \u001b[34m\"sendTo\"\u001b[0m: \u001b[32m\"Parent only\"\u001b[0m, \u001b[34m\"reminder\"\u001b[0m: \u001b[36m5\u001b[0m, \u001b[34m\"maxEventPerStudent\"\u001b[0m: \u001b[36m2\u001b[0m }]\n"
                         },
                         {
-                          "text": "✅ Verified: \"demo\"\n"
+                          "text": "✅ Selected dropdown option: \"Paid\"\n"
+                        },
+                        {
+                          "text": "✅ Selected dropdown option: \"Parent only\"\n"
                         },
                         {
                           "text": "\u001b[32m✅ SUCCESS:\u001b[0m Create event\n"
+                        },
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch data\u001b[0m\n"
+                        },
+                        {
+                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"demo\"\u001b[0m]\n"
+                        },
+                        {
+                          "text": "\n🔍 Starting data extraction for [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "   Found 16 matching rows\n"
+                        },
+                        {
+                          "text": "\n📋 Extracting all data from row where [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "   Found 48 columns in the row\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "\n📊 Quality Summary:\n"
+                        },
+                        {
+                          "text": "   Total columns extracted: 2\n"
+                        },
+                        {
+                          "text": "   Row identification: [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Search data\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
                       "steps": [
                         {
-                          "title": "Create & verify Event Master \"demo\"",
-                          "duration": 4515,
+                          "title": " I create a new Event Master with the name \"Sample Event\" demo\"",
+                          "duration": 7191,
                           "steps": [
                             {
                               "title": "Create event",
-                              "duration": 4513
+                              "duration": 7190
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Navigate to Event Master page",
+                          "duration": 1393
+                        },
+                        {
+                          "title": "Then the Event Master should be created successfully including name \"Sample Event\"",
+                          "duration": 2662,
+                          "steps": [
+                            {
+                              "title": "Search data",
+                              "duration": 2661
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-14T13:41:28.446Z",
+                      "startTime": "2025-09-16T11:19:22.837Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -230,91 +337,6 @@
               "file": "with-storage/event/event.spec.ts",
               "line": 27,
               "column": 9
-            },
-            {
-              "title": "Validate required field \"Event Master Name\"",
-              "ok": true,
-              "tags": [
-                "Regression"
-              ],
-              "tests": [
-                {
-                  "timeout": 10000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "with-storage",
-                  "projectName": "with-storage",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 4793,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck Mandatory files at Master Event\u001b[0m\n"
-                        },
-                        {
-                          "text": "message check Event Master Name\nComplete this field.\n"
-                        },
-                        {
-                          "text": "message check Event Type\nComplete this field.\n"
-                        },
-                        {
-                          "text": "message check Send To\nComplete this field.\n"
-                        },
-                        {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Check Mandatory files at Master Event\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "steps": [
-                        {
-                          "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 2303,
-                          "steps": [
-                            {
-                              "title": "Check Mandatory files at Master Event",
-                              "duration": 2302
-                            }
-                          ]
-                        }
-                      ],
-                      "startTime": "2025-09-14T13:41:28.446Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJpZHMiOls2NjZdfQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJ0aXRsZSI6IkVuc3VyZSB0aGF0IHRoZSBzeXN0ZW0gcHJvbXB0cyB0aGUgdXNlciB3aGVuIHRoZSByZXF1aXJlZCBFdmVudCBNYXN0ZXIgTmFtZSBpcyBub3QgZmlsbGVkLiJ9"
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJjb21tZW50IjoiTWVzc2FnZSBcIkNvbXBsZXRlIHRoaXMgZmllbGQuXCIgc2hvdWxkIGJlIGRpc3BsYXllZCB1bmRlciBmaWVsZHMifQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
-              "file": "with-storage/event/event.spec.ts",
-              "line": 44,
-              "column": 7
             }
           ]
         }
@@ -323,9 +345,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-14T13:41:19.002Z",
-    "duration": 17016.379,
-    "expected": 2,
+    "startTime": "2025-09-16T11:19:21.400Z",
+    "duration": 18830.363,
+    "expected": 1,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

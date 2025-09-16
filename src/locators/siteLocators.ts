@@ -8,5 +8,6 @@ export const SiteLocators = {
   BUTTON_NEXT: 'role=button[name="Next"]',
   BUTTON_SAVE: 'role=button[name="Save"]',
   HEADER_PRIMARY_FIELD: '.slds-page-header__title.slds-m-right--small.slds-align-middle.slds-line-clamp.clip-text lightning-formatted-text',
-  HEADER_SECONDARY_FIELD: 'div.maincontent'
+  HEADER_SECONDARY_FIELD: 'div.maincontent',
+  INPUT_SEARCH: 'Search this list...',
 } as const;

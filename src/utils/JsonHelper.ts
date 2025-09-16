@@ -53,9 +53,32 @@ export class JsonHelper {
    * @param datapath - relative path to the JSON file
    * @returns a parsed JSON object
    */
-  static async loadJsonFromFile(datapath: string): Promise<any> {
-    const filePath = path.join(process.cwd(), datapath);
-    const content = await fs.promises.readFile(filePath, 'utf8');
+  // static async loadJsonFromFile(datapath: string): Promise<any> {
+  //   //const filePath = path.join(process.cwd(), datapath);
+  //   const filePath = path.resolve(__dirname, "..", datapath); 
+  //   const content = await fs.promises.readFile(filePath, 'utf8');
+  //   return JSON.parse(content);
+  // }
+   static async loadJsonFromFile(datapath: string): Promise<any> {
+    let filePath = datapath;
+
+    // Nếu path chưa phải absolute → resolve lại
+    if (!path.isAbsolute(datapath)) {
+      // Ưu tiên tìm trong project root
+      filePath = path.resolve(process.cwd(), datapath);
+
+      // Nếu không tồn tại, thử resolve từ __dirname (dành cho trường hợp gọi "data/users.json")
+      if (!fs.existsSync(filePath)) {
+        filePath = path.resolve(__dirname, "..", "..", datapath);
+      }
+    }
+
+    // Kiểm tra lần cuối
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`❌ JSON file not found: ${filePath}`);
+    }
+
+    const content = await fs.promises.readFile(filePath, "utf8");
     return JSON.parse(content);
   }
 

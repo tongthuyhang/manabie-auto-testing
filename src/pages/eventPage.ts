@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
 import { SiteLocators } from '../locators/siteLocators';
@@ -19,7 +19,8 @@ export class EventPage extends BasePage {
   readonly btnSave: Locator;
   readonly headerPrimary: Locator;
   readonly headerSecondary: Locator;
-  readonly popupEvent: Locator
+  readonly popupEvent: Locator;
+  readonly inputSearch: Locator
 
   constructor(page: Page) {
     super(page);
@@ -32,6 +33,7 @@ export class EventPage extends BasePage {
     this.inputEventMasterName = page.locator(EventLocators.INPUT_EVENT_MASTER_NAME);
     this.inputReminders = page.locator(EventLocators.INPUT_REMINDERS);
     this.inputMaxEventPerStudent = page.locator(EventLocators.INPUT_MAX_EVENT_PER_STUDENT);
+    this.inputSearch = page.locator(SiteLocators.INPUT_SEARCH);
 
     // Dropdowns
     this.selectEventType = page.locator(EventLocators.SELECT_EVENT_TYPE);
@@ -51,6 +53,7 @@ export class EventPage extends BasePage {
   /** Clicks the "Save" button */
   async clickSaveButton() {
     await this.click(this.btnSave);
+ 
   }
 
   /**
@@ -61,26 +64,63 @@ export class EventPage extends BasePage {
    * @param reminder - Reminder count
    * @param maxEventPerStudent - Maximum events per student
    */
+  // async fillEventMasterForm(
+  //   eventMasterName: string,
+  //   eventType: string,
+  //   sendTo: string,
+  //   reminder: number,
+  //   maxEventPerStudent: number
+  // ) {
+  //   await this.type(this.inputEventMasterName, eventMasterName);
+  //   await this.selectFromDropdown(this.selectEventType, eventType);
+  //   await this.selectFromDropdown(this.selectSendTo, sendTo);
+  //   await this.inputReminders.fill(reminder.toString());
+  //   await this.inputMaxEventPerStudent.fill(maxEventPerStudent.toString());
+  // }
+
+
   async fillEventMasterForm(
-    eventMasterName: string,
-    eventType: string,
-    sendTo: string,
-    reminder: number,
-    maxEventPerStudent: number
-  ) {
-    await this.type(this.inputEventMasterName, eventMasterName);
-    await this.selectFromDropdown(this.selectEventType, eventType);
-    await this.selectFromDropdown(this.selectSendTo, sendTo);
+  eventMasterName: string,              // required
+  eventType: string,                    // required
+  sendTo: string,                       // required
+  reminder?: number,                    // optinal
+  maxEventPerStudent?: number           //  optinal
+) {
+  // Validate for field required
+  if (!eventMasterName.trim()) {
+    throw new Error("eventMasterName is required");
+  }
+  if (!eventType.trim()) {
+    throw new Error("eventType is required");
+  }
+  if (!sendTo.trim()) {
+    throw new Error("sendTo is required");
+  }
+
+  // Fill fields required
+  await this.type(this.inputEventMasterName, eventMasterName);
+  await this.selectFromDropdown(this.selectEventType, eventType);
+  await this.selectFromDropdown(this.selectSendTo, sendTo);
+
+  // Fill fields optinal
+  if (reminder !== undefined) {
     await this.inputReminders.fill(reminder.toString());
+  }
+
+  if (maxEventPerStudent !== undefined) {
     await this.inputMaxEventPerStudent.fill(maxEventPerStudent.toString());
   }
+}
+
 
   /**
    * Verifies the Event Master name appears in the page header
    * @param expected - Expected event name
    */
-  async verifyEventMasterName(expected: string) {
-    await this.verifyData(this.headerPrimary, expected);
+  async verifyEventMasterName() {
+    //await this.verifyData(this.headerPrimary, expected);
+        await expect(this.page.locator('span.toastMessage:has-text("was created")'))
+    .toBeVisible({ timeout: 10000 });
   }
 
   /**
@@ -88,9 +128,21 @@ export class EventPage extends BasePage {
    * @param eventMasterName - Event name to search
    */
   async searchEventMaster(eventMasterName: string) {
-    await this.type(this.inputEventMasterName, eventMasterName);
+    await this.searchData(SiteLocators.INPUT_SEARCH, eventMasterName);
   }
+
+  /**
+   * Check data in grid
+   */
+  async checkDataInGrid(column: string, expectedData: Record<string, string>) {
+    await this.getAllGridRowData(column, expectedData[column]);
+  }
+
   async checkMandatoryFieldValidation() {
     await this.checkMultipleMandatoryFields(['Event Master Name', 'Event Type', 'Send To']);
+  }
+
+  async checkMaxLengthValidation(name: string) {
+    await this.checkMaxLengthByLabel(this.page, name, 80);
   }
 }

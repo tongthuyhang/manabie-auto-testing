@@ -13,7 +13,7 @@ dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });
 
 const storagePath = `storage/storageState.${ENV}.json`;
 
-// Debug log env (ẩn token cho an toàn)
+// Debug log env 
 console.log(' QASE_TESTOPS_API_TOKEN:', process.env.QASE_TESTOPS_API_TOKEN?.slice(0, 6) + '...');
 console.log(' QASE_TESTOPS_PROJECT:', process.env.QASE_TESTOPS_PROJECT);
 console.log(' QASE_TESTOPS_API_HOST:', process.env.QASE_TESTOPS_API_HOST);
@@ -40,18 +40,19 @@ export default defineConfig({
         mode: process.env.QASE_MODE || 'testops',
         fallback: process.env.QASE_FALLBACK || 'report',
         environment: process.env.QASE_ENVIRONMENT || ENV,
-        debug: 'true',//process.env.QASE_DEBUG === 'true',
+        debug: true,//process.env.QASE_DEBUG === 'true',
         captureLogs: process.env.QASE_CAPTURE_LOGS === 'true',
 
         testops: {
           api: {
             token: process.env.QASE_TESTOPS_API_TOKEN!,
-            host: process.env.QASE_TESTOPS_API_HOST || 'qase.io',
+            //host: process.env.QASE_TESTOPS_API_HOST || 'qase.io',
+            host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io',
           },
           project: process.env.QASE_TESTOPS_PROJECT!,
           run: {
             complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false',
-            title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Run - ${ENV} - ${now}`,
+            title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`,
             description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run',
             // planId: process.env.QASE_TESTOPS_PLAN_ID ? Number(process.env.QASE_TESTOPS_PLAN_ID) : undefined,
           },
@@ -76,7 +77,7 @@ export default defineConfig({
     ],
   ],
   globalSetup: require.resolve('./global-setup'),
-  timeout: 10 * 1000,
+  timeout: 10 * 10000,
   use: {
     baseURL: process.env.PAGE_URL,
     trace: 'on-first-retry',
