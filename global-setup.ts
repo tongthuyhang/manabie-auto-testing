@@ -2,8 +2,8 @@
 import { chromium, FullConfig, Browser, Page } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
-import { LoginAction } from './src/utils/LoginHelper';
-import { loadConfig } from './src/utils/ConfigHelpers';
+import { LoginAction } from './src/utils/loginHelper';
+import { loadConfig } from './src/utils/configHelpers';
 import { StorageHelper } from './src/utils/storageHelper';
 
 // Load ENV (url, login, etc.)
@@ -22,13 +22,13 @@ async function globalSetup(config: FullConfig) {
   await loadConfig(env);
 
   // Force check storage status
-  const shouldRefresh = StorageHelper.shouldRefresh(env);
+  const shouldRefresh = StorageHelper.shouldRefreshStorageState(env);
   console.log(`🔍 Storage refresh needed: ${shouldRefresh}`);
   
   if (shouldRefresh) {
     console.log(`🔄 Storage needs refresh - proceeding with login...`);
   } else {
-    const storagePath = StorageHelper.getPath(env);
+    const storagePath = StorageHelper.getStorageFilePath(env);
     console.log(`✅ Found valid storageState: ${storagePath}, skipping login.`);
     return;
   }
@@ -54,8 +54,8 @@ async function globalSetup(config: FullConfig) {
     console.log(`✅ Salesforce login successful. Current URL: ${page.url()}`);
 
     // Save storageState using helper
-    await StorageHelper.save(page, env);
-    console.log(`✅ Storage saved at: ${StorageHelper.getPath(env)} (${new Date().toISOString()})`);
+    await StorageHelper.saveStorageState(page, env);
+    console.log(`✅ Storage saved at: ${StorageHelper.getStorageFilePath(env)} (${new Date().toISOString()})`);
   } catch (error) {
     console.error('❌ Global setup failed:', error);
     throw error;

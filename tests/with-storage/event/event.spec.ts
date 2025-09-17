@@ -1,12 +1,12 @@
 import { test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { EventFacade } from '@src/facade/eventFacade';
-import { CommonHelpers } from '@src/utils/CommonHelpers';
+import { EventFacade } from '@src/facade/EventFacade';
+import { CommonHelpers } from '@src/utils/commonHelpers';
 import { CommonConstants } from '@src/constants/commonConstants';
 import { EventData } from '@src/type/EventData';
 import testData from '@src/data/eventMasterData.json';
-import { JsonHelper } from '@src/utils/JsonHelper';
-import {StorageHelper} from '@src/utils/storageHelper';
+import { JsonHelper } from '@src/utils/jsonHelper';
+import { StorageHelper } from '@src/utils/storageHelper';
 
 const selectedEventNames = ['demo'];
 const selectedEvents: EventData[] = JsonHelper.getItemsByKey(
@@ -39,15 +39,14 @@ test.describe('Event Tests', () => {
       qase.comment('The Event Master should be created successfully'); // Actual result field on QASE
 
       // === Test Steps ===
-      await test.step(` I create a new Event Master with the name "Sample Event" ${event.eventMasterName}"`, async () => {
-        await eventFacade.createAndVerify(event);
+      await test.step(`Create new Event Master with name "${event.eventMasterName}"`, async () => {
+        await eventFacade.createAndVerifyEvent(event);
       });
       await test.step('Navigate to Event Master page', async () => {
         await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
       });
-      await test.step(`Then the Event Master should be created successfully including name "Sample Event"`, async () => {
-
-        await eventFacade.searchData('demo');
+      await test.step(`Verify Event Master "${event.eventMasterName}" appears in list`, async () => {
+        await eventFacade.searchAndValidateEventData(event.eventMasterName);
       });
     });
   });
@@ -62,21 +61,25 @@ test.describe('Event Tests', () => {
     });
 
     // === Test Steps ===
-    await test.step(`error message "Complete this field." should be displayed under fields`, async () => {
-      await eventFacade.checkMandatoryMasterEvent();
+    await test.step('Validate mandatory field error messages are displayed', async () => {
+      await eventFacade.validateMandatoryFieldErrors();
     });
   });
 
-  test(`Search data and check data`, { tag: "@Regression" }, async ({ page }) => {
-
-    await eventFacade.searchData('demo');
-
+  test('Should search and validate event data successfully', { tag: '@Regression' }, async ({ page }) => {
+    const eventName = 'demo';
+    
+    await test.step(`Search and validate event data for "${eventName}"`, async () => {
+      await eventFacade.searchAndValidateEventData(eventName);
+    });
   });
 
-  test(`Check max lenght event master name`, { tag: "@Regression" }, async ({ page }) => {
-
-    await eventFacade.checkMaxLenght('Event Master Name');
-
+  test('Should validate Event Master Name field maximum length', { tag: '@Validation' }, async ({ page }) => {
+    const fieldName = 'Event Master Name';
+    
+    await test.step(`Validate maximum length for "${fieldName}" field`, async () => {
+      await eventFacade.validateFieldMaxLength(fieldName);
+    });
   });
 
 });

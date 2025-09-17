@@ -110,7 +110,7 @@
           "specs": [
             {
               "title": "Create Event Master for\"demo\"",
-              "ok": false,
+              "ok": true,
               "tags": [
                 "Regression"
               ],
@@ -125,312 +125,12 @@
                     {
                       "workerIndex": 0,
                       "parallelIndex": 0,
-                      "status": "failed",
-                      "duration": 35104,
-                      "error": {
-                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n",
-                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n\n    at EventPage.type (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:58:15)\n    at EventPage.fillEventMasterForm (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:101:14)\n    at EventFacade.createAndVerify (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:34:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:26\n    at EventFacade.replacement (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:14)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:43:9\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:42:7",
-                        "location": {
-                          "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                          "column": 15,
-                          "line": 58
-                        },
-                        "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:58\n\n\u001b[0m \u001b[90m 56 |\u001b[39m   \u001b[36masync\u001b[39m type(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m string\u001b[33m,\u001b[39m append \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m delay \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 57 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 59 |\u001b[39m     \u001b[36mif\u001b[39m (append) {\n \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mpressSequentially(text\u001b[33m,\u001b[39m { delay })\u001b[33m;\u001b[39m \u001b[90m// simulates user typing\u001b[39m\n \u001b[90m 61 |\u001b[39m     } \u001b[36melse\u001b[39m {\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                            "column": 15,
-                            "line": 58
-                          },
-                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n\n\n\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:58\n\n\u001b[0m \u001b[90m 56 |\u001b[39m   \u001b[36masync\u001b[39m type(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m string\u001b[33m,\u001b[39m append \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m delay \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 57 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 59 |\u001b[39m     \u001b[36mif\u001b[39m (append) {\n \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mpressSequentially(text\u001b[33m,\u001b[39m { delay })\u001b[33m;\u001b[39m \u001b[90m// simulates user typing\u001b[39m\n \u001b[90m 61 |\u001b[39m     } \u001b[36melse\u001b[39m {\u001b[0m\n\u001b[2m    at EventPage.type (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:58:15)\u001b[22m\n\u001b[2m    at EventPage.fillEventMasterForm (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:101:14)\u001b[22m\n\u001b[2m    at EventFacade.createAndVerify (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:34:26)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:26\u001b[22m\n\u001b[2m    at EventFacade.replacement (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:14)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:43:9\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:42:7\u001b[22m"
-                        }
-                      ],
-                      "stdout": [
-                        {
-                          "text": "✅ Storage is fresh (0.2h old)\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: false\n"
-                        },
-                        {
-                          "text": "   - Should refresh: false\n"
-                        },
-                        {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate event\u001b[0m\n"
-                        },
-                        {
-                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[{ \u001b[34m\"eventMasterName\"\u001b[0m: \u001b[32m\"demo\"\u001b[0m, \u001b[34m\"eventType\"\u001b[0m: \u001b[32m\"Paid\"\u001b[0m, \u001b[34m\"sendTo\"\u001b[0m: \u001b[32m\"Parent only\"\u001b[0m, \u001b[34m\"reminder\"\u001b[0m: \u001b[36m5\u001b[0m, \u001b[34m\"maxEventPerStudent\"\u001b[0m: \u001b[36m2\u001b[0m }]\n"
-                        }
-                      ],
-                      "stderr": [
-                        {
-                          "text": "\u001b[31m❌ FAILED:\u001b[0m Create event locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n\n    at EventPage.type \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\base\\BasePage.ts:58:15\u001b[90m)\u001b[39m\n    at EventPage.fillEventMasterForm \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\pages\\eventPage.ts:101:14\u001b[90m)\u001b[39m\n    at EventFacade.createAndVerify \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\facade\\eventFacade.ts:34:26\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\decorators\\logStep.ts:103:26\n    at EventFacade.replacement \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\decorators\\logStep.ts:94:14\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39mtests\\with-storage\\event\\event.spec.ts:43:9\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39mtests\\with-storage\\event\\event.spec.ts:42:7 {\n  name: \u001b[32m'TimeoutError'\u001b[39m,\n  \u001b[32mSymbol(step)\u001b[39m: {\n    location: {\n      file: \u001b[32m'C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts'\u001b[39m,\n      line: \u001b[33m58\u001b[39m,\n      column: \u001b[33m15\u001b[39m,\n      function: \u001b[32m'EventPage.type'\u001b[39m\n    },\n    category: \u001b[32m'pw:api'\u001b[39m,\n    title: \u001b[32m`Wait for selector locator('[name=\"Name\"]')`\u001b[39m,\n    apiName: \u001b[32m'locator.waitFor'\u001b[39m,\n    params: {\n      selector: \u001b[32m'[name=\"Name\"]'\u001b[39m,\n      strict: \u001b[33mtrue\u001b[39m,\n      omitReturnValue: \u001b[33mtrue\u001b[39m,\n      state: \u001b[32m'visible'\u001b[39m,\n      timeout: \u001b[33m10000\u001b[39m\n    },\n    group: \u001b[90mundefined\u001b[39m,\n    stepId: \u001b[32m'pw:api@44'\u001b[39m,\n    boxedStack: \u001b[90mundefined\u001b[39m,\n    steps: [],\n    attachmentIndices: [],\n    info: TestStepInfoImpl {\n      annotations: [],\n      _testInfo: \u001b[36m[TestInfoImpl]\u001b[39m,\n      _stepId: \u001b[32m'pw:api@44'\u001b[39m,\n      _title: \u001b[32m`Wait for selector locator('[name=\"Name\"]')`\u001b[39m,\n      _parentStep: \u001b[36m[TestStepInfoImpl]\u001b[39m,\n      skip: \u001b[36m[Function (anonymous)]\u001b[39m\n    },\n    recoverFromStepError: \u001b[36m[AsyncFunction: recoverFromStepError]\u001b[39m,\n    complete: \u001b[36m[Function: complete]\u001b[39m,\n    endWallTime: \u001b[33m1758087088388\u001b[39m,\n    error: {\n      message: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('[name=\"Name\"]') to be visible\\x1B[22m\\n`\u001b[39m,\n      stack: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('[name=\"Name\"]') to be visible\\x1B[22m\\n`\u001b[39m +\n        \u001b[32m'\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.type (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts:58:15)\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.fillEventMasterForm (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\pages\\\\eventPage.ts:101:14)\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.createAndVerify (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\facade\\\\eventFacade.ts:34:26)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:103:26\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.replacement (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:94:14)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:43:9\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:42:7'\u001b[39m,\n      cause: \u001b[90mundefined\u001b[39m\n    }\n  }\n}\n"
-                        }
-                      ],
-                      "retry": 0,
-                      "steps": [
-                        {
-                          "title": " I create a new Event Master with the name \"Sample Event\" demo\"",
-                          "duration": 12167,
-                          "error": {
-                            "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n",
-                            "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n\n    at EventPage.type (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:58:15)\n    at EventPage.fillEventMasterForm (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:101:14)\n    at EventFacade.createAndVerify (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:34:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:26\n    at EventFacade.replacement (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:14)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:43:9\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:42:7",
-                            "location": {
-                              "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                              "column": 15,
-                              "line": 58
-                            },
-                            "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:58\n\n\u001b[0m \u001b[90m 56 |\u001b[39m   \u001b[36masync\u001b[39m type(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m string\u001b[33m,\u001b[39m append \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m delay \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 57 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 59 |\u001b[39m     \u001b[36mif\u001b[39m (append) {\n \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mpressSequentially(text\u001b[33m,\u001b[39m { delay })\u001b[33m;\u001b[39m \u001b[90m// simulates user typing\u001b[39m\n \u001b[90m 61 |\u001b[39m     } \u001b[36melse\u001b[39m {\u001b[0m"
-                          },
-                          "steps": [
-                            {
-                              "title": "Create event",
-                              "duration": 12163,
-                              "error": {
-                                "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n",
-                                "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[name=\"Name\"]') to be visible\u001b[22m\n\n    at EventPage.type (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:58:15)\n    at EventPage.fillEventMasterForm (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:101:14)\n    at EventFacade.createAndVerify (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:34:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:26\n    at EventFacade.replacement (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:14)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:43:9\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:42:7",
-                                "location": {
-                                  "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                                  "column": 15,
-                                  "line": 58
-                                },
-                                "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:58\n\n\u001b[0m \u001b[90m 56 |\u001b[39m   \u001b[36masync\u001b[39m type(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m\u001b[33m,\u001b[39m text\u001b[33m:\u001b[39m string\u001b[33m,\u001b[39m append \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m delay \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m) {\n \u001b[90m 57 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 58 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 59 |\u001b[39m     \u001b[36mif\u001b[39m (append) {\n \u001b[90m 60 |\u001b[39m       \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mpressSequentially(text\u001b[33m,\u001b[39m { delay })\u001b[33m;\u001b[39m \u001b[90m// simulates user typing\u001b[39m\n \u001b[90m 61 |\u001b[39m     } \u001b[36melse\u001b[39m {\u001b[0m"
-                              }
-                            }
-                          ]
-                        }
-                      ],
-                      "startTime": "2025-09-17T05:30:53.262Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJpZHMiOls2NjFdfQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJ0aXRsZSI6IkNyZWF0ZSBFdmVudCBNYXN0ZXIgZm9yIGRlbW8ifQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJwYXJhbWV0ZXJzIjp7ImlucHV0RGF0YSI6IntcImV2ZW50TWFzdGVyTmFtZVwiOlwiZGVtb1wiLFwiZXZlbnRUeXBlXCI6XCJQYWlkXCIsXCJzZW5kVG9cIjpcIlBhcmVudCBvbmx5XCIsXCJyZW1pbmRlclwiOjUsXCJtYXhFdmVudFBlclN0dWRlbnRcIjoyfSJ9fQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJWZXJpZnkgdGhhdCBhIG5ldyBFdmVudCBNYXN0ZXIgY2FuIGJlIGNyZWF0ZWQgc3VjY2Vzc2Z1bGx5IiwicHJlY29uZGl0aW9ucyI6IlVzZXIgaXMgbG9nZ2VkIGluIGFuZCBvbiBFdmVudCBNYXN0ZXIgcGFnZSJ9fQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJjb21tZW50IjoiVGhlIEV2ZW50IE1hc3RlciBzaG91bGQgYmUgY3JlYXRlZCBzdWNjZXNzZnVsbHkifQ=="
-                        },
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Create-Event-Master-for-demo--with-storage\\test-failed-1.png"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Create-Event-Master-for-demo--with-storage\\error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                        "column": 15,
-                        "line": 58
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
-                }
-              ],
-              "id": "726f4112f73a2bafcb4b-3312e120b1f5d48c51ad",
-              "file": "with-storage/event/event.spec.ts",
-              "line": 30,
-              "column": 9
-            },
-            {
-              "title": "Validate required field \"Event Master Name\"",
-              "ok": false,
-              "tags": [
-                "Regression"
-              ],
-              "tests": [
-                {
-                  "timeout": 100000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "with-storage",
-                  "projectName": "with-storage",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "failed",
-                      "duration": 47939,
-                      "error": {
-                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
-                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
-                        "location": {
-                          "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                          "column": 15,
-                          "line": 43
-                        },
-                        "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
-                      },
-                      "errors": [
-                        {
-                          "location": {
-                            "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                            "column": 15,
-                            "line": 43
-                          },
-                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n\n\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m\n\u001b[2m    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\u001b[22m\n\u001b[2m    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\u001b[22m\n\u001b[2m    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\u001b[22m\n\u001b[2m    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16\u001b[22m"
-                        }
-                      ],
-                      "stdout": [
-                        {
-                          "text": "✅ Storage is fresh (0.2h old)\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: false\n"
-                        },
-                        {
-                          "text": "   - Should refresh: false\n"
-                        },
-                        {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck Mandatory files at Master Event\u001b[0m\n"
-                        }
-                      ],
-                      "stderr": [
-                        {
-                          "text": "\u001b[31m❌ FAILED:\u001b[0m Check Mandatory files at Master Event locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\base\\BasePage.ts:43:15\u001b[90m)\u001b[39m\n    at EventPage.clickNewButton \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\pages\\eventPage.ts:50:16\u001b[90m)\u001b[39m\n    at EventFacade.apply \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\facade\\eventFacade.ts:49:26\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent \u001b[90m(C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39msrc\\decorators\\logStep.ts:94:25\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39mtests\\with-storage\\event\\event.spec.ts:66:25\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\manabie-auto-testing\\\u001b[39mtests\\with-storage\\event\\event.spec.ts:65:16 {\n  name: \u001b[32m'TimeoutError'\u001b[39m,\n  \u001b[32mSymbol(step)\u001b[39m: {\n    location: {\n      file: \u001b[32m'C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts'\u001b[39m,\n      line: \u001b[33m43\u001b[39m,\n      column: \u001b[33m15\u001b[39m,\n      function: \u001b[32m'EventPage.click'\u001b[39m\n    },\n    category: \u001b[32m'pw:api'\u001b[39m,\n    title: \u001b[32m`Wait for selector locator('role=button[name=\"New\"]')`\u001b[39m,\n    apiName: \u001b[32m'locator.waitFor'\u001b[39m,\n    params: {\n      selector: \u001b[32m'role=button[name=\"New\"]'\u001b[39m,\n      strict: \u001b[33mtrue\u001b[39m,\n      omitReturnValue: \u001b[33mtrue\u001b[39m,\n      state: \u001b[32m'visible'\u001b[39m,\n      timeout: \u001b[33m10000\u001b[39m\n    },\n    group: \u001b[90mundefined\u001b[39m,\n    stepId: \u001b[32m'pw:api@41'\u001b[39m,\n    boxedStack: \u001b[90mundefined\u001b[39m,\n    steps: [],\n    attachmentIndices: [],\n    info: TestStepInfoImpl {\n      annotations: [],\n      _testInfo: \u001b[36m[TestInfoImpl]\u001b[39m,\n      _stepId: \u001b[32m'pw:api@41'\u001b[39m,\n      _title: \u001b[32m`Wait for selector locator('role=button[name=\"New\"]')`\u001b[39m,\n      _parentStep: \u001b[36m[TestStepInfoImpl]\u001b[39m,\n      skip: \u001b[36m[Function (anonymous)]\u001b[39m\n    },\n    recoverFromStepError: \u001b[36m[AsyncFunction: recoverFromStepError]\u001b[39m,\n    complete: \u001b[36m[Function: complete]\u001b[39m,\n    endWallTime: \u001b[33m1758087101284\u001b[39m,\n    error: {\n      message: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\\x1B[22m\\n`\u001b[39m,\n      stack: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\\x1B[22m\\n`\u001b[39m +\n        \u001b[32m'\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.click (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts:43:15)\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.clickNewButton (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\pages\\\\eventPage.ts:50:16)\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.apply (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\facade\\\\eventFacade.ts:49:26)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:103:47\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.checkMandatoryMasterEvent (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:94:25)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:66:25\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:65:16'\u001b[39m,\n      cause: \u001b[90mundefined\u001b[39m\n    }\n  }\n}\n"
-                        }
-                      ],
-                      "retry": 0,
-                      "steps": [
-                        {
-                          "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 10023,
-                          "error": {
-                            "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
-                            "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
-                            "location": {
-                              "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                              "column": 15,
-                              "line": 43
-                            },
-                            "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
-                          },
-                          "steps": [
-                            {
-                              "title": "Check Mandatory files at Master Event",
-                              "duration": 10019,
-                              "error": {
-                                "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
-                                "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
-                                "location": {
-                                  "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                                  "column": 15,
-                                  "line": 43
-                                },
-                                "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
-                              }
-                            }
-                          ]
-                        }
-                      ],
-                      "startTime": "2025-09-17T05:30:53.280Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJpZHMiOls2NjZdfQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJ0aXRsZSI6IkVuc3VyZSB0aGF0IHRoZSBzeXN0ZW0gcHJvbXB0cyB0aGUgdXNlciB3aGVuIHRoZSByZXF1aXJlZCBFdmVudCBNYXN0ZXIgTmFtZSBpcyBub3QgZmlsbGVkLiJ9"
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJjb21tZW50IjoiTWVzc2FnZSBcIkNvbXBsZXRlIHRoaXMgZmllbGQuXCIgc2hvdWxkIGJlIGRpc3BsYXllZCB1bmRlciBmaWVsZHMifQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
-                        },
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Va-0d6c4-ed-field-Event-Master-Name--with-storage\\test-failed-1.png"
-                        },
-                        {
-                          "name": "error-context",
-                          "contentType": "text/markdown",
-                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Va-0d6c4-ed-field-Event-Master-Name--with-storage\\error-context.md"
-                        }
-                      ],
-                      "errorLocation": {
-                        "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
-                        "column": 15,
-                        "line": 43
-                      }
-                    }
-                  ],
-                  "status": "unexpected"
-                }
-              ],
-              "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
-              "file": "with-storage/event/event.spec.ts",
-              "line": 54,
-              "column": 7
-            },
-            {
-              "title": "Search data and check data",
-              "ok": true,
-              "tags": [
-                "Regression"
-              ],
-              "tests": [
-                {
-                  "timeout": 100000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "with-storage",
-                  "projectName": "with-storage",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 25746,
+                      "duration": 16765,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (0.2h old)\n"
+                          "text": "✅ Storage is fresh (2.2h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -445,7 +145,22 @@
                           "text": "   - Should refresh: false\n"
                         },
                         {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch data\u001b[0m\n"
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate and verify event\u001b[0m\n"
+                        },
+                        {
+                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[{ \u001b[34m\"eventMasterName\"\u001b[0m: \u001b[32m\"demo\"\u001b[0m, \u001b[34m\"eventType\"\u001b[0m: \u001b[32m\"Paid\"\u001b[0m, \u001b[34m\"sendTo\"\u001b[0m: \u001b[32m\"Parent only\"\u001b[0m, \u001b[34m\"reminder\"\u001b[0m: \u001b[36m5\u001b[0m, \u001b[34m\"maxEventPerStudent\"\u001b[0m: \u001b[36m2\u001b[0m }]\n"
+                        },
+                        {
+                          "text": "✅ Selected dropdown option: \"Paid\"\n"
+                        },
+                        {
+                          "text": "✅ Selected dropdown option: \"Parent only\"\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Create and verify event\n"
+                        },
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch and validate event data\u001b[0m\n"
                         },
                         {
                           "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"demo\"\u001b[0m]\n"
@@ -574,32 +289,78 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Search data\n"
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Search and validate event data\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
                       "steps": [
                         {
-                          "title": "Search data",
-                          "duration": 4820
+                          "title": "Create new Event Master with name \"demo\"",
+                          "duration": 7200,
+                          "steps": [
+                            {
+                              "title": "Create and verify event",
+                              "duration": 7199
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Navigate to Event Master page",
+                          "duration": 784
+                        },
+                        {
+                          "title": "Verify Event Master \"demo\" appears in list",
+                          "duration": 1173,
+                          "steps": [
+                            {
+                              "title": "Search and validate event data",
+                              "duration": 1173
+                            }
+                          ]
                         }
                       ],
-                      "startTime": "2025-09-17T05:30:53.227Z",
+                      "startTime": "2025-09-17T07:28:20.627Z",
                       "annotations": [],
-                      "attachments": []
+                      "attachments": [
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJpZHMiOls2NjFdfQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJ0aXRsZSI6IkNyZWF0ZSBFdmVudCBNYXN0ZXIgZm9yIGRlbW8ifQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJwYXJhbWV0ZXJzIjp7ImlucHV0RGF0YSI6IntcImV2ZW50TWFzdGVyTmFtZVwiOlwiZGVtb1wiLFwiZXZlbnRUeXBlXCI6XCJQYWlkXCIsXCJzZW5kVG9cIjpcIlBhcmVudCBvbmx5XCIsXCJyZW1pbmRlclwiOjUsXCJtYXhFdmVudFBlclN0dWRlbnRcIjoyfSJ9fQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJWZXJpZnkgdGhhdCBhIG5ldyBFdmVudCBNYXN0ZXIgY2FuIGJlIGNyZWF0ZWQgc3VjY2Vzc2Z1bGx5IiwicHJlY29uZGl0aW9ucyI6IlVzZXIgaXMgbG9nZ2VkIGluIGFuZCBvbiBFdmVudCBNYXN0ZXIgcGFnZSJ9fQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJjb21tZW50IjoiVGhlIEV2ZW50IE1hc3RlciBzaG91bGQgYmUgY3JlYXRlZCBzdWNjZXNzZnVsbHkifQ=="
+                        }
+                      ]
                     }
                   ],
                   "status": "expected"
                 }
               ],
-              "id": "726f4112f73a2bafcb4b-3ef2df0edcbef6b189d5",
+              "id": "726f4112f73a2bafcb4b-3312e120b1f5d48c51ad",
               "file": "with-storage/event/event.spec.ts",
-              "line": 70,
-              "column": 7
+              "line": 30,
+              "column": 9
             },
             {
-              "title": "Check max lenght event master name",
+              "title": "Validate required field \"Event Master Name\"",
               "ok": true,
               "tags": [
                 "Regression"
@@ -613,14 +374,14 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 37251,
+                      "duration": 8599,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (0.2h old)\n"
+                          "text": "✅ Storage is fresh (2.2h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -635,24 +396,253 @@
                           "text": "   - Should refresh: false\n"
                         },
                         {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck maxlenght Event Master Name field\u001b[0m\n"
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate mandatory field errors\u001b[0m\n"
                         },
                         {
-                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"Event Master Name\"\u001b[0m]\n"
+                          "text": "message check Event Master Name\nComplete this field.\n"
                         },
                         {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Check maxlenght Event Master Name field\n"
+                          "text": "message check Event Type\nComplete this field.\n"
+                        },
+                        {
+                          "text": "message check Send To\nComplete this field.\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Validate mandatory field errors\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
                       "steps": [
                         {
-                          "title": "Check maxlenght Event Master Name field",
-                          "duration": 21886
+                          "title": "Validate mandatory field error messages are displayed",
+                          "duration": 4308,
+                          "steps": [
+                            {
+                              "title": "Validate mandatory field errors",
+                              "duration": 4305
+                            }
+                          ]
                         }
                       ],
-                      "startTime": "2025-09-17T05:30:53.266Z",
+                      "startTime": "2025-09-17T07:28:20.626Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJpZHMiOls2NjZdfQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJ0aXRsZSI6IkVuc3VyZSB0aGF0IHRoZSBzeXN0ZW0gcHJvbXB0cyB0aGUgdXNlciB3aGVuIHRoZSByZXF1aXJlZCBFdmVudCBNYXN0ZXIgTmFtZSBpcyBub3QgZmlsbGVkLiJ9"
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJjb21tZW50IjoiTWVzc2FnZSBcIkNvbXBsZXRlIHRoaXMgZmllbGQuXCIgc2hvdWxkIGJlIGRpc3BsYXllZCB1bmRlciBmaWVsZHMifQ=="
+                        },
+                        {
+                          "name": "qase-metadata.json",
+                          "contentType": "application/qase.metadata+json",
+                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
+              "file": "with-storage/event/event.spec.ts",
+              "line": 53,
+              "column": 7
+            },
+            {
+              "title": "Should search and validate event data successfully",
+              "ok": true,
+              "tags": [
+                "Regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 100000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "with-storage",
+                  "projectName": "with-storage",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 9556,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Storage is fresh (2.2h old)\n"
+                        },
+                        {
+                          "text": "🔍 Storage check for dev-staging:\n"
+                        },
+                        {
+                          "text": "   - Valid: true\n"
+                        },
+                        {
+                          "text": "   - Expired: false\n"
+                        },
+                        {
+                          "text": "   - Should refresh: false\n"
+                        },
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch and validate event data\u001b[0m\n"
+                        },
+                        {
+                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"demo\"\u001b[0m]\n"
+                        },
+                        {
+                          "text": "\n🔍 Starting data extraction for [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "   Found 17 matching rows\n"
+                        },
+                        {
+                          "text": "\n📋 Extracting all data from row where [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "   Found 51 columns in the row\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
+                        },
+                        {
+                          "text": "\n📊 Quality Summary:\n"
+                        },
+                        {
+                          "text": "   Total columns extracted: 2\n"
+                        },
+                        {
+                          "text": "   Row identification: [Event Master Name] = \"demo\"\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Search and validate event data\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Search and validate event data for \"demo\"",
+                          "duration": 983,
+                          "steps": [
+                            {
+                              "title": "Search and validate event data",
+                              "duration": 982
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2025-09-17T07:28:20.646Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -660,9 +650,82 @@
                   "status": "expected"
                 }
               ],
-              "id": "726f4112f73a2bafcb4b-31974b73b385c87dc0c1",
+              "id": "726f4112f73a2bafcb4b-6854d6d6ac2ac611923e",
               "file": "with-storage/event/event.spec.ts",
-              "line": 76,
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "Should validate Event Master Name field maximum length",
+              "ok": true,
+              "tags": [
+                "Validation"
+              ],
+              "tests": [
+                {
+                  "timeout": 100000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "with-storage",
+                  "projectName": "with-storage",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 8629,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Storage is fresh (2.2h old)\n"
+                        },
+                        {
+                          "text": "🔍 Storage check for dev-staging:\n"
+                        },
+                        {
+                          "text": "   - Valid: true\n"
+                        },
+                        {
+                          "text": "   - Expired: false\n"
+                        },
+                        {
+                          "text": "   - Should refresh: false\n"
+                        },
+                        {
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate field maximum length\u001b[0m\n"
+                        },
+                        {
+                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"Event Master Name\"\u001b[0m]\n"
+                        },
+                        {
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Validate field maximum length\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Validate maximum length for \"Event Master Name\" field",
+                          "duration": 2189,
+                          "steps": [
+                            {
+                              "title": "Validate field maximum length",
+                              "duration": 2186
+                            }
+                          ]
+                        }
+                      ],
+                      "startTime": "2025-09-17T07:28:20.643Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "726f4112f73a2bafcb4b-a1996ed064c5f5f33f70",
+              "file": "with-storage/event/event.spec.ts",
+              "line": 77,
               "column": 7
             }
           ]
@@ -672,11 +735,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-17T05:30:51.848Z",
-    "duration": 49885.92,
-    "expected": 2,
+    "startTime": "2025-09-17T07:28:19.560Z",
+    "duration": 18278.268,
+    "expected": 4,
     "skipped": 0,
-    "unexpected": 2,
+    "unexpected": 0,
     "flaky": 0
   }
 }
