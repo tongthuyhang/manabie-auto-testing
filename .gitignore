@@ -6,6 +6,3 @@ playwright-report/index.html
 test-logs.json
 build/
 logs/
-storage/
-storageState.dev-staging.json
-storageState.staging.json

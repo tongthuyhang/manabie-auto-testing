@@ -110,7 +110,7 @@
           "specs": [
             {
               "title": "Validate required field \"Event Master Name\"",
-              "ok": true,
+              "ok": false,
               "tags": [
                 "Regression"
               ],
@@ -123,14 +123,33 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 6,
+                      "workerIndex": 8,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 17690,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 14302,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
+                        "location": {
+                          "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
+                          "column": 15,
+                          "line": 43
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
+                            "column": 15,
+                            "line": 43
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n\n\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m\n\u001b[2m    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\u001b[22m\n\u001b[2m    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\u001b[22m\n\u001b[2m    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\u001b[22m\n\u001b[2m    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\u001b[22m\n\u001b[2m    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16\u001b[22m"
+                        }
+                      ],
                       "stdout": [
                         {
-                          "text": "⏰ Storage expired by age: 25.0h old (max: 24h)\n"
+                          "text": "✅ Storage is fresh (0.0h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -139,57 +158,54 @@
                           "text": "   - Valid: true\n"
                         },
                         {
-                          "text": "   - Expired: true\n"
+                          "text": "   - Expired: false\n"
                         },
                         {
-                          "text": "   - Should refresh: true\n"
-                        },
-                        {
-                          "text": "🔄 Storage expired - forcing re-authentication...\n"
-                        },
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        },
-                        {
-                          "text": "✅ Storage saved: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
-                        },
-                        {
-                          "text": "✅ Fresh storage created\n"
+                          "text": "   - Should refresh: false\n"
                         },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck Mandatory files at Master Event\u001b[0m\n"
-                        },
-                        {
-                          "text": "message check Event Master Name\nComplete this field.\n"
-                        },
-                        {
-                          "text": "message check Event Type\nComplete this field.\n"
-                        },
-                        {
-                          "text": "message check Send To\nComplete this field.\n"
-                        },
-                        {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Check Mandatory files at Master Event\n"
                         }
                       ],
-                      "stderr": [],
+                      "stderr": [
+                        {
+                          "text": "\u001b[31m❌ FAILED:\u001b[0m Check Mandatory files at Master Event locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click \u001b[90m(C:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\src\\base\\BasePage.ts:43:15\u001b[90m)\u001b[39m\n    at EventPage.clickNewButton \u001b[90m(C:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\src\\pages\\eventPage.ts:50:16\u001b[90m)\u001b[39m\n    at EventFacade.apply \u001b[90m(C:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\src\\facade\\eventFacade.ts:49:26\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent \u001b[90m(C:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\src\\decorators\\logStep.ts:94:25\u001b[90m)\u001b[39m\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at \u001b[90mC:\\hang\\manabie-auto-testing\\\u001b[39mmanabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16 {\n  name: \u001b[32m'TimeoutError'\u001b[39m,\n  \u001b[32mSymbol(step)\u001b[39m: {\n    location: {\n      file: \u001b[32m'C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts'\u001b[39m,\n      line: \u001b[33m43\u001b[39m,\n      column: \u001b[33m15\u001b[39m,\n      function: \u001b[32m'EventPage.click'\u001b[39m\n    },\n    category: \u001b[32m'pw:api'\u001b[39m,\n    title: \u001b[32m`Wait for selector locator('role=button[name=\"New\"]')`\u001b[39m,\n    apiName: \u001b[32m'locator.waitFor'\u001b[39m,\n    params: {\n      selector: \u001b[32m'role=button[name=\"New\"]'\u001b[39m,\n      strict: \u001b[33mtrue\u001b[39m,\n      omitReturnValue: \u001b[33mtrue\u001b[39m,\n      state: \u001b[32m'visible'\u001b[39m,\n      timeout: \u001b[33m10000\u001b[39m\n    },\n    group: \u001b[90mundefined\u001b[39m,\n    stepId: \u001b[32m'pw:api@41'\u001b[39m,\n    boxedStack: \u001b[90mundefined\u001b[39m,\n    steps: [],\n    attachmentIndices: [],\n    info: TestStepInfoImpl {\n      annotations: [],\n      _testInfo: \u001b[36m[TestInfoImpl]\u001b[39m,\n      _stepId: \u001b[32m'pw:api@41'\u001b[39m,\n      _title: \u001b[32m`Wait for selector locator('role=button[name=\"New\"]')`\u001b[39m,\n      _parentStep: \u001b[36m[TestStepInfoImpl]\u001b[39m,\n      skip: \u001b[36m[Function (anonymous)]\u001b[39m\n    },\n    recoverFromStepError: \u001b[36m[AsyncFunction: recoverFromStepError]\u001b[39m,\n    complete: \u001b[36m[Function: complete]\u001b[39m,\n    endWallTime: \u001b[33m1758084603590\u001b[39m,\n    error: {\n      message: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\\x1B[22m\\n`\u001b[39m,\n      stack: \u001b[32m'TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\\n'\u001b[39m +\n        \u001b[32m'Call log:\\n'\u001b[39m +\n        \u001b[32m`\\x1B[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\\x1B[22m\\n`\u001b[39m +\n        \u001b[32m'\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.click (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\base\\\\BasePage.ts:43:15)\\n'\u001b[39m +\n        \u001b[32m'    at EventPage.clickNewButton (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\pages\\\\eventPage.ts:50:16)\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.apply (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\facade\\\\eventFacade.ts:49:26)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:103:47\\n'\u001b[39m +\n        \u001b[32m'    at EventFacade.checkMandatoryMasterEvent (C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\src\\\\decorators\\\\logStep.ts:94:25)\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:66:25\\n'\u001b[39m +\n        \u001b[32m'    at C:\\\\hang\\\\manabie-auto-testing\\\\manabie-auto-testing\\\\tests\\\\with-storage\\\\event\\\\event.spec.ts:65:16'\u001b[39m,\n      cause: \u001b[90mundefined\u001b[39m\n    }\n  }\n}\n"
+                        }
+                      ],
                       "retry": 0,
                       "steps": [
                         {
                           "title": "error message \"Complete this field.\" should be displayed under fields",
-                          "duration": 5221,
+                          "duration": 10032,
+                          "error": {
+                            "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
+                            "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
+                            "location": {
+                              "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
+                              "column": 15,
+                              "line": 43
+                            },
+                            "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
+                          },
                           "steps": [
                             {
                               "title": "Check Mandatory files at Master Event",
-                              "duration": 5218
+                              "duration": 10030,
+                              "error": {
+                                "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n",
+                                "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('role=button[name=\"New\"]') to be visible\u001b[22m\n\n    at EventPage.click (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts:43:15)\n    at EventPage.clickNewButton (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\pages\\eventPage.ts:50:16)\n    at EventFacade.apply (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\facade\\eventFacade.ts:49:26)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:103:47\n    at EventFacade.checkMandatoryMasterEvent (C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\decorators\\logStep.ts:94:25)\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:66:25\n    at C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\tests\\with-storage\\event\\event.spec.ts:65:16",
+                                "location": {
+                                  "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
+                                  "column": 15,
+                                  "line": 43
+                                },
+                                "snippet": "\u001b[90m   at \u001b[39m..\\src\\base\\BasePage.ts:43\n\n\u001b[0m \u001b[90m 41 |\u001b[39m   \u001b[36masync\u001b[39m click(locator\u001b[33m:\u001b[39m string \u001b[33m|\u001b[39m \u001b[33mLocator\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 42 |\u001b[39m     \u001b[36mconst\u001b[39m loc \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mnormalizeLocator(locator)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'visible'\u001b[39m\u001b[33m,\u001b[39m timeout\u001b[33m:\u001b[39m \u001b[35m10000\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 44 |\u001b[39m     \u001b[36mawait\u001b[39m loc\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\n \u001b[90m 45 |\u001b[39m   }\n \u001b[90m 46 |\u001b[39m\u001b[0m"
+                              }
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-17T04:22:40.396Z",
+                      "startTime": "2025-09-17T04:49:49.327Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -211,16 +227,31 @@
                           "name": "qase-metadata.json",
                           "contentType": "application/qase.metadata+json",
                           "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Va-0d6c4-ed-field-Event-Master-Name--with-storage\\test-failed-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\test-results\\event-event-Event-Tests-Va-0d6c4-ed-field-Event-Master-Name--with-storage\\error-context.md"
                         }
-                      ]
+                      ],
+                      "errorLocation": {
+                        "file": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\src\\base\\BasePage.ts",
+                        "column": 15,
+                        "line": 43
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
               "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
               "file": "with-storage/event/event.spec.ts",
-              "line": 55,
+              "line": 54,
               "column": 7
             }
           ]
@@ -230,11 +261,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-17T04:22:38.981Z",
-    "duration": 19491.217999999877,
-    "expected": 1,
+    "startTime": "2025-09-17T04:49:47.620Z",
+    "duration": 16437.440999999642,
+    "expected": 0,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }
