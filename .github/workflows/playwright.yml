@@ -1,3 +1,61 @@
+# name: Playwright + Qase CI/CD
+
+# on:
+#   push:
+#     branches: [ main, develop ]
+#   pull_request:
+#     branches: [ main, develop ]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 60
+
+#     steps:
+#       # 1. Checkout repo
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       # 2. Setup Node.js
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: lts/*
+
+#       - name: List files and folders in src directory
+#         run: |
+#           echo "Listing contents of src directory:"
+#           ls -la src/
+#           echo "\nDirectory structure:"
+#           find src/ -type d
+#           echo "\nAll files:"
+#           find src/ -type f
+
+#       # 3. Install dependencies
+#       - name: Install dependencies
+#         run: npm ci
+
+#       # 4. Install Playwright browsers
+#       - name: Install Playwright Browsers
+#         run: npx playwright install --with-deps
+          
+#       # 5. Run Playwright tests with Qase
+#       - name: Run Playwright Tests (Dev-Staging with Qase)
+#         run: npm run test:dev-staging:qase
+#         env:
+#           ENV: dev-staging
+#           USER_TYPE: admin
+#           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
+
+#       # 6. Upload HTML report
+#       - name: Upload Playwright Report
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: playwright-report
+#           path: playwright-report/
+#           retention-days: 30
+
 name: Playwright + Qase CI/CD
 
 on:
@@ -16,30 +74,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
+      # 2. Setup Node.js (có cache npm)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-
-      - name: List files and folders in src directory
-        run: |
-          echo "Listing contents of src directory:"
-          ls -la src/
-          echo "\nDirectory structure:"
-          find src/ -type d
-          echo "\nAll files:"
-          find src/ -type f
+          cache: npm
 
       # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4. Install Playwright browsers
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      # 4. Cache Playwright browsers
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      # 5. Install Playwright browsers (Official Action)
+      - name: Setup Playwright
+        uses: microsoft/playwright-github-action@v1
           
-      # 5. Run Playwright tests with Qase
+      # 6. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
         run: npm run test:dev-staging:qase
         env:
@@ -47,7 +106,7 @@ jobs:
           USER_TYPE: admin
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
 
-      # 6. Upload HTML report
+      # 7. Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
