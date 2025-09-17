@@ -215,7 +215,7 @@
       "value": "1758082966269",
       "domain": "c.salesforce.com",
       "path": "/",
-      "expires": 1758084766,
+      "expires": 1789618966,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -305,7 +305,7 @@
       "value": "!MOq3Nid5qYK/8PoyXjUrFypm9AjETO7oOJlN+puJxtJNFmRWU0b+f+RFI0bL0NvEP6sHzNTUNIXNsw==",
       "domain": "dev-staging.file.force.com",
       "path": "/",
-      "expires": 1758083146.690107,
+      "expires": 1789618966.690107,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -335,7 +335,7 @@
       "value": "!nSljSJr0pJzlAs+/e1NphdtxMBHEaamWIR7k7Hn2VGwfozQEZ3cilpeNBHzWieOZgmZVwQBOq54y",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
-      "expires": 1758083148.514932,
+      "expires": 1789618968.514932,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -385,7 +385,7 @@
       "value": "!AfW7TYsALKuUGmJAyKRxQvK3yIe8pS86pLG1Hwy8YVE8ZJMg/q48LrPHvXeyqFMZL93iiviBj1x3gA==",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
-      "expires": 1758083152.113069,
+      "expires": 1789618972.113069,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
