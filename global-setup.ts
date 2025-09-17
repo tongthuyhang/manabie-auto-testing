@@ -12,6 +12,8 @@ dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
 
 async function globalSetup(config: FullConfig) {
   console.log("🚀 Global setup starting...");
+  console.log(`🔧 Running from: ${process.env.NODE_ENV || 'unknown'}`);
+  console.log(`📁 Working directory: ${process.cwd()}`);
 
   const env = process.env.ENV?.trim() || 'dev-staging';
   const userType = process.env.USER_TYPE || 'admin';
@@ -19,8 +21,13 @@ async function globalSetup(config: FullConfig) {
 
   await loadConfig(env);
 
-  // Check if valid storageState already exists
-  if (StorageHelper.isValid(env)) {
+  // Force check storage status
+  const shouldRefresh = StorageHelper.shouldRefresh(env);
+  console.log(`🔍 Storage refresh needed: ${shouldRefresh}`);
+  
+  if (shouldRefresh) {
+    console.log(`🔄 Storage needs refresh - proceeding with login...`);
+  } else {
     const storagePath = StorageHelper.getPath(env);
     console.log(`✅ Found valid storageState: ${storagePath}, skipping login.`);
     return;
@@ -40,8 +47,9 @@ async function globalSetup(config: FullConfig) {
     await LoginAction(page, userType);
 
     // Wait for Salesforce Lightning page
-    await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
-    await page.waitForSelector('header[id="oneHeader"]', { timeout: 60000 });
+    //await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
+    await page.waitForURL('**/lightning/**', { timeout: 30000 });
+    await page.waitForSelector('header[id="oneHeader"]', { timeout: 3000 });
 
     console.log(`✅ Salesforce login successful. Current URL: ${page.url()}`);
 

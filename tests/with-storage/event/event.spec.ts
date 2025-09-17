@@ -1,11 +1,12 @@
 import { test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 import { EventFacade } from '@src/facade/eventFacade';
-import { CommonHelpers } from '../../../src/utils/CommonHelpers';
-import { CommonConstants } from '../../../src/constants/commonConstants';
-import { EventData } from '../../../src/type/EventData';
-import testData from '../../../src/data/eventMasterData.json';
-import { JsonHelper } from '../../../src/utils/JsonHelper';
+import { CommonHelpers } from '@src/utils/CommonHelpers';
+import { CommonConstants } from '@src/constants/commonConstants';
+import { EventData } from '@src/type/EventData';
+import testData from '@src/data/eventMasterData.json';
+import { JsonHelper } from '@src/utils/JsonHelper';
+import {StorageHelper} from '@src/utils/storageHelper';
 
 const selectedEventNames = ['demo'];
 const selectedEvents: EventData[] = JsonHelper.getItemsByKey(
@@ -18,6 +19,9 @@ test.describe('Event Tests', () => {
   let eventFacade: EventFacade;
 
   test.beforeEach(async ({ page }) => {
+    // Check and refresh storage if expired
+    await StorageHelper.checkAndRefreshStorage(page);
+    
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
     eventFacade = new EventFacade(page);
   });

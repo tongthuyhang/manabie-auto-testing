@@ -105,11 +105,11 @@
         {
           "title": "Event Tests",
           "file": "with-storage/event/event.spec.ts",
-          "line": 17,
+          "line": 18,
           "column": 6,
           "specs": [
             {
-              "title": "Create Event Master for\"demo\"",
+              "title": "Validate required field \"Event Master Name\"",
               "ok": true,
               "tags": [
                 "Regression"
@@ -123,209 +123,94 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 0,
+                      "workerIndex": 6,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 17050,
+                      "duration": 17690,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate event\u001b[0m\n"
+                          "text": "⏰ Storage expired by age: 25.0h old (max: 24h)\n"
                         },
                         {
-                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[{ \u001b[34m\"eventMasterName\"\u001b[0m: \u001b[32m\"demo\"\u001b[0m, \u001b[34m\"eventType\"\u001b[0m: \u001b[32m\"Paid\"\u001b[0m, \u001b[34m\"sendTo\"\u001b[0m: \u001b[32m\"Parent only\"\u001b[0m, \u001b[34m\"reminder\"\u001b[0m: \u001b[36m5\u001b[0m, \u001b[34m\"maxEventPerStudent\"\u001b[0m: \u001b[36m2\u001b[0m }]\n"
+                          "text": "🔍 Storage check for dev-staging:\n"
                         },
                         {
-                          "text": "✅ Selected dropdown option: \"Paid\"\n"
+                          "text": "   - Valid: true\n"
                         },
                         {
-                          "text": "✅ Selected dropdown option: \"Parent only\"\n"
+                          "text": "   - Expired: true\n"
                         },
                         {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Create event\n"
+                          "text": "   - Should refresh: true\n"
                         },
                         {
-                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch data\u001b[0m\n"
+                          "text": "🔄 Storage expired - forcing re-authentication...\n"
                         },
                         {
-                          "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"demo\"\u001b[0m]\n"
+                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
                         },
                         {
-                          "text": "\n🔍 Starting data extraction for [Event Master Name] = \"demo\"\n"
+                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
                         },
                         {
-                          "text": "   Found 16 matching rows\n"
+                          "text": "✅ Storage saved: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
                         },
                         {
-                          "text": "\n📋 Extracting all data from row where [Event Master Name] = \"demo\"\n"
+                          "text": "✅ Fresh storage created\n"
                         },
                         {
-                          "text": "   Found 48 columns in the row\n"
+                          "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCheck Mandatory files at Master Event\u001b[0m\n"
                         },
                         {
-                          "text": "   [Event Master Name]: \"demo\"\n"
+                          "text": "message check Event Master Name\nComplete this field.\n"
                         },
                         {
-                          "text": "   [Description]: \"\"\n"
+                          "text": "message check Event Type\nComplete this field.\n"
                         },
                         {
-                          "text": "   [Event Master Name]: \"demo\"\n"
+                          "text": "message check Send To\nComplete this field.\n"
                         },
                         {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "   [Event Master Name]: \"demo\"\n"
-                        },
-                        {
-                          "text": "   [Description]: \"\"\n"
-                        },
-                        {
-                          "text": "\n📊 Quality Summary:\n"
-                        },
-                        {
-                          "text": "   Total columns extracted: 2\n"
-                        },
-                        {
-                          "text": "   Row identification: [Event Master Name] = \"demo\"\n"
-                        },
-                        {
-                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Search data\n"
+                          "text": "\u001b[32m✅ SUCCESS:\u001b[0m Check Mandatory files at Master Event\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
                       "steps": [
                         {
-                          "title": " I create a new Event Master with the name \"Sample Event\" demo\"",
-                          "duration": 7191,
+                          "title": "error message \"Complete this field.\" should be displayed under fields",
+                          "duration": 5221,
                           "steps": [
                             {
-                              "title": "Create event",
-                              "duration": 7190
-                            }
-                          ]
-                        },
-                        {
-                          "title": "Navigate to Event Master page",
-                          "duration": 1393
-                        },
-                        {
-                          "title": "Then the Event Master should be created successfully including name \"Sample Event\"",
-                          "duration": 2662,
-                          "steps": [
-                            {
-                              "title": "Search data",
-                              "duration": 2661
+                              "title": "Check Mandatory files at Master Event",
+                              "duration": 5218
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-16T11:19:22.837Z",
+                      "startTime": "2025-09-17T04:22:40.396Z",
                       "annotations": [],
                       "attachments": [
                         {
                           "name": "qase-metadata.json",
                           "contentType": "application/qase.metadata+json",
-                          "body": "eyJpZHMiOls2NjFdfQ=="
+                          "body": "eyJpZHMiOls2NjZdfQ=="
                         },
                         {
                           "name": "qase-metadata.json",
                           "contentType": "application/qase.metadata+json",
-                          "body": "eyJ0aXRsZSI6IkNyZWF0ZSBFdmVudCBNYXN0ZXIgZm9yIGRlbW8ifQ=="
+                          "body": "eyJ0aXRsZSI6IkVuc3VyZSB0aGF0IHRoZSBzeXN0ZW0gcHJvbXB0cyB0aGUgdXNlciB3aGVuIHRoZSByZXF1aXJlZCBFdmVudCBNYXN0ZXIgTmFtZSBpcyBub3QgZmlsbGVkLiJ9"
                         },
                         {
                           "name": "qase-metadata.json",
                           "contentType": "application/qase.metadata+json",
-                          "body": "eyJwYXJhbWV0ZXJzIjp7ImlucHV0RGF0YSI6IntcImV2ZW50TWFzdGVyTmFtZVwiOlwiZGVtb1wiLFwiZXZlbnRUeXBlXCI6XCJQYWlkXCIsXCJzZW5kVG9cIjpcIlBhcmVudCBvbmx5XCIsXCJyZW1pbmRlclwiOjUsXCJtYXhFdmVudFBlclN0dWRlbnRcIjoyfSJ9fQ=="
+                          "body": "eyJjb21tZW50IjoiTWVzc2FnZSBcIkNvbXBsZXRlIHRoaXMgZmllbGQuXCIgc2hvdWxkIGJlIGRpc3BsYXllZCB1bmRlciBmaWVsZHMifQ=="
                         },
                         {
                           "name": "qase-metadata.json",
                           "contentType": "application/qase.metadata+json",
-                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJWZXJpZnkgdGhhdCBhIG5ldyBFdmVudCBNYXN0ZXIgY2FuIGJlIGNyZWF0ZWQgc3VjY2Vzc2Z1bGx5IiwicHJlY29uZGl0aW9ucyI6IlVzZXIgaXMgbG9nZ2VkIGluIGFuZCBvbiBFdmVudCBNYXN0ZXIgcGFnZSJ9fQ=="
-                        },
-                        {
-                          "name": "qase-metadata.json",
-                          "contentType": "application/qase.metadata+json",
-                          "body": "eyJjb21tZW50IjoiVGhlIEV2ZW50IE1hc3RlciBzaG91bGQgYmUgY3JlYXRlZCBzdWNjZXNzZnVsbHkifQ=="
+                          "body": "eyJmaWVsZHMiOnsiZGVzY3JpcHRpb24iOiJFbnN1cmUgdGhhdCB0aGUgc3lzdGVtIHByb21wdHMgdGhlIHVzZXIgd2hlbiB0aGUgcmVxdWlyZWQgRXZlbnQgTWFzdGVyIE5hbWUgaXMgbm90IGZpbGxlZC4iLCJwcmVjb25kaXRpb25zIjoiVXNlciBpcyBsb2dnZWQgaW4gYW5kIG9uIEV2ZW50IE1hc3RlciBwYWdlIn19"
                         }
                       ]
                     }
@@ -333,10 +218,10 @@
                   "status": "expected"
                 }
               ],
-              "id": "726f4112f73a2bafcb4b-3312e120b1f5d48c51ad",
+              "id": "726f4112f73a2bafcb4b-4894f30aebeb827d6639",
               "file": "with-storage/event/event.spec.ts",
-              "line": 27,
-              "column": 9
+              "line": 55,
+              "column": 7
             }
           ]
         }
@@ -345,8 +230,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-16T11:19:21.400Z",
-    "duration": 18830.363,
+    "startTime": "2025-09-17T04:22:38.981Z",
+    "duration": 19491.217999999877,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,
