@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 import path from 'path';
 import { LoginAction } from './src/utils/LoginHelper';
 import { loadConfig } from './src/utils/ConfigHelpers';
-import { StorageHelper } from './src/utils/StorageHelper';
+import { StorageHelper } from './src/utils/storageHelper';
 
 // Load ENV (url, login, etc.)
 const ENV = process.env.ENV?.trim() || 'dev-staging';
