@@ -126,11 +126,11 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 16765,
+                      "duration": 19997,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (2.2h old)\n"
+                          "text": "✅ Storage is fresh (2.7h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -297,30 +297,30 @@
                       "steps": [
                         {
                           "title": "Create new Event Master with name \"demo\"",
-                          "duration": 7200,
+                          "duration": 10626,
                           "steps": [
                             {
                               "title": "Create and verify event",
-                              "duration": 7199
+                              "duration": 10625
                             }
                           ]
                         },
                         {
                           "title": "Navigate to Event Master page",
-                          "duration": 784
+                          "duration": 1141
                         },
                         {
                           "title": "Verify Event Master \"demo\" appears in list",
-                          "duration": 1173,
+                          "duration": 1565,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1173
+                              "duration": 1564
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-17T07:28:20.627Z",
+                      "startTime": "2025-09-17T07:57:36.126Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -377,11 +377,11 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 8599,
+                      "duration": 7893,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (2.2h old)\n"
+                          "text": "✅ Storage is fresh (2.7h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -416,16 +416,16 @@
                       "steps": [
                         {
                           "title": "Validate mandatory field error messages are displayed",
-                          "duration": 4308,
+                          "duration": 3630,
                           "steps": [
                             {
                               "title": "Validate mandatory field errors",
-                              "duration": 4305
+                              "duration": 3629
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-17T07:28:20.626Z",
+                      "startTime": "2025-09-17T07:57:36.126Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -477,11 +477,11 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 9556,
+                      "duration": 5484,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (2.2h old)\n"
+                          "text": "✅ Storage is fresh (2.7h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -633,16 +633,16 @@
                       "steps": [
                         {
                           "title": "Search and validate event data for \"demo\"",
-                          "duration": 983,
+                          "duration": 1214,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 982
+                              "duration": 1213
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-17T07:28:20.646Z",
+                      "startTime": "2025-09-17T07:57:36.127Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -673,11 +673,11 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 8629,
+                      "duration": 7700,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (2.2h old)\n"
+                          "text": "✅ Storage is fresh (2.7h old)\n"
                         },
                         {
                           "text": "🔍 Storage check for dev-staging:\n"
@@ -706,16 +706,16 @@
                       "steps": [
                         {
                           "title": "Validate maximum length for \"Event Master Name\" field",
-                          "duration": 2189,
+                          "duration": 2911,
                           "steps": [
                             {
                               "title": "Validate field maximum length",
-                              "duration": 2186
+                              "duration": 2909
                             }
                           ]
                         }
                       ],
-                      "startTime": "2025-09-17T07:28:20.643Z",
+                      "startTime": "2025-09-17T07:57:36.127Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -735,8 +735,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-17T07:28:19.560Z",
-    "duration": 18278.268,
+    "startTime": "2025-09-17T07:57:35.162Z",
+    "duration": 21409.855,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,

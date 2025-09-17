@@ -1,7 +1,7 @@
 import { chromium } from '@playwright/test';
-import { LoginAction } from '../src/utils/LoginHelper';
+import { LoginAction } from '../src/utils/loginHelper';
 import { StorageHelper } from '../src/utils/storageHelper';
-import { loadConfig } from '../src/utils/ConfigHelpers';
+import { loadConfig } from '../src/utils/configHelpers';
 import * as dotenv from 'dotenv';
 import path from 'path'
 
@@ -14,6 +14,6 @@ import path from 'path'
   const page = await browser.newPage();
   await LoginAction(page, process.env.USER_TYPE || 'admin');
   await page.waitForURL('**/lightning/**');
-  await StorageHelper.save(page,ENV);
+  await StorageHelper.saveStorageState(page,ENV);
   await browser.close();
 })();

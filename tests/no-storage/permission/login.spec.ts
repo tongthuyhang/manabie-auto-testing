@@ -1,9 +1,8 @@
 import { test, expect} from '@playwright/test';
 import { LoginLocators } from '../../../src/locators/loginLocators';
-import { CommonHelpers } from '../../../src/utils/CommonHelpers';
-import { getTestCaseInfo, TestCaseInfo } from '../../../src/utils/TestInfoHelper';
-import { LoginAction } from '../../../src/utils/LoginHelper';
-import { loadConfig } from '../../../src/utils/ConfigHelpers';
+import { CommonHelpers } from '../../../src/utils/commonHelpers';
+import { LoginAction } from '../../../src/utils/loginHelper';
+import { loadConfig } from '../../../src/utils/configHelpers';
 import { UserConstants } from '../../../src/constants/userConstants';
 import { CommonConstants } from "../../../src/constants/commonConstants";
 

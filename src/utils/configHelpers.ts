@@ -3,7 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { CommonConstants } from "../constants/commonConstants";
-import { JsonHelper } from "./JsonHelper";
+import { JsonHelper } from "./jsonHelper";
 import { UserConstants } from "../constants/userConstants";
 import * as dotenv from "dotenv";
 

@@ -1,6 +1,6 @@
 import { Page } from "@playwright/test";
 import { LoginPage } from "../pages/LoginPage";
-import { loadUserByEnv } from "./ConfigHelpers";
+import { loadUserByEnv } from "./configHelpers";
 
 export async function LoginAction(page: Page, userType: string) {
   const loginPage = new LoginPage(page);
