@@ -47,8 +47,8 @@ async function globalSetup(config: FullConfig) {
     await LoginAction(page, userType);
 
     // Wait for Salesforce Lightning page
-    //await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
-    await page.waitForURL('**/lightning/**', { timeout: 30000 });
+    await page.waitForURL(/.*lightning\.force\.com\/lightning\/.*/, { timeout: 60000 });
+    //await page.waitForURL('**/lightning/**', { timeout: 30000 });
     await page.waitForSelector('header[id="oneHeader"]', { timeout: 3000 });
 
     console.log(`✅ Salesforce login successful. Current URL: ${page.url()}`);

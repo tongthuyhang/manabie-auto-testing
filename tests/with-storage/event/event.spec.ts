@@ -21,7 +21,6 @@ test.describe('Event Tests', () => {
   test.beforeEach(async ({ page }) => {
     // Check and refresh storage if expired
     await StorageHelper.checkAndRefreshStorage(page);
-    
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
     eventFacade = new EventFacade(page);
   });
