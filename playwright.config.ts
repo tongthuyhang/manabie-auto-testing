@@ -42,47 +42,47 @@ export default defineConfig({
     ['list'],
     ['html', { open: 'never' }],
     ['json', { outputFile: 'test-results.json' }],
-    // [
-    //   'playwright-qase-reporter',
-    //   {
-    //     mode: process.env.QASE_MODE || 'testops',
-    //     fallback: process.env.QASE_FALLBACK || 'report',
-    //     environment: process.env.QASE_ENVIRONMENT || ENV,
-    //     debug: true,//process.env.QASE_DEBUG === 'true',
-    //     captureLogs: process.env.QASE_CAPTURE_LOGS === 'true',
+    [
+      'playwright-qase-reporter',
+      {
+        mode: process.env.QASE_MODE || 'testops',
+        fallback: process.env.QASE_FALLBACK || 'report',
+        environment: process.env.QASE_ENVIRONMENT || ENV,
+        debug: true,//process.env.QASE_DEBUG === 'true',
+        captureLogs: process.env.QASE_CAPTURE_LOGS === 'true',
 
-    //     testops: {
-    //       api: {
-    //         token: process.env.QASE_TESTOPS_API_TOKEN!,
-    //         //host: process.env.QASE_TESTOPS_API_HOST || 'qase.io',
-    //         host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io',
-    //       },
-    //       project: process.env.QASE_TESTOPS_PROJECT!,
-    //       run: {
-    //         complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false',
-    //         title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`,
-    //         description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run',
-    //         // planId: process.env.QASE_TESTOPS_PLAN_ID ? Number(process.env.QASE_TESTOPS_PLAN_ID) : undefined,
-    //       },
-    //       framework: {
-    //       browser: {
-    //         addAsParameter: true,
-    //         parameterName: 'Chrome 138.0.7204.50',
-    //       },
-    //        //markAsFlaky: true,
-    //     },
-    //       uploadAttachments: true,
-    //     },
+        testops: {
+          api: {
+            token: process.env.QASE_TESTOPS_API_TOKEN!,
+            //host: process.env.QASE_TESTOPS_API_HOST || 'qase.io',
+            host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io',
+          },
+          project: process.env.QASE_TESTOPS_PROJECT!,
+          run: {
+            complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false',
+            title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`,
+            description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run',
+            // planId: process.env.QASE_TESTOPS_PLAN_ID ? Number(process.env.QASE_TESTOPS_PLAN_ID) : undefined,
+          },
+          framework: {
+          browser: {
+            addAsParameter: true,
+            parameterName: 'Chrome 138.0.7204.50',
+          },
+           //markAsFlaky: true,
+        },
+          uploadAttachments: true,
+        },
 
-    //     report: {
-    //       driver: process.env.QASE_REPORT_DRIVER || 'local',
-    //       connection: {
-    //         path: process.env.QASE_REPORT_CONNECTION_PATH || './build/qase-report',
-    //         format: process.env.QASE_REPORT_CONNECTION_FORMAT || 'json',
-    //       },
-    //     },
-    //   },
-    // ],
+        report: {
+          driver: process.env.QASE_REPORT_DRIVER || 'local',
+          connection: {
+            path: process.env.QASE_REPORT_CONNECTION_PATH || './build/qase-report',
+            format: process.env.QASE_REPORT_CONNECTION_FORMAT || 'json',
+          },
+        },
+      },
+    ],
   ],
   globalSetup: require.resolve('./global-setup'),
   timeout: 10 * 10000,
