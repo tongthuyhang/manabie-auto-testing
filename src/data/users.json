@@ -4,6 +4,10 @@
       "username": "salesforce.manabie.dev-staging@manabie.com",
       "password": "Manabie@12345"
     },
+      "adminsalesforse": {
+      "username": "salesforce.manabie.dev-staging@manabie.com",
+      "password": "Manabie@12345"
+    },
     "back_office": {
       "username": "diemquynh.vu+lmsv2admin@manabie.com",
       "password": "Manabie@2023"

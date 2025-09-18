@@ -94,7 +94,7 @@ export class EventPage extends BasePage {
 ### Facade Pattern
 ```typescript
 // High-level business operations
-export class EventFacade {
+export class EventMasterFacade {
   async createAndVerify(data: EventData): Promise<void>
   async searchData(name: string): Promise<void>
 }
@@ -112,6 +112,7 @@ await StorageHelper.save(page, env)
 ```
 
 ## 📁 Project Structure
+See detailed [Project Structure & Icons](./STRUCTURE.md)
 
 ```
 src/
@@ -146,6 +147,50 @@ export default defineConfig({
     { name: 'no-storage', testDir: './tests/no-storage' }
   ]
 });
+
++---------------------+
+| playwright.config.ts|
+|  (your settings)    |
++---------------------+
+          │
+          ▼
++---------------------+
+|  Playwright Runner  |
+|  (npx playwright ...)|
++---------------------+
+          │
+          ▼
++-------------------------------+
+| FullConfig object             |
+| (compiled config from file)   |
+|                               |
+|  • projects[]                 |
+|  • rootDir                    |
+|  • timeout                    |
+|  • metadata                   |
+|  • workers, retries...        |
++-------------------------------+
+          │   (auto injects)
+          ▼
++-------------------------------+
+| globalSetup(config: FullConfig)|
+|                               |
+|  ✅ You can access all         |
+|     config info here           |
+|                               |
+|  Example:                     |
+|  console.log(config.projects)  |
++-------------------------------+
+          │
+          ▼
+          
++---------------------+
+| Test Execution      |
+| (uses prepared      |
+|  environment)       |
++---------------------+
+
+
 ```
 
 ### Environment Variables
@@ -220,11 +265,11 @@ npm run report
 ### Basic Test Structure
 ```typescript
 import { test } from '@playwright/test';
-import { EventFacade } from '@src/facade/eventFacade';
+import { EventMasterFacade } from '@src/facade/EventMasterFacade';
 import { StorageRefreshHelper } from '@src/utils/StorageRefreshHelper';
 
 test.describe('Event Tests', () => {
-  let eventFacade: EventFacade;
+  let EventMasterFacade: EventMasterFacade;
 
   test.beforeEach(async ({ page }) => {
     // Auto-refresh storage if expired
@@ -232,12 +277,12 @@ test.describe('Event Tests', () => {
     
     // Navigate to page
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
-    eventFacade = new EventFacade(page);
+    EventMasterFacade = new EventMasterFacade(page);
   });
 
   test('Create Event Master', async ({ page }) => {
     const eventData = { name: 'Test Event', type: 'Meeting' };
-    await eventFacade.createAndVerify(eventData);
+    await EventMasterFacade.createAndVerify(eventData);
   });
 });
 ```
@@ -252,7 +297,7 @@ test('Create Event Master', async ({ page }) => {
   
   // Test steps
   await test.step('Create event', async () => {
-    await eventFacade.createAndVerify(eventData);
+    await EventMasterFacade.createAndVerify(eventData);
   });
 });
 ```
@@ -296,6 +341,13 @@ node -e "const {StorageHelper} = require('./src/utils/storageHelper'); console.l
 
 # Refresh storage
 npm run refresh:storage
+
+# Update the storage file about the expiration to test the function to refresh storage when it expires.
+In cmd, type: powershell -Command "(Get-Item 'storage\storageState.dev-staging.json').LastWriteTime = (Get-Date).AddHours(-25)"
+# Check expired file have yet
+powershell -Command "(Get-Item 'storage\storageState.dev-staging.json').LastWriteTime"
+
+
 ```
 
 #### Login Failures

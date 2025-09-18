@@ -22,26 +22,32 @@ This document defines the coding standards, rules, and best practices for the Ma
 
 ### File Naming
 ```typescript
-// ✅ Correct - PascalCase for classes
+
+// ✅ Correct - PascalCase for domain classes (Pages, Facades, Services)
 EventPage.ts
 LoginPage.ts
 BasePage.ts
-EventFacade.ts
+EventMasterFacade.ts
 
-// ✅ Correct - camelCase for utilities
-commonHelpers.ts
-configHelpers.ts
+// ✅ Correct - camelCase for utilities/helpers/decorators/data/constant
 storageHelper.ts
+configUtils.ts
+commonHelpers.ts
 loginHelper.ts
 
-// ✅ Correct - kebab-case for test files
+// ✅ Correct - kebab-case for test/data/config
 event-master.spec.ts
 login-validation.spec.ts
+
 
 // ❌ Incorrect
 eventPage.ts (for classes)
 CommonHelpers.ts (for utilities)
 Event_Page.ts
+// 📌 Quick rule
+Class/Facade/Page → PascalCase
+Helper/Utils/Constants → camelCase
+Tests/Configs → kebab-case
 ```
 
 ### Class Structure
@@ -130,7 +136,7 @@ test('Create event', async ({ page }) => {
 ### Facade Pattern
 ```typescript
 // ✅ Correct - High-level business operations
-export class EventFacade {
+export class EventMasterFacade {
   private eventPage: EventPage;
 
   constructor(page: Page) {
@@ -178,12 +184,12 @@ export const Locators = {
 ```typescript
 // ✅ Correct - Clear test structure
 test.describe('Event Management', () => {
-  let eventFacade: EventFacade;
+  let EventMasterFacade: EventMasterFacade;
 
   test.beforeEach(async ({ page }) => {
     await StorageRefreshHelper.checkAndRefreshStorage(page);
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
-    eventFacade = new EventFacade(page);
+    EventMasterFacade = new EventMasterFacade(page);
   });
 
   test('Should create event successfully', { tag: '@Smoke' }, async () => {
@@ -191,10 +197,10 @@ test.describe('Event Management', () => {
     const eventData = TestDataHelper.getEventData('valid-event');
     
     // Act
-    await eventFacade.createAndVerifyEvent(eventData);
+    await EventMasterFacade.createAndVerifyEvent(eventData);
     
     // Assert
-    await eventFacade.verifyEventInList(eventData.name);
+    await EventMasterFacade.verifyEventInList(eventData.name);
   });
 });
 ```
@@ -254,7 +260,7 @@ src/data/
 // ✅ Correct - File structure follows naming rules
 src/pages/EventPage.ts        // PascalCase for classes
 src/utils/commonHelpers.ts    // camelCase for utilities
-src/facade/EventFacade.ts     // PascalCase for classes
+src/facade/EventMasterFacade.ts     // PascalCase for classes
 
 // ✅ Correct - Data helper usage
 const eventData = JsonHelper.getItemsByKey(
@@ -344,7 +350,7 @@ import { qase } from 'playwright-qase-reporter';
 // 2. Internal modules (alphabetical)
 import { CommonConstants } from '@src/constants/commonConstants';
 import { CommonHelpers } from '@src/utils/commonHelpers';
-import { EventFacade } from '@src/facade/EventFacade';
+import { EventMasterFacade } from '@src/facade/EventMasterFacade';
 import { StorageRefreshHelper } from '@src/utils/storageRefreshHelper';
 
 // 3. Test data

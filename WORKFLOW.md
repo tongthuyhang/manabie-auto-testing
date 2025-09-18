@@ -45,7 +45,7 @@ This document describes the step-by-step workflow when executing Playwright test
 │   │   │   ├── If expired: Re-authenticate inline
 │   │   │   └── Save new storage
 │   │   ├── CommonHelpers.navigateToPage()
-│   │   └── Initialize page objects (EventFacade)
+│   │   └── Initialize page objects (EventMasterFacade)
 │   ├── 🎯 Execute test steps:
 │   │   ├── Business actions via Facade
 │   │   ├── Page interactions via Page Objects

@@ -8,7 +8,7 @@ import path from 'path';
 - It wraps any test step in Playwright with logging.
 - It logs input arguments, results, errors, and writes them both to the console (with colors) and to a JSON file.
 - It also uses test.step so that Playwright’s test report will show the decorated method as a named step. 
-# Example usage in EventFacade.ts
+# Example usage in EventMasterFacade.ts
 @LogStep('Create event')
 async createEvent(data: EventData): Promise<void> {
   // ...

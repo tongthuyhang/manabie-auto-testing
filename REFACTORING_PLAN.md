@@ -92,7 +92,7 @@ src/data/users.json
 #### Files to Update:
 ```
 src/pages/eventPage.ts
-src/facade/eventFacade.ts
+src/facade/EventMasterFacade.ts
 src/base/BasePage.ts
 tests/with-storage/event/event.spec.ts
 ```
@@ -130,7 +130,7 @@ tests/with-storage/event/event.spec.ts
 
 2. **Improve Facade pattern**
    ```typescript
-   export class EventFacade {
+   export class EventMasterFacade {
      private eventPage: EventPage;
      
      constructor(page: Page) {
@@ -217,12 +217,12 @@ tests/no-storage/permission/login.spec.ts
 1. **Improve test structure and naming**
    ```typescript
    test.describe('Event Master Management', () => {
-     let eventFacade: EventFacade;
+     let EventMasterFacade: EventMasterFacade;
      
      test.beforeEach(async ({ page }) => {
        await StorageRefreshHelper.checkAndRefreshStorage(page);
        await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
-       eventFacade = new EventFacade(page);
+       EventMasterFacade = new EventMasterFacade(page);
      });
      
      test('Should create event master with valid data successfully', { 
@@ -232,10 +232,10 @@ tests/no-storage/permission/login.spec.ts
        const eventData = JsonHelper.getTestData('valid-event-data');
        
        // Act
-       await eventFacade.createAndVerifyEvent(eventData);
+       await EventMasterFacade.createAndVerifyEvent(eventData);
        
        // Assert
-       await eventFacade.verifyEventInList(eventData.eventMasterName);
+       await EventMasterFacade.verifyEventInList(eventData.eventMasterName);
      });
      
      test('Should display validation errors when required fields are empty', { 
@@ -244,10 +244,10 @@ tests/no-storage/permission/login.spec.ts
        // Arrange - No data provided
        
        // Act
-       await eventFacade.attemptToCreateEmptyEvent();
+       await EventMasterFacade.attemptToCreateEmptyEvent();
        
        // Assert
-       await eventFacade.verifyValidationErrors([
+       await EventMasterFacade.verifyValidationErrors([
          'Event Master Name',
          'Event Type',
          'Send To'
@@ -311,7 +311,7 @@ npx prettier --write "src/**/*.ts"
 
 ## Phase 2: Architecture Improvements
 - [ ] Refactor EventPage.ts structure
-- [ ] Improve EventFacade.ts error handling
+- [ ] Improve EventMasterFacade.ts error handling
 - [ ] Update BasePage.ts with proper documentation
 - [ ] Move direct page interactions from tests
 

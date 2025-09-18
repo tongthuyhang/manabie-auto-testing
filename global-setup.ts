@@ -12,8 +12,9 @@ dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
 
 async function globalSetup(config: FullConfig) {
   console.log("🚀 Global setup starting...");
-  console.log(`🔧 Running from: ${process.env.NODE_ENV || 'unknown'}`);
-  console.log(`📁 Working directory: ${process.cwd()}`);
+  console.log(`🔧 Running from: ${process.env.ENV|| 'unknown'}`);
+  console.log(" 📁 Config root dir:", config.rootDir);
+  console.log("Default timeout:", config.projects[0].timeout);
 
   const env = process.env.ENV?.trim() || 'dev-staging';
   const userType = process.env.USER_TYPE || 'admin';

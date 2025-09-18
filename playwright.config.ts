@@ -39,9 +39,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['list'],
-    ['html', { open: 'never' }],
-    ['json', { outputFile: 'test-results.json' }],
+    ['list'],  // log at terminal
+    ['html', { outputFile: 'test-results.json', open: 'never' }], // JSON report -> test-results.json
+    ['json', { outputFile: 'test-results.json'}], // HTML report
     // [
     //   'playwright-qase-reporter',
     //   {
@@ -97,6 +97,7 @@ export default defineConfig({
       name: 'with-storage',
       testDir: path.resolve(__dirname, 'tests/with-storage'),
       testMatch: '**/*.spec.ts',
+      timeout: 10 * 10000,
       use: {
         ...devices['Desktop Chrome'],
         storageState: storagePath || undefined,

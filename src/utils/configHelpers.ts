@@ -3,7 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { CommonConstants } from "../constants/commonConstants";
-import { JsonHelper } from "./jsonHelper";
+import { loadJsonFromFile } from "./jsonHelper";
 import { UserConstants } from "../constants/userConstants";
 import * as dotenv from "dotenv";
 
@@ -39,7 +39,7 @@ export async function loadUserByEnv(
   env: string = CommonConstants.STAGING,
   userType: string = UserConstants.USR_DEFAULT
 ): Promise<User> {
-  const jsonData = await JsonHelper.loadJsonFromFile(UserConstants.USER_JSON_PATH);
+  const jsonData = await loadJsonFromFile(UserConstants.USER_JSON_PATH);
   const dataByEnv = jsonData[env.trim()];
 
   if (!dataByEnv) {

@@ -2,14 +2,13 @@ import { Page, Locator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
 import { SiteLocators } from '../locators/siteLocators';
-import { EventData } from '../type/EventData';
 
 /**
  * Page Object for the Event Master page
  * Encapsulates locators and actions for maintainability and reuse
  * Extends BasePage to use common helpers (click, type, verify, dropdown...)
  */
-export class EventPage extends BasePage {
+export class EventMasterPage extends BasePage {
   // Form input locators
   readonly inputEventMasterName: Locator;
   readonly inputReminders: Locator;

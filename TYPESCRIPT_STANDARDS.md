@@ -6,7 +6,7 @@
 ```typescript
 // PascalCase for classes
 LoginPage.ts
-EventFacade.ts
+EventMasterFacade.ts
 
 // camelCase for utilities and helpers
 commonHelpers.ts

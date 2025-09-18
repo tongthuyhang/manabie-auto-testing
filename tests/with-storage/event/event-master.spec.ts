@@ -1,28 +1,29 @@
 import { test } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
-import { EventFacade } from '@src/facade/EventFacade';
+import { EventMasterFacade } from '@src/facade/EventMasterFacade';
 import { CommonHelpers } from '@src/utils/commonHelpers';
 import { CommonConstants } from '@src/constants/commonConstants';
 import { EventData } from '@src/type/EventData';
 import testData from '@src/data/eventMasterData.json';
-import { JsonHelper } from '@src/utils/jsonHelper';
+import { getItemsByKey } from '@src/utils/jsonHelper';
 import { StorageHelper } from '@src/utils/storageHelper';
+import { EventFieldLabels } from '@src/locators/eventLocators'
 
 const selectedEventNames = ['demo'];
-const selectedEvents: EventData[] = JsonHelper.getItemsByKey(
+const selectedEvents: EventData[] = getItemsByKey(
   testData,
   selectedEventNames,
   'eventMasterName'
 );
 
-test.describe('Event Tests', () => {
-  let eventFacade: EventFacade;
+test.describe('Event Master Tests', () => {
+  let eventMasterFacade: EventMasterFacade;
 
   test.beforeEach(async ({ page }) => {
     // Check and refresh storage if expired
     await StorageHelper.checkAndRefreshStorage(page);
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
-    eventFacade = new EventFacade(page);
+    eventMasterFacade = new EventMasterFacade(page);
   });
 
   selectedEvents.forEach((event) => {
@@ -40,13 +41,13 @@ test.describe('Event Tests', () => {
 
       // === Test Steps ===
       await test.step(`Create new Event Master with name "${event.eventMasterName}"`, async () => {
-        await eventFacade.createAndVerifyEvent(event);
+        await eventMasterFacade.createAndVerifyEvent(event);
       });
       await test.step('Navigate to Event Master page', async () => {
         await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
       });
       await test.step(`Verify Event Master "${event.eventMasterName}" appears in list`, async () => {
-        await eventFacade.searchAndValidateEventData(event.eventMasterName);
+        await eventMasterFacade.searchAndValidateEventData(event.eventMasterName);
       });
     });
   });
@@ -62,23 +63,21 @@ test.describe('Event Tests', () => {
 
     // === Test Steps ===
     await test.step('Validate mandatory field error messages are displayed', async () => {
-      await eventFacade.validateMandatoryFieldErrors();
+      await eventMasterFacade.validateMandatoryFieldErrors();
     });
   });
 
-  test('Should search and validate event data successfully', { tag: '@Regression' }, async ({ page }) => {
-    const eventName = 'demo';
-    
-    await test.step(`Search and validate event data for "${eventName}"`, async () => {
-      await eventFacade.searchAndValidateEventData(eventName);
+  selectedEventNames.forEach((eventName) => {
+    test(`Should search and validate event data for "${eventName}"`, { tag: '@Regression' }, async ({ page }) => {
+      await test.step(`Search and validate event data for "${eventName}"`, async () => {
+        await eventMasterFacade.searchAndValidateEventData(eventName);
+      });
     });
   });
 
   test('Should validate Event Master Name field maximum length', { tag: '@Validation' }, async ({ page }) => {
-    const fieldName = 'Event Master Name';
-    
-    await test.step(`Validate maximum length for "${fieldName}" field`, async () => {
-      await eventFacade.validateFieldMaxLength(fieldName);
+    await test.step(`Validate maximum length for "${EventFieldLabels.EVENT_MASTER_NAME}" field`, async () => {
+      await eventMasterFacade.validateFieldMaxLength(EventFieldLabels.EVENT_MASTER_NAME);
     });
   });
 

@@ -3,6 +3,24 @@
 ## Overview
 Playwright TypeScript automation testing framework with Page Object Model pattern and QASE integration.
 
+## 🗂️ Icon Legend
+
+| Icon | Meaning               |
+|------|-----------------------|
+| 📁   | Folder / Directory    |
+| ⚙️    | Configuration / Setup |
+| 🌍    | Global / Environment  |
+| 🔑    | Parameter / Key       |
+| ✅    | Check / Validation    |
+| 🧪    | Test / QA             |
+| 📊    | Quality / Report      |
+| 📝    | Documentation         |
+| 🛠️    | Utility / Helper      |
+| 🚀    | Pipeline / CI/CD      |
+| 🗄️    | Storage / Data        |
+| 🪵    | Logs / Debugging      |
+
+
 ## Directory Structure
 
 ```
@@ -26,7 +44,7 @@ manabie-auto-testing/
 │   ├── decorators/               # Custom decorators
 │   │   └── logStep.ts            # Step logging decorator
 │   ├── Facade/                   # Facade pattern classes
-│   │   └── eventFacade.ts        # Event operations facade
+│   │   └── EventMasterFacade.ts        # Event operations facade
 │   ├── locators/                 # Element locators
 │   │   ├── eventLocators.ts      # Event page locators
 │   │   ├── lessonLocators.ts     # Lesson page locators
@@ -95,7 +113,6 @@ manabie-auto-testing/
 - **ConfigHelpers.ts**: Configuration management
 - **JsonHelper.ts**: JSON data manipulation
 - **LoginHelper.ts**: Login-specific utilities
-- **TestInfoHelper.ts**: Test information management
 
 ## Git Commands
 

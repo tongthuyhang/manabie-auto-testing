@@ -55,3 +55,13 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+       # 7. Upload JSON logs + results
+      - name: Upload Test Logs & Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: |
+            test-logs.json
+            test-results.json
+          retention-days: 30
