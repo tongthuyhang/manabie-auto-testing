@@ -107,7 +107,10 @@ export class StorageHelper {
         return true;
       }
       
-      console.log(`✅ Storage is fresh (${ageInHours.toFixed(1)}h old)`);
+      // Only log if verbose mode or if storage is getting old (>12 hours)
+      if (ageInHours > 12) {
+        console.log(`✅ Storage is fresh (${ageInHours.toFixed(1)}h old)`);
+      }
       return false;
       
     } catch (error) {
@@ -122,14 +125,16 @@ export class StorageHelper {
    * @param environment - Environment name
    * @returns True if storage should be refreshed, false otherwise
    */
-  static shouldRefreshStorageState(environment: string): boolean {
+  static shouldRefreshStorageState(environment: string, verbose: boolean = false): boolean {
     const isValid = this.isStorageStateValid(environment);
     const isExpired = this.isStorageStateExpired(environment);
     
-    console.log(`🔍 Storage check for ${environment}:`);
-    console.log(`   - Valid: ${isValid}`);
-    console.log(`   - Expired: ${isExpired}`);
-    console.log(`   - Should refresh: ${!isValid || isExpired}`);
+    if (verbose) {
+      console.log(`🔍 Storage check for ${environment}:`);
+      console.log(`   - Valid: ${isValid}`);
+      console.log(`   - Expired: ${isExpired}`);
+      console.log(`   - Should refresh: ${!isValid || isExpired}`);
+    }
     
     return !isValid || isExpired;
   }

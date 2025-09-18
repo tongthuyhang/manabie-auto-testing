@@ -13,20 +13,23 @@ dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
 dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });
 
 // Get storage path (only use if valid and not expired)
-const storagePath = StorageHelper.shouldRefreshStorageState(ENV) ? null : StorageHelper.loadStorageState(ENV);
+const storagePath = StorageHelper.shouldRefreshStorageState(ENV, false) ? null : StorageHelper.loadStorageState(ENV);
 
+// Only log once in config
 if (storagePath) {
   console.log(`✅ Using existing storage: ${storagePath}`);
 } else {
   console.log(`🔄 Storage will be refreshed by global setup`);
 }
 
-// Debug log env 
-console.log(' QASE_TESTOPS_API_TOKEN:', process.env.QASE_TESTOPS_API_TOKEN?.slice(0, 6) + '...');
-console.log(' QASE_TESTOPS_PROJECT:', process.env.QASE_TESTOPS_PROJECT);
-console.log(' QASE_TESTOPS_API_HOST:', process.env.QASE_TESTOPS_API_HOST);
-console.log(' QASE_MODE:', process.env.QASE_MODE);
-console.log(' QASE_CAPTURE_LOGS:', process.env.QASE_CAPTURE_LOGS);
+// Debug log env (only in CI or when DEBUG=true)
+if (process.env.CI || process.env.DEBUG) {
+  console.log(' QASE_TESTOPS_API_TOKEN:', process.env.QASE_TESTOPS_API_TOKEN?.slice(0, 6) + '...');
+  console.log(' QASE_TESTOPS_PROJECT:', process.env.QASE_TESTOPS_PROJECT);
+  console.log(' QASE_TESTOPS_API_HOST:', process.env.QASE_TESTOPS_API_HOST);
+  console.log(' QASE_MODE:', process.env.QASE_MODE);
+  console.log(' QASE_CAPTURE_LOGS:', process.env.QASE_CAPTURE_LOGS);
+}
 
 // create date test
 const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');

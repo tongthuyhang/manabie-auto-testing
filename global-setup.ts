@@ -23,7 +23,7 @@ async function globalSetup(config: FullConfig) {
   await loadConfig(env);
 
   // Force check storage status
-  const shouldRefresh = StorageHelper.shouldRefreshStorageState(env);
+  const shouldRefresh = StorageHelper.shouldRefreshStorageState(env, true);
   console.log(`🔍 Storage refresh needed: ${shouldRefresh}`);
   
   if (shouldRefresh) {

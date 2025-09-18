@@ -104,7 +104,7 @@
       "specs": [],
       "suites": [
         {
-          "title": "Event Tests",
+          "title": "Event Master Tests",
           "file": "with-storage/event/event-master.spec.ts",
           "line": 19,
           "column": 6,
@@ -127,39 +127,9 @@
                       "workerIndex": 4,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 14908,
+                      "duration": 8149,
                       "errors": [],
                       "stdout": [
-                        {
-                          "text": "🍪 Storage has 3 expired cookies\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: true\n"
-                        },
-                        {
-                          "text": "   - Should refresh: true\n"
-                        },
-                        {
-                          "text": "🔄 Storage expired - forcing re-authentication...\n"
-                        },
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        },
-                        {
-                          "text": "✅ Storage saved successfully: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
-                        },
-                        {
-                          "text": "✅ Fresh storage created\n"
-                        },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate and verify event\u001b[0m\n"
                         },
@@ -173,7 +143,7 @@
                           "text": "✅ Selected dropdown option: \"Parent only\"\n"
                         },
                         {
-                          "text": "⏱️ [createAndVerifyEvent] took 5062 ms\n"
+                          "text": "⏱️ [createAndVerifyEvent] took 3835 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [createAndVerifyEvent] (attempt 1)\n"
@@ -311,7 +281,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 1281 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1284 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -325,19 +295,19 @@
                       "steps": [
                         {
                           "title": "Create new Event Master with name \"demo\"",
-                          "duration": 5073,
+                          "duration": 3845,
                           "steps": [
                             {
                               "title": "Create and verify event",
-                              "duration": 5070,
+                              "duration": 3842,
                               "steps": [
                                 {
                                   "title": "Retry: createAndVerifyEvent",
-                                  "duration": 5066,
+                                  "duration": 3840,
                                   "steps": [
                                     {
                                       "title": "TrackTime: createAndVerifyEvent",
-                                      "duration": 5064
+                                      "duration": 3837
                                     }
                                   ]
                                 }
@@ -347,23 +317,23 @@
                         },
                         {
                           "title": "Navigate to Event Master page",
-                          "duration": 434
+                          "duration": 462
                         },
                         {
                           "title": "Verify Event Master \"demo\" appears in list",
-                          "duration": 1284,
+                          "duration": 1288,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1283,
+                              "duration": 1287,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 1283,
+                                  "duration": 1287,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 1281
+                                      "duration": 1285
                                     }
                                   ]
                                 }
@@ -372,7 +342,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T11:59:28.473Z",
+                      "startTime": "2025-09-18T12:29:21.779Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -406,7 +376,7 @@
                   "status": "expected"
                 }
               ],
-              "id": "2223a6c18626a04cfe4f-98ee8dab02cc7f64bbb2",
+              "id": "2223a6c18626a04cfe4f-1cb27860f17829386cdc",
               "file": "with-storage/event/event-master.spec.ts",
               "line": 31,
               "column": 9
@@ -429,39 +399,9 @@
                       "workerIndex": 5,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 11263,
+                      "duration": 5155,
                       "errors": [],
                       "stdout": [
-                        {
-                          "text": "🍪 Storage has 3 expired cookies\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: true\n"
-                        },
-                        {
-                          "text": "   - Should refresh: true\n"
-                        },
-                        {
-                          "text": "🔄 Storage expired - forcing re-authentication...\n"
-                        },
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        },
-                        {
-                          "text": "✅ Storage saved successfully: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
-                        },
-                        {
-                          "text": "✅ Fresh storage created\n"
-                        },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate mandatory field errors\u001b[0m\n"
                         },
@@ -475,7 +415,7 @@
                           "text": "message check Send To\nComplete this field.\n"
                         },
                         {
-                          "text": "⏱️ [validateMandatoryFieldErrors] took 3390 ms\n"
+                          "text": "⏱️ [validateMandatoryFieldErrors] took 2271 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateMandatoryFieldErrors] (attempt 1)\n"
@@ -489,19 +429,19 @@
                       "steps": [
                         {
                           "title": "Validate mandatory field error messages are displayed",
-                          "duration": 3399,
+                          "duration": 2277,
                           "steps": [
                             {
                               "title": "Validate mandatory field errors",
-                              "duration": 3396,
+                              "duration": 2275,
                               "steps": [
                                 {
                                   "title": "Retry: validateMandatoryFieldErrors",
-                                  "duration": 3393,
+                                  "duration": 2273,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateMandatoryFieldErrors",
-                                      "duration": 3391
+                                      "duration": 2271
                                     }
                                   ]
                                 }
@@ -510,7 +450,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T11:59:28.471Z",
+                      "startTime": "2025-09-18T12:29:21.767Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -539,7 +479,7 @@
                   "status": "expected"
                 }
               ],
-              "id": "2223a6c18626a04cfe4f-b9a222b8eadd595e7492",
+              "id": "2223a6c18626a04cfe4f-cd30ac25da7cb61520fa",
               "file": "with-storage/event/event-master.spec.ts",
               "line": 54,
               "column": 7
@@ -562,39 +502,9 @@
                       "workerIndex": 6,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 9929,
+                      "duration": 4152,
                       "errors": [],
                       "stdout": [
-                        {
-                          "text": "🍪 Storage has 3 expired cookies\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: true\n"
-                        },
-                        {
-                          "text": "   - Should refresh: true\n"
-                        },
-                        {
-                          "text": "🔄 Storage expired - forcing re-authentication...\n"
-                        },
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        },
-                        {
-                          "text": "✅ Storage saved successfully: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
-                        },
-                        {
-                          "text": "✅ Fresh storage created\n"
-                        },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch and validate event data\u001b[0m\n"
                         },
@@ -725,7 +635,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 2099 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1530 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -739,19 +649,19 @@
                       "steps": [
                         {
                           "title": "Search and validate event data for \"demo\"",
-                          "duration": 2107,
+                          "duration": 1540,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 2105,
+                              "duration": 1538,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 2102,
+                                  "duration": 1534,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 2101
+                                      "duration": 1531
                                     }
                                   ]
                                 }
@@ -760,7 +670,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T11:59:28.468Z",
+                      "startTime": "2025-09-18T12:29:21.769Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -768,7 +678,7 @@
                   "status": "expected"
                 }
               ],
-              "id": "2223a6c18626a04cfe4f-d35079877458736ce2b4",
+              "id": "2223a6c18626a04cfe4f-dffdd5991df6a6a0c4e4",
               "file": "with-storage/event/event-master.spec.ts",
               "line": 71,
               "column": 9
@@ -791,39 +701,9 @@
                       "workerIndex": 7,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 11401,
+                      "duration": 4978,
                       "errors": [],
                       "stdout": [
-                        {
-                          "text": "🍪 Storage has 3 expired cookies\n"
-                        },
-                        {
-                          "text": "🔍 Storage check for dev-staging:\n"
-                        },
-                        {
-                          "text": "   - Valid: true\n"
-                        },
-                        {
-                          "text": "   - Expired: true\n"
-                        },
-                        {
-                          "text": "   - Should refresh: true\n"
-                        },
-                        {
-                          "text": "🔄 Storage expired - forcing re-authentication...\n"
-                        },
-                        {
-                          "text": "📝 UserInfo loaded: {\n  \"username\": \"salesforce.manabie.dev-staging@manabie.com\",\n  \"password\": \"Manabie@12345\"\n}\n"
-                        },
-                        {
-                          "text": "🔑 Logging in as admin (salesforce.manabie.dev-staging@manabie.com)\n"
-                        },
-                        {
-                          "text": "✅ Storage saved successfully: C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\storage\\storageState.dev-staging.json\n"
-                        },
-                        {
-                          "text": "✅ Fresh storage created\n"
-                        },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate field maximum length\u001b[0m\n"
                         },
@@ -831,7 +711,7 @@
                           "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"Event Master Name\"\u001b[0m]\n"
                         },
                         {
-                          "text": "⏱️ [validateFieldMaxLength] took 3378 ms\n"
+                          "text": "⏱️ [validateFieldMaxLength] took 1647 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateFieldMaxLength] (attempt 1)\n"
@@ -845,19 +725,19 @@
                       "steps": [
                         {
                           "title": "Validate maximum length for \"Event Master Name\" field",
-                          "duration": 3386,
+                          "duration": 1655,
                           "steps": [
                             {
                               "title": "Validate field maximum length",
-                              "duration": 3384,
+                              "duration": 1652,
                               "steps": [
                                 {
                                   "title": "Retry: validateFieldMaxLength",
-                                  "duration": 3383,
+                                  "duration": 1649,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateFieldMaxLength",
-                                      "duration": 3380
+                                      "duration": 1648
                                     }
                                   ]
                                 }
@@ -866,7 +746,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T11:59:28.465Z",
+                      "startTime": "2025-09-18T12:29:21.777Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -874,7 +754,7 @@
                   "status": "expected"
                 }
               ],
-              "id": "2223a6c18626a04cfe4f-397e868ec34d6ff20b9a",
+              "id": "2223a6c18626a04cfe4f-560326503eadc2515ccf",
               "file": "with-storage/event/event-master.spec.ts",
               "line": 78,
               "column": 7
@@ -886,8 +766,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-18T11:59:27.000Z",
-    "duration": 16789.17100000009,
+    "startTime": "2025-09-18T12:29:20.255Z",
+    "duration": 10189.48999999999,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,

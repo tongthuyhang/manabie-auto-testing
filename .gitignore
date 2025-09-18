@@ -7,3 +7,4 @@ playwright-report/index.html
 test-logs.json
 build/
 logs/
+scripts/
