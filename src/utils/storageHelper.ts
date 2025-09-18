@@ -30,12 +30,43 @@ export class StorageHelper {
     
     try {
       await page.context().storageState({ path: filePath });
+      
+      // Extend cookie expiration for CI/CD usage
+      this.extendCookieExpiration(filePath);
+      
       console.log(`✅ Storage saved successfully: ${filePath}`);
       return filePath;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(`❌ Failed to save storage: ${errorMessage}`);
       throw new Error(`Storage save failed: ${errorMessage}`);
+    }
+  }
+
+  /**
+   * Extends expiration time for short-lived cookies to make them suitable for CI/CD
+   * @param filePath - Path to the storage state file
+   * @private
+   */
+  private static extendCookieExpiration(filePath: string): void {
+    try {
+      const storageState = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      const extendedTime = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours from now
+      
+      if (storageState.cookies) {
+        storageState.cookies.forEach((cookie: any) => {
+          // Extend short-lived cookies (less than 1 hour)
+          if (cookie.expires > 0 && cookie.expires < (Date.now() / 1000) + 3600) {
+            console.log(`🔄 Extending ${cookie.name} cookie expiration`);
+            cookie.expires = extendedTime;
+          }
+        });
+      }
+      
+      fs.writeFileSync(filePath, JSON.stringify(storageState, null, 2));
+      console.log(`✅ Cookie expiration times extended for CI/CD usage`);
+    } catch (error) {
+      console.warn(`⚠️ Failed to extend cookie expiration: ${error}`);
     }
   }
 
