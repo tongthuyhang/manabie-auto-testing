@@ -16,7 +16,7 @@ This document describes the step-by-step workflow when executing Playwright test
 
 ### 2. Global Setup Phase
 ```
-🚀 Global Setup (global-setup.ts)
+🚀 Global Setup (setup/global-setup.ts)
 ├── 🔍 Check storage expiration
 │   ├── File age check (default: 24 hours)
 │   ├── Cookie expiration validation

@@ -4,7 +4,7 @@
     "rootDir": "C:/hang/manabie-auto-testing/manabie-auto-testing/tests",
     "forbidOnly": false,
     "fullyParallel": true,
-    "globalSetup": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\global-setup.ts",
+    "globalSetup": "C:\\hang\\manabie-auto-testing\\manabie-auto-testing\\setup\\global-setup.ts",
     "globalTeardown": null,
     "globalTimeout": 0,
     "grep": {},
@@ -124,10 +124,10 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 24,
+                      "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10462,
+                      "duration": 11278,
                       "errors": [],
                       "stdout": [
                         {
@@ -143,7 +143,7 @@
                           "text": "✅ Selected dropdown option: \"Parent only\"\n"
                         },
                         {
-                          "text": "⏱️ [createAndVerifyEvent] took 4577 ms\n"
+                          "text": "⏱️ [createAndVerifyEvent] took 5411 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [createAndVerifyEvent] (attempt 1)\n"
@@ -281,7 +281,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 1795 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1892 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -295,19 +295,19 @@
                       "steps": [
                         {
                           "title": "Create new Event Master with name \"demo\"",
-                          "duration": 4585,
+                          "duration": 5421,
                           "steps": [
                             {
                               "title": "Create and verify event",
-                              "duration": 4583,
+                              "duration": 5418,
                               "steps": [
                                 {
                                   "title": "Retry: createAndVerifyEvent",
-                                  "duration": 4581,
+                                  "duration": 5415,
                                   "steps": [
                                     {
                                       "title": "TrackTime: createAndVerifyEvent",
-                                      "duration": 4579
+                                      "duration": 5412
                                     }
                                   ]
                                 }
@@ -317,23 +317,23 @@
                         },
                         {
                           "title": "Navigate to Event Master page",
-                          "duration": 539
+                          "duration": 598
                         },
                         {
                           "title": "Verify Event Master \"demo\" appears in list",
-                          "duration": 1800,
+                          "duration": 1895,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1800,
+                              "duration": 1894,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 1798,
+                                  "duration": 1894,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 1796
+                                      "duration": 1893
                                     }
                                   ]
                                 }
@@ -342,7 +342,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T14:34:47.782Z",
+                      "startTime": "2025-09-18T15:19:39.857Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -396,10 +396,10 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 25,
+                      "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 6031,
+                      "duration": 6868,
                       "errors": [],
                       "stdout": [
                         {
@@ -415,7 +415,7 @@
                           "text": "message check Send To\nComplete this field.\n"
                         },
                         {
-                          "text": "⏱️ [validateMandatoryFieldErrors] took 2685 ms\n"
+                          "text": "⏱️ [validateMandatoryFieldErrors] took 2916 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateMandatoryFieldErrors] (attempt 1)\n"
@@ -429,19 +429,19 @@
                       "steps": [
                         {
                           "title": "Validate mandatory field error messages are displayed",
-                          "duration": 2692,
+                          "duration": 2926,
                           "steps": [
                             {
                               "title": "Validate mandatory field errors",
-                              "duration": 2690,
+                              "duration": 2924,
                               "steps": [
                                 {
                                   "title": "Retry: validateMandatoryFieldErrors",
-                                  "duration": 2688,
+                                  "duration": 2920,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateMandatoryFieldErrors",
-                                      "duration": 2687
+                                      "duration": 2918
                                     }
                                   ]
                                 }
@@ -450,7 +450,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T14:34:47.823Z",
+                      "startTime": "2025-09-18T15:19:39.873Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -499,10 +499,10 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 26,
+                      "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 5380,
+                      "duration": 4832,
                       "errors": [],
                       "stdout": [
                         {
@@ -515,13 +515,19 @@
                           "text": "\n🔍 Starting data extraction for [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "   Found 17 matching rows\n"
+                          "text": "   Found 18 matching rows\n"
                         },
                         {
                           "text": "\n📋 Extracting all data from row where [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "   Found 51 columns in the row\n"
+                          "text": "   Found 54 columns in the row\n"
+                        },
+                        {
+                          "text": "   [Event Master Name]: \"demo\"\n"
+                        },
+                        {
+                          "text": "   [Description]: \"\"\n"
                         },
                         {
                           "text": "   [Event Master Name]: \"demo\"\n"
@@ -635,7 +641,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 1781 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1379 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -649,19 +655,19 @@
                       "steps": [
                         {
                           "title": "Search and validate event data for \"demo\"",
-                          "duration": 1792,
+                          "duration": 1388,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1789,
+                              "duration": 1386,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 1785,
+                                  "duration": 1382,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 1782
+                                      "duration": 1380
                                     }
                                   ]
                                 }
@@ -670,7 +676,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T14:34:47.816Z",
+                      "startTime": "2025-09-18T15:19:39.860Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -698,10 +704,10 @@
                   "projectName": "with-storage",
                   "results": [
                     {
-                      "workerIndex": 27,
+                      "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5930,
+                      "duration": 7253,
                       "errors": [],
                       "stdout": [
                         {
@@ -711,7 +717,7 @@
                           "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"Event Master Name\"\u001b[0m]\n"
                         },
                         {
-                          "text": "⏱️ [validateFieldMaxLength] took 2134 ms\n"
+                          "text": "⏱️ [validateFieldMaxLength] took 2512 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateFieldMaxLength] (attempt 1)\n"
@@ -725,19 +731,19 @@
                       "steps": [
                         {
                           "title": "Validate maximum length for \"Event Master Name\" field",
-                          "duration": 2146,
+                          "duration": 2518,
                           "steps": [
                             {
                               "title": "Validate field maximum length",
-                              "duration": 2144,
+                              "duration": 2516,
                               "steps": [
                                 {
                                   "title": "Retry: validateFieldMaxLength",
-                                  "duration": 2140,
+                                  "duration": 2514,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateFieldMaxLength",
-                                      "duration": 2137
+                                      "duration": 2513
                                     }
                                   ]
                                 }
@@ -746,7 +752,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-18T14:34:47.841Z",
+                      "startTime": "2025-09-18T15:19:39.871Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -766,8 +772,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-18T14:34:45.693Z",
-    "duration": 13122.96999999974,
+    "startTime": "2025-09-18T15:19:37.550Z",
+    "duration": 14102.704000000027,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,

@@ -28,6 +28,9 @@ manabie-auto-testing/
 ├── .github/                      # GitHub Actions workflows
 │   └── workflows/
 │       └── playwright.yml        # CI/CD pipeline
+├── setup/                        # ⚙️ Global setup configuration
+│   ├── global-setup.ts           # 🌍 Global test setup
+│   └── global-teardown.ts        # 🌍 Global test teardown
 ├── src/                          # Source code
 │   ├── base/                     # Base classes
 │   │   └── BasePage.ts           # Base page class
@@ -80,8 +83,6 @@ manabie-auto-testing/
 ├── playwright-report/            # Test reports
 ├── test-results/                 # Test execution results
 ├── .gitignore                    # Git ignore rules
-├── global-setup.ts               # Global test setup
-├── global-teardown.ts            # Global test teardown
 ├── playwright.config.ts          # Playwright configuration
 ├── package.json                  # Dependencies and scripts
 ├── README.md                     # Project documentation

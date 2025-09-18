@@ -115,6 +115,10 @@ await StorageHelper.save(page, env)
 See detailed [Project Structure & Icons](./STRUCTURE.md)
 
 ```
+setup/              # Global setup/teardown
+├── global-setup.ts
+└── global-teardown.ts
+
 src/
 ├── base/           # Base classes
 ├── config/         # Environment configs
@@ -131,7 +135,7 @@ tests/
 └── with-storage/   # Tests with auth
 
 storage/            # Authentication states
-scripts/            # Utility scripts
+scripts/            # Utility scripts (ignored in git)
 ```
 
 ## 🔧 Configuration
@@ -141,7 +145,7 @@ scripts/            # Utility scripts
 // playwright.config.ts
 export default defineConfig({
   testDir: './tests',
-  globalSetup: require.resolve('./global-setup'),
+  globalSetup: require.resolve('./setup/global-setup'),
   projects: [
     { name: 'with-storage', testDir: './tests/with-storage' },
     { name: 'no-storage', testDir: './tests/no-storage' }

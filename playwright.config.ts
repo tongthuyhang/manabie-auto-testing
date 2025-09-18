@@ -87,7 +87,7 @@ export default defineConfig({
     //   },
     // ],
   ],
-  globalSetup: require.resolve('./global-setup'),
+  globalSetup: require.resolve('./setup/global-setup'),
   timeout: 10 * 10000,
   use: {
     baseURL: process.env.PAGE_URL,

@@ -2,13 +2,13 @@
 import { chromium, FullConfig, Browser, Page } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
-import { LoginAction } from './src/utils/loginHelper';
-import { loadConfig } from './src/utils/configHelpers';
-import { StorageHelper } from './src/utils/storageHelper';
+import { LoginAction } from '../src/utils/loginHelper';
+import { loadConfig } from '../src/utils/configHelpers';
+import { StorageHelper } from '../src/utils/storageHelper';
 
 // Load ENV (url, login, etc.)
 const ENV = process.env.ENV?.trim() || 'dev-staging';
-dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
+dotenv.config({ path: path.resolve(__dirname, `../src/config/${ENV}.env`) });
 
 async function globalSetup(config: FullConfig) {
   console.log("🚀 Global setup starting...");
