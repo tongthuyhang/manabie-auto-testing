@@ -8,3 +8,7 @@ test-logs.json
 build/
 logs/
 scripts/
+
+# Storage folder structure but not actual files
+storage/*.json
+!storage/.gitkeep
