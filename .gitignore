@@ -11,4 +11,5 @@ scripts/
 
 # Storage folder structure but not actual files
 storage/*.json
-!storage/.gitkeep
+# Allow CI storage file
+!storage/storageState.ci.json

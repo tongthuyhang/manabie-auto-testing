@@ -15,6 +15,12 @@ export class StorageHelper {
     if (!fs.existsSync(storageDirectory)) {
       fs.mkdirSync(storageDirectory, { recursive: true });
     }
+    
+    // Use CI storage file in CI environment
+    if (process.env.CI) {
+      return path.join(storageDirectory, 'storageState.ci.json');
+    }
+    
     return path.join(storageDirectory, `storageState.${environment}.json`);
   }
 
