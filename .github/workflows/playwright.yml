@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+# Permissions for GitHub Pages
+# permissions:
+#   contents: read
+#   pages: write
+#   id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -55,7 +61,19 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-       # 7. Upload JSON logs + results
+
+      # 7. Upload Screenshots & Videos
+      - name: Upload Screenshots & Videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-media
+          path: |
+            test-results/
+            screenshots/
+          retention-days: 30
+
+      # 8. Upload JSON logs + results
       - name: Upload Test Logs & Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -65,3 +83,11 @@ jobs:
             test-logs.json
             test-results.json
           retention-days: 30
+
+      # 9. Deploy Playwright Report to GitHub Pages
+      # - name: Deploy to GitHub Pages
+      #   if: always()
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./playwright-report

@@ -66,11 +66,15 @@ npm run test:regression
 
 ### QASE Integration
 ```bash
-# Run with QASE reporting
-npm run test:dev-staging:qase
+# Run with QASE reporting (Windows CMD)
+set QASE_TESTOPS_API_TOKEN=<your_token> && npm run test:dev-staging:qase
+
+# Run with QASE reporting (Linux / macOS)
+export QASE_TESTOPS_API_TOKEN=<your_token> && npm run test:dev-staging:qase
 
 # Local QASE reporting
 npm run test:dev-staging:local
+
 ```
 
 ## 🏗️ Architecture
