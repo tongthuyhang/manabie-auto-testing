@@ -2,7 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { EventMasterPage } from '../pages/EventMasterPage';
 import { EventData } from '../type/EventData';
 import { LogStep, Retry, TrackTime } from '../decorators/index';
-import { EventFieldLabels, EventGridColumns } from '@src/locators/eventLocators';
+import { EventFieldLabels, EventGridColumns } from '../locators/eventLocators';
 
 /**
  * Facade for Event operations

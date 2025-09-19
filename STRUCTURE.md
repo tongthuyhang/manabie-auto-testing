@@ -154,6 +154,9 @@ git merge feature/new-tests
 
 # Delete branch
 git branch -d feature/new-tests
+
+#
+git rm --cached test-logs.json test-results.json #--cached = only remove from Git index, file is still on your computer.
 ```
 
 ### Common Workflows

@@ -7,7 +7,7 @@ import { EventData } from '@src/type/EventData';
 import testData from '@src/data/eventMasterData.json';
 import { getItemsByKey } from '@src/utils/jsonHelper';
 import { StorageHelper } from '@src/utils/storageHelper';
-import { EventFieldLabels } from '@src/locators/eventLocators'
+import { EventFieldLabels } from '@src/locators/eventLocators';
 
 const selectedEventNames = ['demo'];
 const selectedEvents: EventData[] = getItemsByKey(

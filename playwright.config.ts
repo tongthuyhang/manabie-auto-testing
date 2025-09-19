@@ -1,7 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import path from 'path';
+import { register } from 'tsconfig-paths';
 import { StorageHelper } from './src/utils/storageHelper';
+
+// Register tsconfig paths for @src alias
+register({
+  baseUrl: __dirname,
+  paths: {
+    '@src/*': ['src/*']
+  }
+});
 
 // ==== ENV setup ====
 const ENV = process.env.ENV?.trim() || 'dev-staging';
