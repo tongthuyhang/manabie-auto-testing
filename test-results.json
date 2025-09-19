@@ -89,7 +89,7 @@
     ],
     "shard": null,
     "updateSnapshots": "missing",
-    "updateSourceMethod": "patch",
+    "updateSourceMethod": "3way",
     "version": "1.55.0",
     "workers": 8,
     "webServer": null
@@ -126,11 +126,11 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 14403,
+                      "duration": 8956,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (14.8h old)\n"
+                          "text": "✅ Storage is fresh (15.1h old)\n"
                         },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mCreate and verify event\u001b[0m\n"
@@ -145,7 +145,7 @@
                           "text": "✅ Selected dropdown option: \"Parent only\"\n"
                         },
                         {
-                          "text": "⏱️ [createAndVerifyEvent] took 8110 ms\n"
+                          "text": "⏱️ [createAndVerifyEvent] took 3654 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [createAndVerifyEvent] (attempt 1)\n"
@@ -283,7 +283,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 1234 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1195 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -297,19 +297,19 @@
                       "steps": [
                         {
                           "title": "Create new Event Master with name \"demo\"",
-                          "duration": 8119,
+                          "duration": 3661,
                           "steps": [
                             {
                               "title": "Create and verify event",
-                              "duration": 8117,
+                              "duration": 3659,
                               "steps": [
                                 {
                                   "title": "Retry: createAndVerifyEvent",
-                                  "duration": 8113,
+                                  "duration": 3656,
                                   "steps": [
                                     {
                                       "title": "TrackTime: createAndVerifyEvent",
-                                      "duration": 8112
+                                      "duration": 3655
                                     }
                                   ]
                                 }
@@ -319,23 +319,23 @@
                         },
                         {
                           "title": "Navigate to Event Master page",
-                          "duration": 777
+                          "duration": 471
                         },
                         {
                           "title": "Verify Event Master \"demo\" appears in list",
-                          "duration": 1238,
+                          "duration": 1198,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1237,
+                              "duration": 1197,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 1236,
+                                  "duration": 1197,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 1235
+                                      "duration": 1196
                                     }
                                   ]
                                 }
@@ -344,7 +344,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-19T05:24:32.006Z",
+                      "startTime": "2025-09-19T05:37:26.189Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -401,11 +401,11 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 6779,
+                      "duration": 6520,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (14.8h old)\n"
+                          "text": "✅ Storage is fresh (15.1h old)\n"
                         },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate mandatory field errors\u001b[0m\n"
@@ -420,7 +420,7 @@
                           "text": "message check Send To\nComplete this field.\n"
                         },
                         {
-                          "text": "⏱️ [validateMandatoryFieldErrors] took 1725 ms\n"
+                          "text": "⏱️ [validateMandatoryFieldErrors] took 2419 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateMandatoryFieldErrors] (attempt 1)\n"
@@ -434,19 +434,19 @@
                       "steps": [
                         {
                           "title": "Validate mandatory field error messages are displayed",
-                          "duration": 1733,
+                          "duration": 2433,
                           "steps": [
                             {
                               "title": "Validate mandatory field errors",
-                              "duration": 1731,
+                              "duration": 2431,
                               "steps": [
                                 {
                                   "title": "Retry: validateMandatoryFieldErrors",
-                                  "duration": 1729,
+                                  "duration": 2428,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateMandatoryFieldErrors",
-                                      "duration": 1726
+                                      "duration": 2420
                                     }
                                   ]
                                 }
@@ -455,7 +455,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-19T05:24:32.009Z",
+                      "startTime": "2025-09-19T05:37:26.193Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -507,11 +507,11 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 5345,
+                      "duration": 5131,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (14.8h old)\n"
+                          "text": "✅ Storage is fresh (15.1h old)\n"
                         },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mSearch and validate event data\u001b[0m\n"
@@ -643,7 +643,7 @@
                           "text": "   Row identification: [Event Master Name] = \"demo\"\n"
                         },
                         {
-                          "text": "⏱️ [searchAndValidateEventData] took 1340 ms\n"
+                          "text": "⏱️ [searchAndValidateEventData] took 1653 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [searchAndValidateEventData] (attempt 1)\n"
@@ -657,19 +657,19 @@
                       "steps": [
                         {
                           "title": "Search and validate event data for \"demo\"",
-                          "duration": 1349,
+                          "duration": 1660,
                           "steps": [
                             {
                               "title": "Search and validate event data",
-                              "duration": 1346,
+                              "duration": 1658,
                               "steps": [
                                 {
                                   "title": "Retry: searchAndValidateEventData",
-                                  "duration": 1343,
+                                  "duration": 1656,
                                   "steps": [
                                     {
                                       "title": "TrackTime: searchAndValidateEventData",
-                                      "duration": 1341
+                                      "duration": 1654
                                     }
                                   ]
                                 }
@@ -678,7 +678,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-19T05:24:32.007Z",
+                      "startTime": "2025-09-19T05:37:26.180Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -709,11 +709,11 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 6129,
+                      "duration": 6586,
                       "errors": [],
                       "stdout": [
                         {
-                          "text": "✅ Storage is fresh (14.8h old)\n"
+                          "text": "✅ Storage is fresh (15.1h old)\n"
                         },
                         {
                           "text": "\u001b[33m➡️ START:\u001b[0m \u001b[36mValidate field maximum length\u001b[0m\n"
@@ -722,7 +722,7 @@
                           "text": "\u001b[90m   📥 Args:\u001b[0m\n[\u001b[32m\"Event Master Name\"\u001b[0m]\n"
                         },
                         {
-                          "text": "⏱️ [validateFieldMaxLength] took 3277 ms\n"
+                          "text": "⏱️ [validateFieldMaxLength] took 1690 ms\n"
                         },
                         {
                           "text": "✅ SUCCESS [validateFieldMaxLength] (attempt 1)\n"
@@ -736,19 +736,19 @@
                       "steps": [
                         {
                           "title": "Validate maximum length for \"Event Master Name\" field",
-                          "duration": 3281,
+                          "duration": 1700,
                           "steps": [
                             {
                               "title": "Validate field maximum length",
-                              "duration": 3280,
+                              "duration": 1696,
                               "steps": [
                                 {
                                   "title": "Retry: validateFieldMaxLength",
-                                  "duration": 3279,
+                                  "duration": 1693,
                                   "steps": [
                                     {
                                       "title": "TrackTime: validateFieldMaxLength",
-                                      "duration": 3277
+                                      "duration": 1691
                                     }
                                   ]
                                 }
@@ -757,7 +757,7 @@
                           ]
                         }
                       ],
-                      "startTime": "2025-09-19T05:24:32.007Z",
+                      "startTime": "2025-09-19T05:37:26.181Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -777,8 +777,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-09-19T05:24:31.027Z",
-    "duration": 15827.437,
+    "startTime": "2025-09-19T05:37:24.665Z",
+    "duration": 10895.679000000004,
     "expected": 4,
     "skipped": 0,
     "unexpected": 0,
