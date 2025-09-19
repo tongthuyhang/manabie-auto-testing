@@ -9,8 +9,10 @@ const ENV = process.env.ENV?.trim() || 'dev-staging';
 // Load main ENV (url, login, etc.)
 dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });
 
-// Load Qase env
-dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });
+// Load Qase env only if QASE_MODE is set
+if (process.env.QASE_MODE) {
+  dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });
+}
 
 // Get storage path (only use if valid and not expired)
 const storagePath = StorageHelper.shouldRefreshStorageState(ENV, false) ? null : StorageHelper.loadStorageState(ENV);
@@ -42,23 +44,21 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['list'],  // log at terminal
-    ['html', { outputFile: 'test-results.json', open: 'never' }], // JSON report -> test-results.json
-    ['json', { outputFile: 'test-results.json'}], // HTML report
+  reporter: process.env.QASE_MODE ? [
+    ['list'],
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'test-results.json'}],
     [
       'playwright-qase-reporter',
       {
         mode: process.env.QASE_MODE || 'testops',
         fallback: process.env.QASE_FALLBACK || 'report',
         environment: process.env.QASE_ENVIRONMENT || ENV,
-        debug: true,//process.env.QASE_DEBUG === 'true',
+        debug: true,
         captureLogs: process.env.QASE_CAPTURE_LOGS === 'true',
-
         testops: {
           api: {
             token: process.env.QASE_TESTOPS_API_TOKEN!,
-            //host: process.env.QASE_TESTOPS_API_HOST || 'qase.io',
             host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io',
           },
           project: process.env.QASE_TESTOPS_PROJECT!,
@@ -66,18 +66,15 @@ export default defineConfig({
             complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false',
             title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`,
             description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run',
-            // planId: process.env.QASE_TESTOPS_PLAN_ID ? Number(process.env.QASE_TESTOPS_PLAN_ID) : undefined,
           },
           framework: {
-          browser: {
-            addAsParameter: true,
-            parameterName: 'Chrome 138.0.7204.50',
+            browser: {
+              addAsParameter: true,
+              parameterName: 'Chrome 138.0.7204.50',
+            },
           },
-           //markAsFlaky: true,
-        },
           uploadAttachments: true,
         },
-
         report: {
           driver: process.env.QASE_REPORT_DRIVER || 'local',
           connection: {
@@ -86,7 +83,11 @@ export default defineConfig({
           },
         },
       },
-    ],
+    ]
+  ] : [
+    ['list'],
+    ['html', { open: 'never' }],
+    ['json', { outputFile: 'test-results.json'}],
   ],
   globalSetup: require.resolve('./setup/global-setup'),
   timeout: 10 * 10000,

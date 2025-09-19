@@ -3,7 +3,6 @@ test-results/
 test-results.json
 .vscode/launch.json
 .vscode/settings.json
-playwright-report/index.html
 test-logs.json
 build/
 logs/
