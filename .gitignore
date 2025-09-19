@@ -4,3 +4,7 @@ node_modules/
 build/
 logs/
 scripts/
+playwright-report/
+test-results/
+test-logs.json
+test-results.json
