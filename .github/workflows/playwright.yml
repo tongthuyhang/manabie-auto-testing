@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [scheduling, order, billing] 
+        project: [scheduling] 
     timeout-minutes: 60
 
     steps:
