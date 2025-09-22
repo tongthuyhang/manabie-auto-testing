@@ -54,8 +54,8 @@ npm run test:preprod
 
 ### Test Categories
 ```bash
-# Tests with authentication storage
-npm run test:dev-staging:with-storage
+# Scheduling tests with authentication storage
+npm run test:dev-staging:scheduling
 
 # Tests without storage (fresh login)
 npm run test:dev-staging:no-storage
@@ -137,9 +137,8 @@ src/
 tests/
 ├── no-storage/           # Tests without authentication
 │   └── permission/       # Login and permission tests
-└── with-storage/         # Tests with authentication
-    └── scheduling/       # Scheduling module tests
-        └── event/        # Event management tests
+└── scheduling/           # Scheduling module tests
+    └── event/            # Event management tests
 
 storage/            # Authentication states
 scripts/            # Utility scripts (ignored in git)
@@ -154,7 +153,7 @@ export default defineConfig({
   testDir: './tests',
   globalSetup: require.resolve('./setup/global-setup'),
   projects: [
-    { name: 'with-storage', testDir: './tests/with-storage' },
+    { name: 'scheduling', testDir: './tests/scheduling' },
     { name: 'no-storage', testDir: './tests/no-storage' }
   ]
 });

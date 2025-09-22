@@ -69,10 +69,9 @@ manabie-auto-testing/
 │   ├── no-storage/               # Tests without authentication
 │   │   └── permission/           # Login and permission tests
 │   │       └── login.spec.ts     # Login tests
-│   └── with-storage/             # Tests with authentication
-│       └── scheduling/           # Scheduling module
-│           └── event/            # Event management
-│               └── create-event-master.spec.ts # Event creation tests
+│   └── scheduling/               # Scheduling module tests
+│       └── event/                # Event management
+│           └── create-event-master.spec.ts # Event creation tests
 ├── storage/                      # Authentication storage
 │   ├── storageState.dev-staging.json # Dev-staging auth state
 │   ├── storageState.pre-prod.json    # Pre-prod auth state
@@ -103,7 +102,7 @@ manabie-auto-testing/
 
 ### Test Organization
 - **no-storage/**: Tests requiring fresh authentication
-- **with-storage/**: Tests using pre-authenticated state
+- **scheduling/**: Tests using pre-authenticated state for scheduling module
 
 ### Configuration
 - Environment-specific configs in `src/config/`

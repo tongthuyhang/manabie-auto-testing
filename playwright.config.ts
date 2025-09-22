@@ -52,6 +52,7 @@ if (process.env.CI || process.env.DEBUG) {
 // ===== TIMESTAMP GENERATION =====
 // Create timestamp for test run titles (removes milliseconds for readability)
 const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''); // 📅 Format: "2024-01-15 10:30:00"
+console.log('📅 Generated timestamp:', now); // Debug: verify timestamp generation
 
 // ===== PLAYWRIGHT CONFIGURATION EXPORT =====
 export default defineConfig({
@@ -136,8 +137,8 @@ export default defineConfig({
   projects: [
     {
       // ===== AUTHENTICATED TESTS PROJECT =====
-      name: 'with-storage',             // 📛 Project identifier for tests that use pre-authentication
-      testDir: path.resolve(__dirname, 'tests/with-storage'), // 📂 Directory containing authenticated test files
+      name: 'scheduling',             // 📛 Project identifier for scheduling tests
+      testDir: path.resolve(__dirname, 'tests/scheduling'), // 📂 Directory containing scheduling test files
       testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
       timeout: 10 * 10000,              // ⏱️ Project-specific timeout: 100 seconds
       use: {

@@ -28,7 +28,7 @@ test.describe('Creating Event Master', () => {
 
   selectedEvents.forEach((event) => {
 
-    test(`Create a New Event Master using "Save & New" action for"${event.eventMasterName}"`, { tag: "@Regression" }, async ({ page }) => {
+  test(`Create a New Event Master using "Save & New" action for"${event.eventMasterName}"`, { tag: "@Regression" }, async ({ page }) => {
       //=== QASE Metadata ===
       qase.id(661);
       qase.title(`Create Event Master for ${event.eventMasterName}`);
@@ -108,7 +108,7 @@ test.describe('Creating Event Master', () => {
   });
 
   selectedEventNames.forEach((eventName) => {
-    test(`Should search and validate event data for "${eventName}"`, { tag: '@Regression' }, async ({ page }) => {
+  test(`Should search and validate event data for "${eventName}"`, { tag: '@Regression' }, async ({ page }) => {
       await test.step(`Search and validate event data for "${eventName}"`, async () => {
         await eventMasterFacade.searchAndValidateEventData(eventName);
       });

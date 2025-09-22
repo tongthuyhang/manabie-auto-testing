@@ -15,6 +15,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [scheduling, order, billing] 
     timeout-minutes: 60
 
     steps:
@@ -45,19 +48,20 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
           
-      # 5. Run Playwright tests without Qase
-      - name: Run Playwright Tests (Dev-Staging Report Only)
-        run: npm run test:dev-staging:report
-        env:
-          ENV: dev-staging
-          USER_TYPE: admin
-      # # 5. Run Playwright tests with Qase
-      # - name: Run Playwright Tests (Dev-Staging with Qase)
-      #   run: npm run test:dev-staging:qase
+      # # 5. Run Playwright tests without Qase
+      # - name: Run Playwright Tests (Dev-Staging Report Only)
+      #   run: npm run test:dev-staging:report
       #   env:
       #     ENV: dev-staging
       #     USER_TYPE: admin
-      #     QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
+      # 5. Run Playwright tests with Qase
+      - name: Run Playwright Tests (Dev-Staging with Qase)
+        run: npm run test:dev-staging:qase
+        env:
+          ENV: dev-staging
+          USER_TYPE: admin
+          PROJECT: scheduling
+          QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
 
       # 6. Upload HTML report
       - name: Upload Playwright Report
