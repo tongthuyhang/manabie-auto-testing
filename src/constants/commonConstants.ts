@@ -1,7 +1,5 @@
 export const CommonConstants = {
   EMPTY_VALUE: '',
-  FAIL_STATUS: 'failed',
-  PASS_STATUS: 'passed',
   SITE_TITLE: 'Lightning Experience',
   STAGING: 'dev-staging',
   PRE_PROD: 'pre-prod',
@@ -10,5 +8,4 @@ export const CommonConstants = {
   PAGE_TIMESHEET: 'timesheet',
 } as const;
 
-export type TestStatus = typeof CommonConstants.PASS_STATUS | typeof CommonConstants.FAIL_STATUS;
 export type Environment = typeof CommonConstants.STAGING | typeof CommonConstants.PRE_PROD;

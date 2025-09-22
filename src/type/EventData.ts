@@ -80,4 +80,7 @@ export type EventData = {
   
   /** Maximum events per student (1-100) */
   maxEventPerStudent: number;
+
+  /** description (max 80 characters) */
+  description?: string;
 };

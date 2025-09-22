@@ -88,14 +88,15 @@
  */
 export const EventLocators = {
   // Modal and Headers
-  MODAL_TITLE: '.header.slds-modal__title.slds-hyphenate.slds-text-heading_medium',
+  MODAL_TITLE: 'h2.header.slds-modal__title.slds-hyphenate',
   PAGE_HEADER: 'h1.slds-page-header__title',
   
   // Form Input Fields
   INPUT_EVENT_MASTER_NAME: '[name="Name"]',
   INPUT_REMINDERS: '[name="MANAERP__Reminders__c"]',
   INPUT_MAX_EVENT_PER_STUDENT: '[name="MANAERP__Max_Event_Per_Student__c"]',
-  INPUT_DESCRIPTION: '[name="Description"]',
+  FOCUS_DESCRIPTION: '[role="group"][aria-label="Description"]',
+  INPUT_DESCRIPTION: 'div.slds-rich-text-area__content',
   
   // Dropdown Selectors
   SELECT_EVENT_TYPE: 'button[aria-label="Event Type"]',
@@ -108,10 +109,9 @@ export const EventLocators = {
   
   // Action Buttons
   BUTTON_NEW: 'button[name="New"]',
-  BUTTON_SAVE: 'button[name="SaveEdit"]',
-  BUTTON_CANCEL: 'button[name="CancelEdit"]',
-  BUTTON_DELETE: 'button[name="Delete"]',
-  BUTTON_EDIT: 'button[name="Edit"]',
+  BUTTON_SAVE: '[apiname="SaveEdit"]',
+  BUTTON_CANCEL: '[apiname="CancelEdit"]',
+  BUTTON_SAVE_NEW: '[apiname="SaveAndNew"]',
   
   // Search and Filter
   INPUT_SEARCH: '[name="Event Master-search-input"]',
@@ -140,10 +140,6 @@ export const EventLocators = {
   LABEL_WHO_CAN_RESERVE: 'Who Can Reserve',
   LABEL_REMINDERS: 'label[for*="Reminders"]',
   LABEL_MAX_EVENT_PER_STUDENT: 'label[for*="Max_Event_Per_Student"]',
-  
-  // Checkbox and Radio Options
-  CHECKBOX_SELECT_ALL: 'input[type="checkbox"][title="Select All"]',
-  CHECKBOX_ROW_SELECT: (rowId: string) => `input[type="checkbox"][data-row-selection-disabled="${rowId}"]`
 } as const;
 
 /**

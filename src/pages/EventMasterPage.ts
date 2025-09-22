@@ -13,6 +13,7 @@ export class EventMasterPage extends BasePage {
   readonly inputEventMasterName: Locator;
   readonly inputReminders: Locator;
   readonly inputMaxEventPerStudent: Locator;
+  readonly inputDescription: Locator;
   readonly inputSearch: Locator;
   
   // Dropdown locators
@@ -22,6 +23,8 @@ export class EventMasterPage extends BasePage {
   // Button locators
   readonly buttonNew: Locator;
   readonly buttonSave: Locator;
+  readonly buttonCancel: Locator;
+  readonly buttonSave_New: Locator;
   
   // Header and validation locators
   readonly headerPrimary: Locator;
@@ -35,6 +38,7 @@ export class EventMasterPage extends BasePage {
     this.inputEventMasterName = page.locator(EventLocators.INPUT_EVENT_MASTER_NAME);
     this.inputReminders = page.locator(EventLocators.INPUT_REMINDERS);
     this.inputMaxEventPerStudent = page.locator(EventLocators.INPUT_MAX_EVENT_PER_STUDENT);
+    this.inputDescription = page.locator(EventLocators.INPUT_DESCRIPTION);
     this.inputSearch = page.locator(SiteLocators.INPUT_SEARCH);
 
     // Initialize dropdown locators
@@ -48,7 +52,9 @@ export class EventMasterPage extends BasePage {
     // Initialize header and validation locators
     this.headerPrimary = page.locator(SiteLocators.HEADER_PRIMARY_FIELD);
     this.headerSecondary = page.locator(SiteLocators.HEADER_SECONDARY_FIELD);
-    this.popupEvent = page.locator(SiteLocators.POPUP);
+    this.popupEvent = page.locator(EventLocators.MODAL_TITLE);
+    this.buttonSave_New = page.locator(EventLocators.BUTTON_SAVE_NEW);
+    this.buttonCancel = page.locator(EventLocators.BUTTON_CANCEL);
   }
 
   /**
@@ -67,27 +73,13 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonSave);
   }
 
-  /**
-   * Fills the Event Master form with provided data
-   * @param eventMasterName - The event name
-   * @param eventType - Event type value
-   * @param sendTo - Target audience
-   * @param reminder - Reminder count
-   * @param maxEventPerStudent - Maximum events per student
-   */
-  // async fillEventMasterForm(
-  //   eventMasterName: string,
-  //   eventType: string,
-  //   sendTo: string,
-  //   reminder: number,
-  //   maxEventPerStudent: number
-  // ) {
-  //   await this.type(this.inputEventMasterName, eventMasterName);
-  //   await this.selectFromDropdown(this.selectEventType, eventType);
-  //   await this.selectFromDropdown(this.selectSendTo, sendTo);
-  //   await this.inputReminders.fill(reminder.toString());
-  //   await this.inputMaxEventPerStudent.fill(maxEventPerStudent.toString());
-  // }
+  async clickSave_NewButton(): Promise<void> {
+    await this.click(this.buttonSave_New);
+  }
+
+    async clickCanceButton(): Promise<void> {
+    await this.click(this.buttonCancel);
+  }
 
 
   /**
@@ -104,7 +96,8 @@ export class EventMasterPage extends BasePage {
     eventType: string,
     sendTo: string,
     reminder?: number,
-    maxEventPerStudent?: number
+    maxEventPerStudent?: number,
+    description?: string
   ): Promise<void> {
     // Validate required fields
     await this.validateRequiredFields(eventMasterName, eventType, sendTo);
@@ -113,7 +106,7 @@ export class EventMasterPage extends BasePage {
     await this.fillRequiredFields(eventMasterName, eventType, sendTo);
 
     // Fill optional fields
-    await this.fillOptionalFields(reminder, maxEventPerStudent);
+    await this.fillOptionalFields(reminder, maxEventPerStudent, description);
   }
 
   /**
@@ -156,27 +149,22 @@ export class EventMasterPage extends BasePage {
    */
   private async fillOptionalFields(
     reminder?: number,
-    maxEventPerStudent?: number
+    maxEventPerStudent?: number,
+    description?: string
   ): Promise<void> {
     if (reminder !== undefined) {
-      await this.inputReminders.fill(reminder.toString());
+      await this.type(this.inputReminders, reminder.toString());
     }
 
     if (maxEventPerStudent !== undefined) {
-      await this.inputMaxEventPerStudent.fill(maxEventPerStudent.toString());
+       await this.type(this.inputMaxEventPerStudent, maxEventPerStudent.toString());
     }
-  }
 
-
-  /**
-   * Verifies that the Event Master was created successfully
-   * Checks for the success toast message
-   * @throws Error when success message is not visible
-   */
-  async verifyEventMasterCreated(): Promise<void> {
-    const successToast = this.page.locator('span.toastMessage:has-text("was created")');
-    await expect(successToast).toBeVisible({ timeout: 10000 });
-  }
+    if (description !== undefined) {
+      await this.page.locator(EventLocators.FOCUS_DESCRIPTION).click();
+      await this.type(this.inputDescription, description);
+    }
+}
 
   /**
    * Searches for an Event Master by entering its name in the search field
@@ -220,10 +208,17 @@ export class EventMasterPage extends BasePage {
    * @param maxLength - Maximum allowed length (default: 80)
    * @throws Error when field exceeds maximum length
    */
-  async validateFieldMaxLength(fieldName: string, maxLength: number = 80): Promise<void> {
+  async validateFieldMaxLength(fieldName: string, maxLength: number): Promise<void> {
     if (!fieldName?.trim()) {
       throw new Error('Field name is required for max length validation');
     }
     await this.checkMaxLengthByLabel(this.page, fieldName, maxLength);
   }
+
+  /**Verify title of popuo */
+  async verifyPopupTitle(expectedTitle: string): Promise<void> {
+    await this.verifyModalTitle(this.popupEvent,expectedTitle);
+  }
+
+  
 }

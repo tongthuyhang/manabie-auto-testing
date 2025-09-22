@@ -55,6 +55,139 @@ This document describes the step-by-step workflow when executing Playwright test
 └── 📊 Generate test reports
 ```
 
+## Test Architecture Workflow
+
+### Layer-by-Layer Execution Flow
+```
+🏗️ Test Architecture (Bottom-Up)
+
+1️⃣ Test Case Layer (tests/with-storage/scheduling/event/create-event-master.spec.ts)
+├── 📝 Test definitions and scenarios
+├── 🏷️ QASE metadata and reporting
+├── 🔄 Test lifecycle hooks (beforeEach, afterEach)
+├── 📊 Test data management
+└── 🎯 High-level test assertions
+    ↓
+2️⃣ Facade Layer (src/facade/EventMasterFacade.ts)
+├── 🎭 Business logic orchestration
+├── 🔄 Retry mechanisms (@Retry decorator)
+├── ⏱️ Performance tracking (@TrackTime decorator)
+├── 📝 Step logging (@LogStep decorator)
+├── 🔗 Combines multiple page actions
+└── 🛡️ Input validation and error handling
+    ↓
+3️⃣ Page Object Layer (src/pages/EventMasterPage.ts)
+├── 🎪 UI interaction methods
+├── 🔍 Element finding and waiting
+├── 📝 Form filling and data entry
+├── ✅ Page-level validations
+├── 🧭 Navigation actions
+└── 🎨 UI state management
+    ↓
+4️⃣ Locator Layer (src/locators/eventLocators.ts)
+├── 🎯 Element selectors (CSS, XPath, Role-based)
+├── 📋 Field labels and identifiers
+├── 🗂️ Grid column definitions
+├── 🏷️ Centralized selector management
+└── 🔧 Maintainable element references
+    ↓
+5️⃣ Browser Interaction (Playwright Engine)
+├── 🌐 Browser automation
+├── 🖱️ User actions (click, type, select)
+├── ⏳ Smart waiting strategies
+├── 📸 Screenshot and video capture
+└── 🔍 Element inspection and validation
+    ↓
+6️⃣ Report & Artifacts
+├── 📊 HTML Report (playwright-report/)
+├── 📋 JSON Results (test-results.json)
+├── 📸 Screenshots (test-results/)
+├── 🎬 Videos (test-results/)
+└── 🔍 Traces (test-results/)
+```
+
+### Detailed Execution Example
+```
+🎬 Event Master Test Execution Flow
+
+📝 Test: "Create Event Master for 'demo'"
+├── 🎭 eventMasterFacade.createAndVerifyEvent(eventData)
+│   ├── 🎪 eventPage.clickNewButton()
+│   │   ├── 🎯 locator: EventLocators.BUTTON_NEW
+│   │   └── 🖱️ page.click(selector)
+│   ├── 🎪 eventPage.fillEventMasterForm(...)
+│   │   ├── 🎯 locator: EventLocators.INPUT_EVENT_NAME
+│   │   ├── 🖱️ page.fill(selector, value)
+│   │   ├── 🎯 locator: EventLocators.SELECT_EVENT_TYPE
+│   │   └── 🖱️ page.selectOption(selector, value)
+│   ├── 🎪 eventPage.clickSaveButton()
+│   │   ├── 🎯 locator: EventLocators.BUTTON_SAVE
+│   │   └── 🖱️ page.click(selector)
+│   └── 🎪 eventPage.verifyEventMasterCreated()
+│       ├── 🎯 locator: EventLocators.SUCCESS_MESSAGE
+│       └── ✅ expect(element).toBeVisible()
+├── 📊 Generate test artifacts
+│   ├── 📸 Screenshot on failure
+│   ├── 🎬 Video recording
+│   └── 🔍 Trace file
+└── 📋 Update test results
+    ├── ✅ Test status (passed/failed)
+    ├── ⏱️ Execution time
+    └── 📝 Error details (if any)
+```
+
+### Data Flow Architecture
+```
+📊 Data Flow Through Layers
+
+🗂️ Test Data (eventMasterData.json)
+    ↓ (JsonHelper.getItemsByKey)
+📝 Test Case (event-master.spec.ts)
+    ↓ (EventData interface)
+🎭 Facade Layer (EventMasterFacade.ts)
+    ↓ (Method parameters)
+🎪 Page Object (EventMasterPage.ts)
+    ↓ (UI interactions)
+🎯 Locators (eventLocators.ts)
+    ↓ (Element selectors)
+🌐 Browser (Playwright)
+    ↓ (DOM manipulation)
+📊 Results (Reports & Artifacts)
+```
+
+### Error Handling Across Layers
+```
+🛡️ Error Handling Strategy
+
+📝 Test Layer
+├── ❌ Test failure reporting
+├── 🔄 Test retry configuration
+└── 📊 QASE error reporting
+
+🎭 Facade Layer
+├── 🔄 @Retry decorator (automatic retries)
+├── 🛡️ Input validation
+├── 📝 @LogStep decorator (error context)
+└── ⏱️ @TrackTime decorator (performance monitoring)
+
+🎪 Page Object Layer
+├── ⏳ Smart waiting strategies
+├── 🔍 Element existence checks
+├── 🛡️ Graceful error handling
+└── 📝 Detailed error messages
+
+🎯 Locator Layer
+├── 🎯 Fallback selectors
+├── 🔧 Maintainable element references
+└── 📋 Centralized selector updates
+
+🌐 Browser Layer
+├── 📸 Screenshot on failure
+├── 🎬 Video recording
+├── 🔍 Trace collection
+└── ⏳ Timeout handling
+```
+
 ## Storage Management Workflow
 
 ### Storage Validation Process

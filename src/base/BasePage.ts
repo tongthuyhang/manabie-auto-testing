@@ -40,7 +40,10 @@ export class BasePage {
    */
   async click(locator: string | Locator): Promise<void> {
     const loc = this.normalizeLocator(locator);
-    await loc.waitFor({ state: 'visible', timeout: 10000 });
+    await loc.waitFor({ state: 'visible', timeout: 10000 })
+     if (!(await loc.isEnabled())) {
+        throw new Error('Element is not enabled: ' + locator);
+    }
     await loc.click();
   }
 
@@ -218,6 +221,21 @@ export class BasePage {
   }
 
   /**
+   * Verify modal title text
+   * @param expectedTitle The expected title text
+   */
+  async verifyModalTitle(locator: string | Locator,expectedTitle: string): Promise<void> {
+    const loc = this.normalizeLocator(locator);
+    await expect(loc).toHaveText(expectedTitle);
+    console.log(`✅ Verified modal title: "${expectedTitle}"`);
+  }
+
+  async verifyModalClose(locator: string | Locator): Promise<void> {
+    const loc = this.normalizeLocator(locator);
+    await expect(loc).toHaveCount(0);
+  }
+
+  /**
    * Check the maximum length of an input field by its label text.
    * @param page Playwright Page object
    * @param labelText The text of the label associated with the input
@@ -229,19 +247,24 @@ export class BasePage {
 
     // Try to fill more than maxLength characters
     const longText = 'A'.repeat(maxLength + 20);
+    console.log("length of longText",longText.length); // 25
+    console.log("longText", longText); // "AAAAAAAAAAAAAAAAAAAAAAAAA" (25 word A)
     await input.fill(longText);
+    const maxLengthAttr = await input.getAttribute('maxlength');
     await expect(page.locator(`label:has-text("${labelText}")`)).toBeEnabled();
+    console.log("maxLengthAttr", maxLengthAttr);
 
     // Get the actual value in the input
     const actualValue = await input.inputValue();
 
     // Assert the value length does not exceed maxLength
+    expect(Number(maxLengthAttr)).toBe(maxLength);
     expect(actualValue.length).toBeLessThanOrEqual(maxLength);
 
-    // Optionally, check for the warning message if it exists
-    const warning = page.locator('p#char-limit-warning');
-    if (await warning.isVisible()) {
-      await expect(warning).toHaveText(/Limit reached/, { timeout: 5000 });
-    }
   }
+/** Show message after save success */
+  async verifySuccessMessage(): Promise<void> {
+  const successToast = this.page.locator(`span.toastMessage:has-text("was created")`);
+  await expect(successToast).toBeVisible({ timeout: 10000 });
+}
 }

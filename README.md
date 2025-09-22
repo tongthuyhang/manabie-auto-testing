@@ -135,8 +135,11 @@ src/
 └── utils/          # Helper utilities
 
 tests/
-├── no-storage/     # Tests without auth
-└── with-storage/   # Tests with auth
+├── no-storage/           # Tests without authentication
+│   └── permission/       # Login and permission tests
+└── with-storage/         # Tests with authentication
+    └── scheduling/       # Scheduling module tests
+        └── event/        # Event management tests
 
 storage/            # Authentication states
 scripts/            # Utility scripts (ignored in git)

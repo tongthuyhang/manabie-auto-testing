@@ -2,7 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { EventMasterPage } from '../pages/EventMasterPage';
 import { EventData } from '../type/EventData';
 import { LogStep, Retry, TrackTime } from '../decorators/index';
-import { EventFieldLabels, EventGridColumns } from '../locators/eventLocators';
+import { EventFieldLabels, EventGridColumns,EventLocators } from '../locators/eventLocators';
 
 /**
  * Facade for Event operations
@@ -25,22 +25,19 @@ export class EventMasterFacade {
     if (!eventName?.trim()) {
       throw new Error('Event name is required for search');
     }
-
     await this.eventPage.searchEventMasterByName(eventName);
   }
 
   /**
    * Creates a new event with provided data and verifies creation
    */
-  @LogStep('Create and verify event')
+  @LogStep('Create a New Event Master using "Save & New" action')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  //@TrackTime('time:') // ✅ will log how long it takes
-  async createAndVerifyEvent(eventData: EventData): Promise<void> {
+  async saveNew(eventData: EventData): Promise<void> {
     if (!eventData) {
       throw new Error('Event data is required');
     }
-
     await this.eventPage.clickNewButton();
     await this.eventPage.fillEventMasterForm(
       eventData.eventMasterName,
@@ -49,9 +46,32 @@ export class EventMasterFacade {
       eventData.reminder,
       eventData.maxEventPerStudent
     );
-    await this.eventPage.clickSaveButton();
-    await this.eventPage.verifyEventMasterCreated();
+    await this.eventPage.clickSave_NewButton();
+    await this.eventPage.verifyPopupTitle('New Event Master');
+    await this.eventPage.verifySuccessMessage();
   }
+
+  /**
+   * Verify cancel button
+   * Click New -> fill data -> click cancel button -> expected result: modal close
+   */
+
+  @LogStep('verifyCancelButton')
+  @Retry(1) // ✅ more retries because UI validation can be flaky
+  @TrackTime()// ✅ will log how long it takes
+  async verifyCancelButton(): Promise<void> {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.fillEventMasterForm(
+      'Test Event',
+      'Free',
+      'Parent only',
+      1,
+      10
+     
+    );
+    await this.eventPage.clickCanceButton();
+    await this.eventPage.verifyModalClose(EventLocators.MODAL_TITLE);
+  } 
 
   /**
    * Validates mandatory field error messages
@@ -63,6 +83,42 @@ export class EventMasterFacade {
     await this.eventPage.clickNewButton();
     await this.eventPage.clickSaveButton();
     await this.eventPage.validateMandatoryFieldErrors();
+  }
+
+  /**
+   * Verify description field accepts formatted text
+   */
+  @LogStep('Verify description field accepts formatted text')
+  @Retry(1) // ✅ more retries because UI validation can be flaky
+  @TrackTime()// ✅ will log how long it takes
+  async verifyDescriptionFieldAcceptsFormattedText(eventData: EventData): Promise<void> {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.fillEventMasterForm(
+      eventData.eventMasterName,
+      eventData.eventType,
+      eventData.sendTo,
+      eventData.reminder,
+      eventData.maxEventPerStudent,
+      eventData.description
+    );
+    await this.eventPage.clickSaveButton();
+    await this.eventPage.verifySuccessMessage();
+  }
+
+
+
+  /**
+   * Validates maximum length constraint for Event Master Name field
+   */
+  @LogStep('Create an Event Master with 80-character name and description')
+  @Retry(1) // ✅ more retries because UI validation can be flaky
+  @TrackTime()// ✅ will log how long it takes
+  async validateFieldMaxLength(
+    fieldName: string = EventFieldLabels.EVENT_MASTER_NAME,
+    maxLength: number = 80
+  ): Promise<void> {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.validateFieldMaxLength(fieldName, maxLength);
   }
 
   /**
@@ -82,17 +138,5 @@ export class EventMasterFacade {
     });
   }
 
-  /**
-   * Validates maximum length constraint for Event Master Name field
-   */
-  @LogStep('Validate field maximum length')
-  @Retry(1) // ✅ more retries because UI validation can be flaky
-  @TrackTime()// ✅ will log how long it takes
-  async validateFieldMaxLength(
-    fieldName: string = EventFieldLabels.EVENT_MASTER_NAME,
-    maxLength: number = 80
-  ): Promise<void> {
-    await this.eventPage.clickNewButton();
-    await this.eventPage.validateFieldMaxLength(fieldName, maxLength);
-  }
+  
 }

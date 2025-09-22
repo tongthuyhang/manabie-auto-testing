@@ -67,11 +67,12 @@ manabie-auto-testing/
 │       └── TestInfoHelper.ts     # Test information utilities
 ├── tests/                        # Test files
 │   ├── no-storage/               # Tests without authentication
-│   │   └── permission/
+│   │   └── permission/           # Login and permission tests
 │   │       └── login.spec.ts     # Login tests
 │   └── with-storage/             # Tests with authentication
-│       └── event/
-│           └── event.spec.ts     # Event tests
+│       └── scheduling/           # Scheduling module
+│           └── event/            # Event management
+│               └── create-event-master.spec.ts # Event creation tests
 ├── storage/                      # Authentication storage
 │   ├── storageState.dev-staging.json # Dev-staging auth state
 │   ├── storageState.pre-prod.json    # Pre-prod auth state
