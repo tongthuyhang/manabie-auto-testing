@@ -2,6 +2,7 @@ import { Page, Locator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
 import { SiteLocators } from '../locators/siteLocators';
+import {EventData} from '../type/EventData';
 
 /**
  * Page Object for the Event Master page
@@ -77,7 +78,7 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonSave_New);
   }
 
-    async clickCanceButton(): Promise<void> {
+    async clickCancelButton(): Promise<void> {
     await this.click(this.buttonCancel);
   }
 
@@ -92,21 +93,16 @@ export class EventMasterPage extends BasePage {
    * @throws Error when required fields are empty
    */
   async fillEventMasterForm(
-    eventMasterName: string,
-    eventType: string,
-    sendTo: string,
-    reminder?: number,
-    maxEventPerStudent?: number,
-    description?: string
+    event:EventData
   ): Promise<void> {
     // Validate required fields
-    await this.validateRequiredFields(eventMasterName, eventType, sendTo);
+    await this.validateRequiredFields(event.eventMasterName, event.eventType, event.sendTo);
 
     // Fill required fields
-    await this.fillRequiredFields(eventMasterName, eventType, sendTo);
+    await this.fillRequiredFields(event.eventMasterName, event.eventType, event.sendTo);
 
     // Fill optional fields
-    await this.fillOptionalFields(reminder, maxEventPerStudent, description);
+    await this.fillOptionalFields(event.reminder, event.maxEventPerStudent, event.description);
   }
 
   /**

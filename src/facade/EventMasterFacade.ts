@@ -39,13 +39,7 @@ export class EventMasterFacade {
       throw new Error('Event data is required');
     }
     await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(
-      eventData.eventMasterName,
-      eventData.eventType,
-      eventData.sendTo,
-      eventData.reminder,
-      eventData.maxEventPerStudent
-    );
+    await this.eventPage.fillEventMasterForm(eventData);
     await this.eventPage.clickSave_NewButton();
     await this.eventPage.verifyPopupTitle('New Event Master');
     await this.eventPage.verifySuccessMessage();
@@ -59,17 +53,10 @@ export class EventMasterFacade {
   @LogStep('verifyCancelButton')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  async verifyCancelButton(): Promise<void> {
+  async verifyCancelButton(eventData:EventData): Promise<void> {
     await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(
-      'Test Event',
-      'Free',
-      'Parent only',
-      1,
-      10
-     
-    );
-    await this.eventPage.clickCanceButton();
+    await this.eventPage.fillEventMasterForm(eventData);
+    await this.eventPage.clickCancelButton();
     await this.eventPage.verifyModalClose(EventLocators.MODAL_TITLE);
   } 
 
@@ -93,20 +80,11 @@ export class EventMasterFacade {
   @TrackTime()// ✅ will log how long it takes
   async verifyDescriptionFieldAcceptsFormattedText(eventData: EventData): Promise<void> {
     await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(
-      eventData.eventMasterName,
-      eventData.eventType,
-      eventData.sendTo,
-      eventData.reminder,
-      eventData.maxEventPerStudent,
-      eventData.description
-    );
+    await this.eventPage.fillEventMasterForm(eventData);
     await this.eventPage.clickSaveButton();
     await this.eventPage.verifySuccessMessage();
   }
-
-
-
+  
   /**
    * Validates maximum length constraint for Event Master Name field
    */
@@ -137,6 +115,5 @@ export class EventMasterFacade {
       'Event Master Name': eventName,
     });
   }
-
-  
+ 
 }

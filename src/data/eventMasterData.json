@@ -16,6 +16,14 @@
   },
 
   {
+    "eventMasterName": "Paid-Parent only",
+    "eventType": "Paid",
+    "sendTo": "Parent only",
+    "reminder": 5,
+    "maxEventPerStudent": 2
+  },
+
+  {
     "eventMasterName": "Sample Event",
     "eventType": "Free",
     "sendTo": "Parent only",

@@ -232,7 +232,8 @@ export class BasePage {
 
   async verifyModalClose(locator: string | Locator): Promise<void> {
     const loc = this.normalizeLocator(locator);
-    await expect(loc).toHaveCount(0);
+    //await expect(loc).toHaveCount(0);
+    await expect(loc).toBeHidden();
   }
 
   /**

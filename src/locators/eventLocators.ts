@@ -92,9 +92,9 @@ export const EventLocators = {
   PAGE_HEADER: 'h1.slds-page-header__title',
   
   // Form Input Fields
-  INPUT_EVENT_MASTER_NAME: '[name="Name"]',
-  INPUT_REMINDERS: '[name="MANAERP__Reminders__c"]',
-  INPUT_MAX_EVENT_PER_STUDENT: '[name="MANAERP__Max_Event_Per_Student__c"]',
+  INPUT_EVENT_MASTER_NAME: 'input[name="Name"]',
+  INPUT_REMINDERS: 'input[name="MANAERP__Reminders__c"]',
+  INPUT_MAX_EVENT_PER_STUDENT: 'input[name="MANAERP__Max_Event_Per_Student__c"]',
   FOCUS_DESCRIPTION: '[role="group"][aria-label="Description"]',
   INPUT_DESCRIPTION: 'div.slds-rich-text-area__content',
   

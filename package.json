@@ -12,7 +12,7 @@
     "test:dev-staging:no-storage": "cross-env ENV=dev-staging npx playwright test --project=no-storage",
     "test:dev-staging:qase": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=$PROJECT",
     "test:dev-staging:report": "cross-env ENV=dev-staging npx playwright test --project=scheduling",
-    "test:dev-staging:local": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=true npx playwright test --project=scheduling",
+    "test:dev-staging:local": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=scheduling",
     "test:preprod": "cross-env ENV=pre-prod npx playwright test --project=chromium",
     "test:preprod:with-storage": "cross-env ENV=pre-prod npx playwright test --project=scheduling",
     "test:preprod:no-storage": "cross-env ENV=pre-prod npx playwright test --project=no-storage",
