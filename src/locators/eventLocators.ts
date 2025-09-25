@@ -108,7 +108,10 @@ export const EventLocators = {
   OPTION_SEND_TO: (value: string) => `lightning-base-combobox-item[data-value="${value}"]`,
   
   // Action Buttons
-  BUTTON_NEW: 'button[name="New"]',
+  BUTTON_NEW: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.New"]',
+  BUTTON_CHANGE_OWNER: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassChangeOwner"]',
+  BUTTON_IMPORT: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.Import"]',
+  BUTTON_ASSIGN_LABEL:'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassAssignRecordLabel"]',
   BUTTON_SAVE: '[apiname="SaveEdit"]',
   BUTTON_CANCEL: '[apiname="CancelEdit"]',
   BUTTON_SAVE_NEW: '[apiname="SaveAndNew"]',

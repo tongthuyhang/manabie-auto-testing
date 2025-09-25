@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, FrameLocator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
 import { SiteLocators } from '../locators/siteLocators';
@@ -16,6 +16,8 @@ export class EventMasterPage extends BasePage {
   readonly inputMaxEventPerStudent: Locator;
   readonly inputDescription: Locator;
   readonly inputSearch: Locator;
+  // Iframe
+  readonly iframe: FrameLocator;
   
   // Dropdown locators
   readonly selectEventType: Locator;
@@ -23,13 +25,14 @@ export class EventMasterPage extends BasePage {
   
   // Button locators
   readonly buttonNew: Locator;
+  readonly buttonChangeOwner: Locator;
+  readonly buttonImport: Locator;
+  readonly buttonAssignLabel: Locator;
   readonly buttonSave: Locator;
   readonly buttonCancel: Locator;
   readonly buttonSave_New: Locator;
   
   // Header and validation locators
-  readonly headerPrimary: Locator;
-  readonly headerSecondary: Locator;
   readonly popupEvent: Locator;
 
   constructor(page: Page) {
@@ -47,15 +50,19 @@ export class EventMasterPage extends BasePage {
     this.selectSendTo = page.locator(EventLocators.SELECT_SEND_TO);
 
     // Initialize button locators
-    this.buttonNew = page.locator(SiteLocators.BUTTON_NEW);
-    this.buttonSave = page.locator(SiteLocators.BUTTON_SAVE);
-
-    // Initialize header and validation locators
-    this.headerPrimary = page.locator(SiteLocators.HEADER_PRIMARY_FIELD);
-    this.headerSecondary = page.locator(SiteLocators.HEADER_SECONDARY_FIELD);
-    this.popupEvent = page.locator(EventLocators.MODAL_TITLE);
+    this.buttonNew = page.locator(EventLocators.BUTTON_NEW);
+    this.buttonChangeOwner = page.locator(EventLocators.BUTTON_CHANGE_OWNER);
+    this.buttonImport = page.locator(EventLocators.BUTTON_IMPORT);
+    this.buttonAssignLabel = page.locator(EventLocators.BUTTON_ASSIGN_LABEL);
+    this.buttonSave = page.locator(EventLocators.BUTTON_SAVE);
     this.buttonSave_New = page.locator(EventLocators.BUTTON_SAVE_NEW);
     this.buttonCancel = page.locator(EventLocators.BUTTON_CANCEL);
+
+    // Initialize header and validation locators
+    this.popupEvent = page.locator(EventLocators.MODAL_TITLE);
+
+    // Iframe
+    this.iframe = page.frameLocator(SiteLocators.IFRAME);
   }
 
   /**
@@ -64,6 +71,18 @@ export class EventMasterPage extends BasePage {
    */
   async clickNewButton(): Promise<void> {
     await this.click(this.buttonNew);
+  }
+
+  async clickChangeOwnerButton(): Promise<void> {
+    await this.click(this.buttonChangeOwner);
+  }
+
+  async clickImportButton(): Promise<void> {
+    await this.click(this.buttonImport);
+  }
+  
+  async clickAssignLabelButton(): Promise<void> {
+    await this.click(this.buttonAssignLabel);
   }
 
   /**
@@ -78,8 +97,17 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonSave_New);
   }
 
-    async clickCancelButton(): Promise<void> {
+  async clickCancelButton(): Promise<void> {
     await this.click(this.buttonCancel);
+  }
+
+  async importEventMaster(action:string, filePath:string): Promise<void> {
+    this.importFile("Event Master",action, "CSV", filePath);
+  }
+
+  async clickNextButton(): Promise<void> {
+
+    await this.click(this.iframe.locator(SiteLocators.BUTTON_NEXT_IMPORT));
   }
 
 
@@ -135,8 +163,8 @@ export class EventMasterPage extends BasePage {
     sendTo: string
   ): Promise<void> {
     await this.type(this.inputEventMasterName, eventMasterName);
-    await this.selectFromDropdown(this.selectEventType, eventType);
-    await this.selectFromDropdown(this.selectSendTo, sendTo);
+    await this.selectOptionSmart(this.selectEventType, eventType);
+    await this.selectOptionSmart(this.selectSendTo, sendTo);
   }
 
   /**

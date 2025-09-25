@@ -56,7 +56,7 @@ jobs:
       #     USER_TYPE: admin
       # 5. Run Playwright tests with Qase
       - name: Run Playwright Tests (Dev-Staging with Qase)
-        run: npm run test:dev-staging:qase
+        run: npm run test:dev-staging:qase:ci
         env:
           ENV: dev-staging
           USER_TYPE: admin

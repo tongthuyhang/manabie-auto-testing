@@ -4,7 +4,7 @@ export const CommonConstants = {
   STAGING: 'dev-staging',
   PRE_PROD: 'pre-prod',
   PAGE_EVENT_MASTER: 'event',
-  PAGE_LESSONS: 'lession',
+  PAGE_LESSONS: 'lesson',
   PAGE_TIMESHEET: 'timesheet',
 } as const;
 

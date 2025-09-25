@@ -55,6 +55,7 @@ export class EventMasterFacade {
   @TrackTime()// ✅ will log how long it takes
   async verifyCancelButton(eventData:EventData): Promise<void> {
     await this.eventPage.clickNewButton();
+    await this.eventPage.verifyPopupTitle('New Event Master');
     await this.eventPage.fillEventMasterForm(eventData);
     await this.eventPage.clickCancelButton();
     await this.eventPage.verifyModalClose(EventLocators.MODAL_TITLE);

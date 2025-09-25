@@ -120,7 +120,7 @@ export default defineConfig({
   // ===== GLOBAL SETUP =====
   globalSetup: require.resolve('./setup/global-setup'), // 🌍 Runs once before all tests (handles authentication)
   
-  // ===== TIMEOUT CONFIGURATION =====
+  // ===== TIMEOUT CONFIGURATION =====s
   timeout: 10 * 10000,                  // ⏱️ Global test timeout: 100 seconds (10 * 10000ms)
   // ===== GLOBAL USE CONFIGURATION =====
   // These settings apply to all tests unless overridden in project-specific configuration
@@ -143,7 +143,7 @@ export default defineConfig({
       timeout: 10 * 10000,              // ⏱️ Project-specific timeout: 100 seconds
       use: {
         ...devices['Desktop Chrome'],   // 🖥️ Use Chrome browser with desktop viewport
-         viewport: { width: 1920, height: 1080 }, 
+         //viewport: { width: 1920, height: 1080 }, 
         storageState: storagePath || undefined, // 🔐 Load authentication cookies/localStorage (if available)
       },
     },

@@ -1,0 +1,23 @@
+Event Master Name,Event Type,Send to,Who can reserve,Reminders,Max Event Per Student,Description
+Import 1 - [Scheduling] Regression test 25-Aug-2025,Free,Parent & Student,Parent Only,1,11,"こちらが「データが取得できない」状況を確認するための日本語の短い説明文です：
+
+✅ ユーザー向けメッセージ（UI表示など）
+
+「データが見つかりませんでした。」
+
+「該当する情報はありません。」
+
+「このアカウントではデータを表示できません。」
+
+🧪 テスト・確認用文（開発・検証用）
+
+「検索結果：0件」
+
+「データは取得されませんでした。」
+
+「権限がないため、データを参照できません。」
+
+必要であれば、SQL、APIレスポンス、Robot Framework、Jest などのテストコード向けにも書き換え可能です。どの環境で使う予定ですか？"
+Import 2 - [Scheduling] Regression test 25-Aug-2026,Paid,,Parent & Student,Student Only,2,10,"一般ユーザー向け（カジュアル）
+
+「現在、表示できるデータがありません。」"

@@ -7,29 +7,29 @@ async function navigateToPage(page: Page, pageName: string): Promise<void> {
   await page.goto(url);
 } 
 
-async function navigateToSite(page: Page,  timeout = 15000): Promise<void> {
-  const url = process.env.PAGE_URL || '/';
-  if (!url) {
-    throw new Error('❌ PAGE_URL environment variable is not set.');
-  }
+// async function navigateToSite(page: Page,  timeout = 15000): Promise<void> {
+//   const url = process.env.PAGE_URL || '/';
+//   if (!url) {
+//     throw new Error('❌ PAGE_URL environment variable is not set.');
+//   }
 
-  try {
-    console.log(`➡️ Navigating to ${url}`);
-    await page.goto(url, { waitUntil: 'networkidle', timeout }); // chờ network idle
-    console.log(`✅ Navigation to ${url} successful`);
-  } catch (error) {
-    console.error(`❌ Failed to navigate to ${url}`);
-    throw error;
-  }
-}
+//   try {
+//     console.log(`➡️ Navigating to ${url}`);
+//     await page.goto(url, { waitUntil: 'networkidle', timeout }); // chờ network idle
+//     console.log(`✅ Navigation to ${url} successful`);
+//   } catch (error) {
+//     console.error(`❌ Failed to navigate to ${url}`);
+//     throw error;
+//   }
+// }
 
-function getEnvironment(): string {
-  return process.env.ENV || CommonConstants.STAGING;
-}
+// function getEnvironment(): string {
+//   return process.env.ENV || CommonConstants.STAGING;
+// }
 
-async function teardownBrowser(page: Page): Promise<void> {
-  await page.close();
-}
+// async function teardownBrowser(page: Page): Promise<void> {
+//   await page.close();
+// }
 
 function getPageURL(pageName: string): string {
   switch (pageName) {
@@ -88,9 +88,6 @@ function isValidDate(dateStr: string): boolean {
   }
 
 export class CommonHelpers {
-  static getEnvironment = getEnvironment;
-  static navigateToSite = navigateToSite;
-  static teardownBrowser = teardownBrowser;
   static navigateToPage = navigateToPage;
   static isNumberInRange = isNumberInRange;
   static isMandatory = isMandatory;

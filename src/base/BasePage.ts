@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { SiteLocators } from '../locators/siteLocators';
 /**
  * BasePage
  * - Acts as the parent class for all Page Objects
@@ -40,9 +41,9 @@ export class BasePage {
    */
   async click(locator: string | Locator): Promise<void> {
     const loc = this.normalizeLocator(locator);
-    await loc.waitFor({ state: 'visible', timeout: 10000 })
-     if (!(await loc.isEnabled())) {
-        throw new Error('Element is not enabled: ' + locator);
+    await loc.waitFor({ state: 'visible', timeout: 10000 });
+    if (!(await loc.isEnabled())) {
+      throw new Error('Element is not enabled: ' + locator);
     }
     await loc.click();
   }
@@ -65,6 +66,30 @@ export class BasePage {
       await loc.fill(text); // clears existing and replaces with new text
     }
   }
+
+  /**
+   * 
+   */
+  async importFile(
+  entityName: string,   // ví dụ: "Event Master", "Lesson Master"
+  action: string,       // ví dụ: "Add new records", "Update existing records", "Add new and update existing records"
+  fileType: string,     // ví dụ: "CSV"
+  filePath: string      // path file
+): Promise<void> {
+  const iframe = this.page.frameLocator(SiteLocators.IFRAME);
+  // 1. Chọn entity
+  await this.click(iframe.locator(`a.lv-link:has-text("${entityName}")`));
+
+  // 2. select action
+  await this.click(iframe.locator(`a.lv-link:has-text("${action}")`));
+
+  // 3. Select file
+  await this.click(iframe.locator(`a.stdcolor div div span:has-text("${fileType}")`));
+
+  // 4. Upload file
+  await iframe.locator('input[type="file"]').setInputFiles(filePath);
+}
+
 
   /**
   * Verify text content inside an element
@@ -91,60 +116,19 @@ export class BasePage {
       }
     }
   }
-
-  /**
-   * Select an option from a dropdown (by data-value or visible text)
-   */
-  async selectFromDropdown(
-    dropdown: Locator,
-    identifier: string,
-    by: 'value' | 'text' = 'value',
-    delay: number = 200
-  ): Promise<void> {
-    // Wait for dropdown to be ready and click to open
-    await dropdown.waitFor({ state: 'visible', timeout: 10000 });
-    await dropdown.click();
-
-    // Create option locator based on selection method
-    const option = by === 'value' 
-      ? this.page.locator(`.slds-listbox__option[data-value="${identifier}"]`)
-      : this.page.locator(`.slds-listbox__option`, { hasText: identifier });
-
-    // Wait for option and select if not already selected
-    await option.waitFor({ state: 'visible', timeout: 5000 });
-    
-    const isSelected = await option.getAttribute('aria-selected') === 'true';
-    if (!isSelected) {
-      await option.click();
-      console.log(`✅ Selected dropdown option: "${identifier}"`);
-    } else {
-      console.log(`ℹ️ Option "${identifier}" already selected`);
-    }
-
-    // Optional delay for UI stabilization
-    if (delay > 0) {
-      await this.page.waitForTimeout(delay);
-    }
-
-    // Verify selection for text-based selections
-    if (by === 'text') {
-      await expect(dropdown).toContainText(identifier, { timeout: 5000 });
-    }
-  }
-
   /**
      * Check mandatory field validation message for an LWC input
-     * @param label - Label hiển thị của field (ví dụ: "Event Master Name")
-     * @param expectedMessage - Message mong đợi (default = "Complete this field.")
+     * @param label - Label display of field (EX: "Event Master Name")
+     * @param expectedMessage - Message (default = "Complete this field.")
      */
   async checkMandatoryField(label: string, expectedMessage = 'Complete this field.'): Promise<void> {
     const errorMessage = this.page.locator('.slds-form-element', { has: this.page.getByLabel(label) }).locator('.slds-form-element__help');
     await expect(errorMessage).toBeVisible();
 
-    // Lấy toàn bộ text thực tế
+    // get all text reality
     const actualText = await errorMessage.innerText();
     console.log("message check", actualText);
-    // Kiểm tra xem text có chứa message không
+    // Verify text contains message
     expect(actualText.replace(/\s+/g, ' ').trim()).toContain(`${label} ${expectedMessage}`);
   }
 
@@ -152,8 +136,7 @@ export class BasePage {
    * Check mandatory validation messages for multiple fields
    */
   async checkMultipleMandatoryFields(
-    labels: string[],
-    expectedMessage = 'Complete this field.'
+    labels: string[]
   ): Promise<void> {
     for (const label of labels) {
       await this.checkMandatoryField(label);
@@ -224,7 +207,7 @@ export class BasePage {
    * Verify modal title text
    * @param expectedTitle The expected title text
    */
-  async verifyModalTitle(locator: string | Locator,expectedTitle: string): Promise<void> {
+  async verifyModalTitle(locator: string | Locator, expectedTitle: string): Promise<void> {
     const loc = this.normalizeLocator(locator);
     await expect(loc).toHaveText(expectedTitle);
     console.log(`✅ Verified modal title: "${expectedTitle}"`);
@@ -248,7 +231,7 @@ export class BasePage {
 
     // Try to fill more than maxLength characters
     const longText = 'A'.repeat(maxLength + 20);
-    console.log("length of longText",longText.length); // 25
+    console.log("length of longText", longText.length); // 25
     console.log("longText", longText); // "AAAAAAAAAAAAAAAAAAAAAAAAA" (25 word A)
     await input.fill(longText);
     const maxLengthAttr = await input.getAttribute('maxlength');
@@ -263,9 +246,50 @@ export class BasePage {
     expect(actualValue.length).toBeLessThanOrEqual(maxLength);
 
   }
-/** Show message after save success */
+  /** Show message after save success */
   async verifySuccessMessage(): Promise<void> {
-  const successToast = this.page.locator(`span.toastMessage:has-text("was created")`);
-  await expect(successToast).toBeVisible({ timeout: 10000 });
+    const successToast = this.page.locator(`span.toastMessage:has-text("was created")`);
+    await expect(successToast).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+  * Select option dropdown based label text
+  * @param labelText Label of dropdown
+  * @param optionValue value want to select
+  */
+  async selectOptionSmart(
+  labelText: string | Locator,
+  optionValue: string,
+  by: 'value' | 'text' = 'value'
+) {
+  const frame = this.page.frameLocator('iframe[title="accessibility title"]');
+
+  // Only use string labelText for iframe approach
+  if (typeof labelText !== 'string') {
+    // Use regular combobox approach for Locator
+    const combobox = this.normalizeLocator(labelText);
+    await combobox.click();
+    
+    const option = by === 'value'
+      ? this.page.locator(`.slds-listbox__option[data-value="${optionValue}"]`)
+      : this.page.locator('.slds-listbox__option', { hasText: optionValue });
+    
+    await option.waitFor({ state: 'visible', timeout: 5000 });
+    
+    if ((await option.getAttribute('aria-selected')) !== 'true') {
+      await option.click();
+    }
+    return;
+  }
+  
+  const label = frame.locator(`label:has-text("${labelText}")`);;
+  const selectId = await label.getAttribute('for');
+    // Use iframe approach with select element
+    const dropdown = frame.locator(`//select[@id="${selectId}"]`);
+    await dropdown.waitFor({ state: 'visible', timeout: 5000 });
+    await dropdown.selectOption(optionValue);
+    console.log("Selected from iframe dropdown:", optionValue);
+
 }
+
 }

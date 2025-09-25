@@ -6,5 +6,6 @@ logs/
 scripts/
 playwright-report/
 test-results/
-test-logs.json
 test-results.json
+test-logs.json
+docs

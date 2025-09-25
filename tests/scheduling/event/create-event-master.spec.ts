@@ -28,9 +28,8 @@ test.describe('Creating Event Master', () => {
   });
 
   selectedEvents.forEach((event) => {
-  test(`Create a New Event Master using "Save & New" action for"${event.eventMasterName}"`, { tag: "@Regression" }, async ({ page }) => {
+  test(qase(661,`Create a New Event Master using "Save & New" action for"${event.eventMasterName}"`), { tag: "@Regression" }, async ({ page }) => {
       //=== QASE Metadata ===
-      qase.id(661);
       qase.title(`Create Event Master for ${event.eventMasterName}`);
       qase.parameters({ inputData: JSON.stringify(event) }); // parameters field on QASE
       qase.fields({
