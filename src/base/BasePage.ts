@@ -170,12 +170,16 @@ export class BasePage {
     });
 
     const rowCount = await rowLocator.count();
-    console.log(`   Found ${rowCount} matching rows`);
+    console.log(`Found ${rowCount} matching rows`);
 
-    if (rowCount === 0) {
-      console.log(`   ❌ No rows found with [${uniqueColumn}] = "${uniqueValue}"`);
-      return {};
-    }
+    // if (rowCount === 0) {
+    //   console.log(`❌ No rows found with [${uniqueColumn}] = "${uniqueValue}"`);
+    //   const messageNodata = this.page.locator('lst-empty-state-illustration div.slds-illustration div p.slds-text-body_regular').first();
+    //   expect(messageNodata).toContainText(`There's nothing in your list yet. Try adding a new record.`);
+    //    const mes = await messageNodata.innerText();
+    //   console.log(`nodata`, mes);
+    //   return {};
+    // }
 
     // Get all cells in the row
     const cells = rowLocator.locator('td[data-label], th[data-label]');
@@ -202,6 +206,12 @@ export class BasePage {
 
     return rowData;
   }
+
+  async handelNoData () {
+    const messageNodata = this.page.locator('lst-empty-state-illustration div.slds-illustration div p.slds-text-body_regular').first();
+    await expect(messageNodata).toContainText("There's nothing in your list yet. Try adding a new record.");
+  }
+
 
   /**
    * Verify modal title text

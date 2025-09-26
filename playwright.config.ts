@@ -88,6 +88,7 @@ export default defineConfig({
           },
           project: process.env.QASE_TESTOPS_PROJECT!,       // 📊 QASE project identifier (e.g., 'PX')
           run: {
+            id: process.env.QASE_TESTOPS_RUN_ID || undefined,   // 🔗 Attach vào run có sẵn
             complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false', // ✅ Auto-complete test run
             title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`, // 📝 Test run title with timestamp
             description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run', // 📝 Run description

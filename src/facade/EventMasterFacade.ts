@@ -2,7 +2,7 @@ import { Page, expect } from '@playwright/test';
 import { EventMasterPage } from '../pages/EventMasterPage';
 import { EventData } from '../type/EventData';
 import { LogStep, Retry, TrackTime } from '../decorators/index';
-import { EventFieldLabels, EventGridColumns,EventLocators } from '../locators/eventLocators';
+import { EventFieldLabels,EventLocators } from '../locators/eventLocators';
 
 /**
  * Facade for Event operations
@@ -11,8 +11,10 @@ import { EventFieldLabels, EventGridColumns,EventLocators } from '../locators/ev
  */
 export class EventMasterFacade {
   private readonly eventPage: EventMasterPage;
+  private readonly page: Page;
 
   constructor(page: Page) {
+    this.page = page;
     this.eventPage = new EventMasterPage(page);
   }
 
@@ -112,9 +114,20 @@ export class EventMasterFacade {
     }
 
     await this.eventPage.searchEventMasterByName(eventName);
-    await this.eventPage.validateDataInGrid(EventGridColumns.EVENT_MASTER_NAME, {
+    await this.eventPage.validateDataInGrid(EventFieldLabels.EVENT_MASTER_NAME, {
       'Event Master Name': eventName,
     });
+
+  }
+
+  async searchNoData(eventName: string): Promise<void> {
+    if (!eventName?.trim()) {
+      throw new Error('Event name is required for search and validation');
+    }
+
+    await this.eventPage.searchEventMasterByName(eventName);
+    await this.eventPage.handelNoData();
+
   }
  
 }

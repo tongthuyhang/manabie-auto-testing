@@ -23,7 +23,9 @@
     "report": "npx playwright show-report",
     "refresh:storage": "ts-node scripts/refresh-storage.ts",
     "check:storage": "ts-node scripts/check-storage-expiry.ts",
-    "count:cookies": "ts-node scripts/count-cookies.ts"
+    "count:cookies": "ts-node scripts/count-cookies.ts",
+    "test:dev-staging:qase:attach": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_RUN_ID=$RUN_ID QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false QASE_TESTOPS_RUN_COMPLETE=false npx playwright test --project=scheduling"
+    
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",

@@ -157,23 +157,6 @@ export const EventValidation = {
 } as const;
 
 /**
- * Event Master dropdown options
- */
-export const EventOptions = {
-  EVENT_TYPES: {
-    MEETING: 'Meeting',
-    WORKSHOP: 'Workshop',
-    SEMINAR: 'Seminar',
-    CONFERENCE: 'Conference'
-  },
-  SEND_TO_OPTIONS: {
-    ALL_STUDENTS: 'All Students',
-    SELECTED_STUDENTS: 'Selected Students',
-    SPECIFIC_GRADE: 'Specific Grade'
-  }
-} as const;
-
-/**
  * Field labels for validation testing
  */
 export const EventFieldLabels = {
@@ -184,19 +167,4 @@ export const EventFieldLabels = {
   REMINDERS: 'Reminders',
   MAX_EVENT_PER_STUDENT: 'Max Event Per Student',
   DESCRIPTION: 'Description'
-} as const;
-
-/**
- * Grid column names
- */
-export const EventGridColumns = {
-  EVENT_MASTER_NAME: 'Event Master Name',
-  EVENT_TYPE: 'Event Type',
-  SEND_TO: 'Send To',
-  REMINDERS: 'Reminders',
-  MAX_EVENT_PER_STUDENT: 'Max Event Per Student',
-  CREATED_DATE: 'Created Date',
-  LAST_MODIFIED: 'Last Modified',
-  OWNER: 'Owner',
-  STATUS: 'Status'
 } as const;
