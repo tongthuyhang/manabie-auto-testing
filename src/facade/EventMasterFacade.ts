@@ -129,5 +129,14 @@ export class EventMasterFacade {
     await this.eventPage.handelNoData();
 
   }
+
+  async createPreconditionData(eventData: EventData): Promise<void> {
+    if (!eventData) {
+      throw new Error('Event data is required');
+    }
+    await this.eventPage.clickNewButton();
+    await this.eventPage.fillEventMasterForm(eventData);
+    await this.eventPage.clickSaveButton();
+  }
  
 }

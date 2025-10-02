@@ -11,7 +11,7 @@ import { StorageHelper } from '@src/utils/storageHelper';
 
 
 /* Data to test */
-const selectedEventNames = ['demo', 'Paid-Parent only'];
+const selectedEventNames = ['demo', 'test delete'];
 const selectedEvents: EventData[] = getItemsByKey(
   testData,
   selectedEventNames,
@@ -31,7 +31,7 @@ test.describe('Delete Event Master', () => {
     eventMasterPage = new EventMasterPage(page);
   });
 
-  test.only(qase(712, `Click "Undo" to restore deleted Event Master`), { tag: '@Regression' }, async ({ page }) => {
+  test(qase(712, `Click "Undo" to restore deleted Event Master`), { tag: '@Regression' }, async ({ page }) => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'Ensure that deleted Event Master can be restored immediately after deletion', // description field on QASE
@@ -54,14 +54,17 @@ test.describe('Delete Event Master', () => {
     });
   });
 
-  test.only(qase(675, `Successfully delete an Event Master`), { tag: '@Regression' }, async ({ page }) => {
+  test(qase(675, `Successfully delete an Event Master`), { tag: '@Regression' }, async ({ page }) => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'Verify successful deletion of Event Master that has no linked Activity Events', // description field on QASE
+    
       preconditions: `The user has creation permissions, is on the 'Event Master' page, data is created (10072 is passed)`, // preconditions field on QASE
     });
     qase.comment('The Event Master should no longer appear in the Event Master list');
     await test.step(`search for an Event Master`, async () => {
+      await eventMasterFacade.createPreconditionData(selectedEvents[1]);
+      await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
       await eventMasterFacade.searchAndValidateEventData(selectedEvents[1].eventMasterName);
     });
     await test.step(`Delete an Event Master`, async () => {
@@ -74,7 +77,7 @@ test.describe('Delete Event Master', () => {
     });
   });
 
-  test.only(qase(711, `Cancel deletion of Event Master`), { tag: '@Regression' }, async ({ page }) => {
+  test(qase(711, `Cancel deletion of Event Master`), { tag: '@Regression' }, async ({ page }) => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'Ensure no changes are made when user clicks "Cancel" in delete popup', // description field on QASE

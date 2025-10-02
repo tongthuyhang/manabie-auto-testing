@@ -1,7 +1,7 @@
 [
   
   {
-    "eventMasterName": "test",
+    "eventMasterName": "test delete",
     "eventType": "Free",
     "sendTo": "Parent only",
     "reminder": 1,
