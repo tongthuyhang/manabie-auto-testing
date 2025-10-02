@@ -23,8 +23,6 @@ test.describe('Creating Event Master', () => {
   let eventMasterFacade: EventMasterFacade;
 
   test.beforeEach(async ({ page }) => {
-    // Check and refresh storage if expired
-    await StorageHelper.checkAndRefreshStorage(page);
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
     eventMasterFacade = new EventMasterFacade(page);
   });
@@ -41,7 +39,7 @@ test.describe('Creating Event Master', () => {
     // === Test Steps ===
 
     await test.step(`Create new Event Master with name "${selectedEvents[0]}`, async () => {
-      await eventMasterFacade.saveNew(selectedEvents[0]);
+      await eventMasterFacade.saveNew(selectedEvents[0],'was created');
     });
   });
 
@@ -83,7 +81,7 @@ test.describe('Creating Event Master', () => {
     qase.comment('A confirmation message "Event Master \"Sample Event\" was created." should be displayed'); // Actual result field on QASE
     // === Test Steps ===
     await test.step(`Verify description field accepts formatted text`, async () => {
-      await eventMasterFacade.verifyDescriptionFieldAcceptsFormattedText(selectedEvents[0]);
+      await eventMasterFacade.verifyDescriptionFieldAcceptsFormattedText(selectedEvents[0],'was created');
     });
   });
 
@@ -108,7 +106,7 @@ test.describe('Creating Event Master', () => {
     });
     // === Test Steps ===
     await test.step(`Enter all data, while type = paid, sento = parent only`, async () => {
-      qase.comment('Who Can Reserve = parent only')
+      qase.comment('Who Can Reserve = parent only');
       await eventMasterPage.clickNewButton();
       await eventMasterPage.fillEventMasterForm(selectedEvents[1]);
       const valueWhoCanReserve = page.locator(EventLocators.SELECT_WHO_CAN_RESERVE);
@@ -117,7 +115,7 @@ test.describe('Creating Event Master', () => {
     await test.step(`Click Save`, async () => {
       qase.comment('Successfully create a new Event Master with type: paid, send to: parent only'); // Actual result field on QASE
       await eventMasterPage.clickSaveButton();
-      await eventMasterPage.verifySuccessMessage();
+      await eventMasterPage.verifySuccessMessage('was created');
     });
 
   });

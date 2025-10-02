@@ -21,6 +21,7 @@
     "test:regression": "cross-env ENV=dev-staging npx playwright test --project=scheduling --grep @Regression",
     "test:regression:qase": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=scheduling --grep @Regression --headless=false",
     "report": "npx playwright show-report",
+    "expire-storage": "powershell -ExecutionPolicy Bypass -File ./scripts/expire-storage.ps1 -env dev-staging",
     "refresh:storage": "ts-node scripts/refresh-storage.ts",
     "check:storage": "ts-node scripts/check-storage-expiry.ts",
     "count:cookies": "ts-node scripts/count-cookies.ts",

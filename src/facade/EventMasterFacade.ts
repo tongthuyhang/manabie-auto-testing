@@ -36,7 +36,7 @@ export class EventMasterFacade {
   @LogStep('Create a New Event Master using "Save & New" action')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  async saveNew(eventData: EventData): Promise<void> {
+  async saveNew(eventData: EventData, message:string): Promise<void> {
     if (!eventData) {
       throw new Error('Event data is required');
     }
@@ -44,7 +44,7 @@ export class EventMasterFacade {
     await this.eventPage.fillEventMasterForm(eventData);
     await this.eventPage.clickSave_NewButton();
     await this.eventPage.verifyPopupTitle('New Event Master');
-    await this.eventPage.verifySuccessMessage();
+    await this.eventPage.verifySuccessMessage(message);
   }
 
   /**
@@ -81,11 +81,11 @@ export class EventMasterFacade {
   @LogStep('Verify description field accepts formatted text')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  async verifyDescriptionFieldAcceptsFormattedText(eventData: EventData): Promise<void> {
+  async verifyDescriptionFieldAcceptsFormattedText(eventData: EventData, message:string): Promise<void> {
     await this.eventPage.clickNewButton();
     await this.eventPage.fillEventMasterForm(eventData);
     await this.eventPage.clickSaveButton();
-    await this.eventPage.verifySuccessMessage();
+    await this.eventPage.verifySuccessMessage(message);
   }
   
   /**

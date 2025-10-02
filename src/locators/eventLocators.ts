@@ -109,12 +109,16 @@ export const EventLocators = {
   
   // Action Buttons
   BUTTON_NEW: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.New"]',
-  BUTTON_CHANGE_OWNER: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassChangeOwner"]',
+  BUTTON_EDIT: '[role="menuitem"][title="Edit"]',
+  BUTTON_DELETE: '[role="menuitem"][title="Delete"]',
+  BUTTON_CHANGE_OWNER: '[role="menuitem"][title="Change Owner"]',
+  BUTTON_EDIT_LABELS:'[role="menuitem"][title="Edit Labels"]',
   BUTTON_IMPORT: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.Import"]',
-  BUTTON_ASSIGN_LABEL:'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassAssignRecordLabel"]',
+  BUTTON_ASIGN_LABEL: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.Import"]',
   BUTTON_SAVE: '[apiname="SaveEdit"]',
   BUTTON_CANCEL: '[apiname="CancelEdit"]',
   BUTTON_SAVE_NEW: '[apiname="SaveAndNew"]',
+  BUTTON_UNDO: 'a[title="Undo"]',
   
   // Search and Filter
   INPUT_SEARCH: '[name="Event Master-search-input"]',
@@ -131,10 +135,6 @@ export const EventLocators = {
   ERROR_INVALID_FORMAT: '.slds-has-error .slds-form-element__help',
   SUCCESS_TOAST: '.slds-notify--toast.slds-theme--success',
   ERROR_TOAST: '.slds-notify--toast.slds-theme--error',
-  
-  // Loading States
-  LOADING_SPINNER: '.slds-spinner',
-  LOADING_OVERLAY: '.slds-backdrop',
   
   // Labels and Text
   LABEL_EVENT_MASTER_NAME: 'label[for*="Name"]',

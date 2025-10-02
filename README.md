@@ -381,6 +381,28 @@ npx playwright list-browsers
 # Generate test files
 npx playwright codegen
 ```
+### Noted
+- Note: Normally, storage refresh should be handled only in globalSetup.
+- However, when running tests via the VS Code Playwright extension,
+- the test runner doesn't always restart the Playwright process,
+- so globalSetup may NOT be executed again (even if the storageState has expired).
+  → To handle this edge case, we call `StorageHelper.checkAndRefreshStorage(page)`
+- here to ensure session validity when running individual tests inside VS Code.
+
+| Run mode                      | GlobalSetup executed | Storage refreshed |
+| ----------------------------- | -------------------- | ----------------- |
+| ✅ Terminal (`npx playwright`) | ✔️ Yes             | ✔️ Yes            |
+| ❌ VS Code “Run Test”          | ❌ No              | ❌ No             |
+| 🔄 Restart Runner in VS Code  | ✔️ Yes              | ✔️ Yes            |
+
+```typescript
+  test.beforeEach(async ({ page }) => {
+    // Check and refresh storage if expired
+    await StorageHelper.checkAndRefreshStorage(page);
+    await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
+    eventMasterFacade = new EventMasterFacade(page);
+  });
+```
 
 ## 📚 Additional Resources
 

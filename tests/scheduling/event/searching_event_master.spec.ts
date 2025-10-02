@@ -22,8 +22,6 @@ test.describe('Searching Event Master', () => {
   let eventMasterFacade: EventMasterFacade;
 
   test.beforeEach(async ({ page }) => {
-    // Check and refresh storage if expired
-    await StorageHelper.checkAndRefreshStorage(page);
     await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
     eventMasterFacade = new EventMasterFacade(page);
   });

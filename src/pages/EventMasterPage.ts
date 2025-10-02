@@ -1,9 +1,9 @@
 import { Page, Locator, FrameLocator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
-import { SiteLocators } from '../locators/siteLocators';
-import {EventData} from '../type/EventData';
-
+import { SiteLocators} from '../locators/siteLocators';
+import { EventData } from '@src/type/EventData';
+import { CommonHelpers } from '../utils/commonHelpers';
 /**
  * Page Object for the Event Master page
  * Encapsulates locators and actions for maintainability and reuse
@@ -18,20 +18,22 @@ export class EventMasterPage extends BasePage {
   readonly inputSearch: Locator;
   // Iframe
   readonly iframe: FrameLocator;
-  
+
   // Dropdown locators
   readonly selectEventType: Locator;
   readonly selectSendTo: Locator;
-  
+
   // Button locators
   readonly buttonNew: Locator;
+  readonly buttonEdit: Locator;
+  readonly buttonDelete: Locator;
   readonly buttonChangeOwner: Locator;
+  readonly buttonEditLabels: Locator;
   readonly buttonImport: Locator;
-  readonly buttonAssignLabel: Locator;
   readonly buttonSave: Locator;
   readonly buttonCancel: Locator;
   readonly buttonSave_New: Locator;
-  
+
   // Header and validation locators
   readonly popupEvent: Locator;
 
@@ -51,9 +53,11 @@ export class EventMasterPage extends BasePage {
 
     // Initialize button locators
     this.buttonNew = page.locator(EventLocators.BUTTON_NEW);
+    this.buttonEdit = page.locator(EventLocators.BUTTON_EDIT);
+    this.buttonDelete = page.locator(EventLocators.BUTTON_DELETE);
     this.buttonChangeOwner = page.locator(EventLocators.BUTTON_CHANGE_OWNER);
+    this.buttonEditLabels = page.locator(EventLocators.BUTTON_EDIT_LABELS);
     this.buttonImport = page.locator(EventLocators.BUTTON_IMPORT);
-    this.buttonAssignLabel = page.locator(EventLocators.BUTTON_ASSIGN_LABEL);
     this.buttonSave = page.locator(EventLocators.BUTTON_SAVE);
     this.buttonSave_New = page.locator(EventLocators.BUTTON_SAVE_NEW);
     this.buttonCancel = page.locator(EventLocators.BUTTON_CANCEL);
@@ -73,17 +77,42 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonNew);
   }
 
+  async clickEditButton(): Promise<void> {
+    await this.click(this.buttonEdit);
+  }
+
+  async clickDeleteButton(): Promise<void> {
+    await this.click(this.buttonDelete);
+  }
+
+  async clickUnDoButton(): Promise<void> {
+    await this.click(EventLocators.BUTTON_UNDO);
+  }
+
   async clickChangeOwnerButton(): Promise<void> {
     await this.click(this.buttonChangeOwner);
+  }
+
+  async clickEditLabelButton(): Promise<void> {
+    await this.click(this.buttonEditLabels);
   }
 
   async clickImportButton(): Promise<void> {
     await this.click(this.buttonImport);
   }
-  
-  async clickAssignLabelButton(): Promise<void> {
-    await this.click(this.buttonAssignLabel);
+
+  /**
+   * Click "Show Actions" button in the table
+   */
+  async clickMoreActionsButton() {
+    //const moreActionsBtn = this.page.locator(SiteLocators.BUTTON_MORE_ACTION, { hasText: 'Show Actions' }).first();
+    const moreActionsBtn = this.page.locator(SiteLocators.BUTTON_MORE_ACTION).first();
+     await this.click(moreActionsBtn);
   }
+
+  /**
+  * Click vào button "More actions" trong li.oneActionsDropDown đầu tiên
+  */
 
   /**
    * Clicks the "Save" button to save the event
@@ -101,8 +130,16 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonCancel);
   }
 
-  async importEventMaster(action:string, filePath:string): Promise<void> {
-    this.importFile("Event Master",action, "CSV", filePath);
+  async clickDialogDeleteButton(): Promise<void> {
+    await this.click(SiteLocators.BUTTON_DIALOG_DELETE);
+  }
+
+    async clickDialogCancelButton(): Promise<void> {
+    await this.click(SiteLocators.BUTTON_DIALOG_CANCEL);
+  }
+
+  async importEventMaster(action: string, filePath: string): Promise<void> {
+    this.importFile("Event Master", action, "CSV", filePath);
   }
 
   async clickNextButton(): Promise<void> {
@@ -121,7 +158,7 @@ export class EventMasterPage extends BasePage {
    * @throws Error when required fields are empty
    */
   async fillEventMasterForm(
-    event:EventData
+    event: EventData
   ): Promise<void> {
     // Validate required fields
     await this.validateRequiredFields(event.eventMasterName, event.eventType, event.sendTo);
@@ -181,14 +218,14 @@ export class EventMasterPage extends BasePage {
     }
 
     if (maxEventPerStudent !== undefined) {
-       await this.type(this.inputMaxEventPerStudent, maxEventPerStudent.toString());
+      await this.type(this.inputMaxEventPerStudent, maxEventPerStudent.toString());
     }
 
     if (description !== undefined) {
       await this.page.locator(EventLocators.FOCUS_DESCRIPTION).click();
       await this.type(this.inputDescription, description);
     }
-}
+  }
 
   /**
    * Searches for an Event Master by entering its name in the search field
@@ -241,8 +278,13 @@ export class EventMasterPage extends BasePage {
 
   /**Verify title of popuo */
   async verifyPopupTitle(expectedTitle: string): Promise<void> {
-    await this.verifyModalTitle(this.popupEvent,expectedTitle);
+    await this.verifyModalTitle(this.popupEvent, expectedTitle);
   }
 
-  
+  /** Verify confirm delete dialog*/
+  async verifyConfirmDeleteDialog(): Promise<void> {
+    await this.expectConfirmDialogVisible("Delete Event Master");
+  }
+
+
 }

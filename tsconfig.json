@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2020", 
     "module": "commonjs",
     "lib": [
-      "ES2020"
+      "ES2020", //allows you to use new JavaScript functions (Promise.allSettled, BigInt, etc.).
+       "DOM" //Add type definitions for browser APIs (document, window, HTMLElement, querySelectorAll, 
     ],
     "outDir": "./dist",
     "rootDir": "./",

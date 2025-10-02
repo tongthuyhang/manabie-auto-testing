@@ -170,7 +170,6 @@ export class StorageHelper {
     return !isValid || isExpired;
   }
 
-
   /**
    * Checks if storage is expired and refreshes it if needed
    * @param page - Playwright page instance
