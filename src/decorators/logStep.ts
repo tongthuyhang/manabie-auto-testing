@@ -36,10 +36,16 @@ const LOG_LEVEL: LogLevel = (process.env.LOG_LEVEL as LogLevel) || 'debug';
 // File path for writing logs (default = test-logs.json at project root)
 const LOG_FILE = process.env.LOG_FILE || path.join(process.cwd(), 'test-logs.json');
 
+//
+interface LogStepOptions {
+  name?: string;
+  level?: LogLevel;
+}
+
 // Check if a log message should be printed based on the current log level
-function shouldLog(level: LogLevel): boolean {
-  const order: LogLevel[] = ['debug', 'info', 'error', 'none'];
-  return order.indexOf(level) >= order.indexOf(LOG_LEVEL);
+function shouldLog(target: LogLevel, current: LogLevel): boolean {
+  const order = { none: 0, error: 1, info: 2, debug: 3 };
+  return order[target] <= order[current];
 }
 
 // ANSI escape codes for colored console output
@@ -81,23 +87,28 @@ function appendToFile(entry: any) {
 
 // Main decorator function
 // Usage: @LogStep('Step Name') above any async method
-export function LogStep(name?: string) {
+export function LogStep(options?: string | LogStepOptions) {
   return function <T extends (...args: any[]) => any>(
     originalMethod: T,
     context: ClassMethodDecoratorContext
   ) {
     // Step name comes from argument or method name
-    const stepName = name || String(context.name);
+    const stepName = typeof options === 'string' ? options : options?.name || String(context.name);
+    const logLevel: LogLevel = typeof options === 'object' ? options.level ?? 'info' : 'info';
 
     // Replacement function that wraps the original method
     async function replacement(this: any, ...args: Parameters<T>): Promise<ReturnType<T>> {
       return await test.step(stepName, async () => {
         const timestamp = new Date().toISOString();
 
-        // Console: start message + arguments (if debug)
-        if (shouldLog('info')) console.log(`${colors.yellow}➡️ START:${colors.reset} ${colors.cyan}${stepName}${colors.reset}`);
-        if (shouldLog('debug') && args.length > 0) console.log(`${colors.gray}   📥 Args:${colors.reset}\n${prettyPrint(args)}`);
-
+       // Start log
+        if (shouldLog('info', logLevel)) {
+          console.log(`${colors.yellow}➡️ START:${colors.reset} ${colors.cyan}${stepName}${colors.reset}`);
+        }
+         // Log args if debug on
+        if (shouldLog('debug', logLevel) && args.length > 0) {
+          console.log(`${colors.gray}   📥 Args:${colors.reset}\n${prettyPrint(args)}`);
+        }
         try {
           // Call the original method
           const result = await originalMethod.apply(this, args);
@@ -113,8 +124,8 @@ export function LogStep(name?: string) {
           appendToFile(logEntry);
 
           // Console: result (if debug) + success message
-          if (shouldLog('debug') && result !== undefined) console.log(`${colors.gray}   📤 Result:${colors.reset}\n${prettyPrint(result)}`);
-          if (shouldLog('info')) console.log(`${colors.green}✅ SUCCESS:${colors.reset} ${stepName}`);
+          if (shouldLog('debug',logLevel) && result !== undefined) console.log(`${colors.gray}   📤 Result:${colors.reset}\n${prettyPrint(result)}`);
+          if (shouldLog('info',logLevel)) console.log(`${colors.green}✅ SUCCESS:${colors.reset} ${stepName}`);
 
           return result;
         } catch (err) {
@@ -132,7 +143,7 @@ export function LogStep(name?: string) {
           appendToFile(logEntry);
 
           // Console: failure message
-          if (shouldLog('error')) console.error(`${colors.red}❌ FAILED:${colors.reset} ${stepName}`, err);
+          if (shouldLog('error',logLevel)) console.error(`${colors.red}❌ FAILED:${colors.reset} ${stepName}`, err);
 
           // Rethrow to fail the test
           throw err;

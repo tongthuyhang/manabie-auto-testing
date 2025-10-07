@@ -22,4 +22,7 @@ export const SiteLocators = {
   INPUT_SEARCH: 'Search this list...',
   //label fiels
   LABEL_CHARACTER_CODE: 'Character Code',
+  //message
+   SUCCESS_TOAST: '.slds-notify--toast.slds-theme--success',
+   ERROR_TOAST: '.slds-notify--toast.slds-theme--error',
 } as const;

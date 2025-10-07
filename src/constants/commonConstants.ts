@@ -6,6 +6,7 @@ export const CommonConstants = {
   PAGE_EVENT_MASTER: 'event',
   PAGE_LESSONS: 'lesson',
   PAGE_TIMESHEET: 'timesheet',
+  PAGE_ORDER: 'order'
 } as const;
 
 export type Environment = typeof CommonConstants.STAGING | typeof CommonConstants.PRE_PROD;

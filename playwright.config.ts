@@ -137,7 +137,7 @@ export default defineConfig({
   // Multiple projects allow different test configurations (with/without authentication, different browsers, etc.)
   projects: [
     {
-      // ===== AUTHENTICATED TESTS PROJECT =====
+      // ===== GENERAL SCHEDULING PROJECT =====
       name: 'scheduling',             // 📛 Project identifier for scheduling tests
       testDir: path.resolve(__dirname, 'tests/scheduling'), // 📂 Directory containing scheduling test files
       testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
@@ -159,13 +159,17 @@ export default defineConfig({
       },
     },
     {
-      // ===== GENERAL CHROMIUM PROJECT =====
-      name: 'chromium',                 // 📛 General project for basic browser tests
-      testDir: path.resolve(__dirname, 'tests'), // 📂 Root tests directory
+      // ===== GENERAL ORDER PROJECT =====
+       name: 'order',             // 📛 Project identifier for scheduling tests
+      testDir: path.resolve(__dirname, 'tests/order'), // 📂 Directory containing scheduling test files
+      testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
+      timeout: 10 * 10000,              // ⏱️ Project-specific timeout: 100 seconds
       use: {
         ...devices['Desktop Chrome'],   // 🖥️ Use Chrome browser with desktop viewport
-        // Note: No storageState specified, inherits from global use config
+         //viewport: { width: 1920, height: 1080 }, 
+        storageState: storagePath || undefined, // 🔐 Load authentication cookies/localStorage (if available)
       },
+     
     },
   ],
 });

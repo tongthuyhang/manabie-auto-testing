@@ -64,6 +64,8 @@ export class CommonHelpers {
         return process.env.LESSONS_URL as string;
       case CommonConstants.PAGE_TIMESHEET:
         return process.env.TIMESHEET_URL as string;
+      case CommonConstants.PAGE_ORDER:
+        return process.env.ORDER_URL as string;
       default:
         return process.env.PAGE_URL as string;
     }
@@ -95,9 +97,9 @@ export class CommonHelpers {
    */
   static async teardownBrowser(page: Page): Promise<void> {
     if (page && !page.isClosed()) {
-      console.log('🧹 Closing browser page...');
+      console.log('- Closing browser page...');
       await page.close();
-      console.log('✅ Browser page closed');
+      console.log('- Browser page closed');
     }
   }
 }

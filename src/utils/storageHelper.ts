@@ -52,6 +52,7 @@ export class StorageHelper {
     try {
       const storageState = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
       const extendedTime = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours from now
+      console.log(' stogare', storageState);
       
       if (storageState.cookies) {
         storageState.cookies.forEach((cookie: any) => {

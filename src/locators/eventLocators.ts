@@ -103,18 +103,15 @@ export const EventLocators = {
   SELECT_SEND_TO: 'button[aria-label="Send To"]',
   SELECT_WHO_CAN_RESERVE: 'button[aria-label="Who Can Reserve"]',
   
-  // Dropdown Options
-  OPTION_EVENT_TYPE: (value: string) => `lightning-base-combobox-item[data-value="${value}"]`,
-  OPTION_SEND_TO: (value: string) => `lightning-base-combobox-item[data-value="${value}"]`,
-  
   // Action Buttons
   BUTTON_NEW: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.New"]',
-  BUTTON_EDIT: '[role="menuitem"][title="Edit"]',
-  BUTTON_DELETE: '[role="menuitem"][title="Delete"]',
-  BUTTON_CHANGE_OWNER: '[role="menuitem"][title="Change Owner"]',
-  BUTTON_EDIT_LABELS:'[role="menuitem"][title="Edit Labels"]',
+  BUTTON_CHANGE_OWNER:'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassChangeOwner"]',
   BUTTON_IMPORT: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.Import"]',
-  BUTTON_ASIGN_LABEL: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.Import"]',
+  BUTTON_ASIGN_LABEL: 'li[data-target-selection-name="sfdc:StandardButton.MANAERP__Event_Master__c.MassAssignRecordLabel"]',
+  BUTTON_EDIT_ON_GRID: '[role="menuitem"][title="Edit"]',
+  BUTTON_DELETE_ON_GRID: '[role="menuitem"][title="Delete"]',
+  BUTTON_CHANGE_OWNER_ON_GRID: '[role="menuitem"][title="Change Owner"]',
+  BUTTON_EDIT_LABELS_ON_GRID:'[role="menuitem"][title="Edit Labels"]',
   BUTTON_SAVE: '[apiname="SaveEdit"]',
   BUTTON_CANCEL: '[apiname="CancelEdit"]',
   BUTTON_SAVE_NEW: '[apiname="SaveAndNew"]',
@@ -122,19 +119,10 @@ export const EventLocators = {
   
   // Search and Filter
   INPUT_SEARCH: '[name="Event Master-search-input"]',
-  BUTTON_SEARCH: 'button[title="Search"]',
-  BUTTON_CLEAR_SEARCH: 'button[title="Clear Search"]',
-  
-  // Data Grid
-  TABLE_EVENT_MASTER: 'table[role="grid"]',
-  TABLE_ROW: 'tr[data-row-key-value]',
-  TABLE_CELL: (columnName: string) => `td[data-label="${columnName}"]`,
   
   // Validation Messages
   ERROR_REQUIRED_FIELD: '.slds-form-element__help',
   ERROR_INVALID_FORMAT: '.slds-has-error .slds-form-element__help',
-  SUCCESS_TOAST: '.slds-notify--toast.slds-theme--success',
-  ERROR_TOAST: '.slds-notify--toast.slds-theme--error',
   
   // Labels and Text
   LABEL_EVENT_MASTER_NAME: 'label[for*="Name"]',
@@ -166,5 +154,6 @@ export const EventFieldLabels = {
   WHO_CAN_RESERVE: 'Who Can Reserve',
   REMINDERS: 'Reminders',
   MAX_EVENT_PER_STUDENT: 'Max Event Per Student',
-  DESCRIPTION: 'Description'
+  DESCRIPTION: 'Description',
+  SELECT_NEW_OWNER: 'Select New Owner *'
 } as const;

@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { LocatorOptions } from '@src/type/LocatorOptions';
 import { SiteLocators } from '../locators/siteLocators';
-import { TIMEOUT } from 'dns';
 /**
  * BasePage
  * - Acts as the parent class for all Page Objects
@@ -243,7 +242,6 @@ export class BasePage {
     await fieldSearch.press("Enter");
   }
 
-
   /**
    * Gets all data from a grid row and returns it as an object
    * @param uniqueColumn The column used to identify the row
@@ -264,6 +262,10 @@ export class BasePage {
 
     const rowCount = await rowLocator.count();
     console.log(`Found ${rowCount} matching rows`);
+    if (rowCount === 0) {
+      // Don't throw, let the test decide → avoid combining responsibilities
+      return {};
+    }
     // Get all cells in the row
     const cells = rowLocator.locator('td[data-label], th[data-label]');
     const cellCount = await cells.count();
@@ -286,8 +288,27 @@ export class BasePage {
     console.log(`\n📊 Quality Summary:`);
     console.log(`   Total columns extracted: ${Object.keys(rowData).length}`);
     console.log(`   Row identification: [${uniqueColumn}] = "${uniqueValue}"`);
-
+    if (Object.keys(rowData).length === 0) {
+      throw new Error(
+        `❌ Row found but no columns extracted for [${uniqueColumn}] = "${uniqueValue}". Check selectors or loading state.`
+      );
+    }
     return rowData;
+  }
+  /** Checkbox on grid */
+  async checkOnGrid(items: string[]) {
+    for (const item of items) {
+      await this.page
+        .locator('td[role="gridcell"]')
+        .filter({
+          has: this.page.locator('span.slds-form-element__label', { hasText: new RegExp(`^${this.escapeRegExp(item)}$`) })
+
+        })
+        .locator('span.slds-checkbox_faux')
+        .click();
+
+    }
+
   }
   /**
    * Handel there is no data after search data
@@ -360,9 +381,40 @@ export class BasePage {
   }
   /** Show message after save success */
   async verifySuccessMessage(message: string, timeout = 5000): Promise<void> {
-    const toastmessage = this.page.locator(`span.toastMessage:has-text("${message}")`);
+    await this.page.locator(SiteLocators.SUCCESS_TOAST).waitFor({ state: 'visible', timeout });
+    const toastmessage = this.page.locator(SiteLocators.SUCCESS_TOAST, {
+      hasText: new RegExp(this.escapeRegExp(message))
+    });
     await toastmessage.waitFor({ state: 'visible', timeout });
+    console.log(`✅ Verified success message: "${message}"`);
     await expect(toastmessage).toBeVisible({ timeout: 10000 });
+  }
+
+  /**
+   * Select option in combobox with search functionality
+   * @param comboboxName The accessible name of the combobox
+   * @param searchText Text to search/filter options
+   * @param waitTime Optional wait time after typing (default 2000ms)
+   */
+  async searchAndSelectComboboxOption(
+    comboboxName: string,
+    searchText: string,
+    waitTime: number = 2000
+  ): Promise<void> {
+    const combobox = this.page.getByRole('combobox', { name: comboboxName });
+
+    // Click to open dropdown
+    await combobox.click();
+
+    // Type search text
+    await combobox.fill(searchText);
+
+    // Wait for search results
+    await this.page.waitForTimeout(waitTime);
+
+    // Navigate to first option and select
+    await combobox.press('ArrowDown');
+    await combobox.press('Enter');
   }
 
   /**
@@ -370,7 +422,7 @@ export class BasePage {
   * @param labelText Label of dropdown
   * @param optionValue value want to select
   */
-  async selectOptionSmart(
+  async selectComboboxOptionBy(
     labelText: string | Locator | LocatorOptions,
     optionValue: string,
     by: 'value' | 'text' = 'value'

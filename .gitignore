@@ -8,4 +8,6 @@ playwright-report/
 test-results/
 test-results.json
 test-logs.json
+REFACTORING_PLAN.md
+qase.env
 docs

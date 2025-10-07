@@ -4,6 +4,7 @@ import { BasePage } from '../base/BasePage';
 import { SiteLocators} from '../locators/siteLocators';
 import { EventData } from '@src/type/EventData';
 import { CommonHelpers } from '../utils/commonHelpers';
+import { CommonConstants } from '@src/constants/commonConstants';
 /**
  * Page Object for the Event Master page
  * Encapsulates locators and actions for maintainability and reuse
@@ -25,11 +26,13 @@ export class EventMasterPage extends BasePage {
 
   // Button locators
   readonly buttonNew: Locator;
-  readonly buttonEdit: Locator;
-  readonly buttonDelete: Locator;
-  readonly buttonChangeOwner: Locator;
-  readonly buttonEditLabels: Locator;
+  readonly buttonEditOnGrid: Locator;
+  readonly buttonDeleteOnGrid: Locator;
+  readonly buttonChangeOwnerOnGrid: Locator;
+  readonly buttonEditLabelsOnGrid: Locator;
   readonly buttonImport: Locator;
+  readonly buttonChangeOwner: Locator
+  readonly buttonAssignLabel: Locator
   readonly buttonSave: Locator;
   readonly buttonCancel: Locator;
   readonly buttonSave_New: Locator;
@@ -53,11 +56,13 @@ export class EventMasterPage extends BasePage {
 
     // Initialize button locators
     this.buttonNew = page.locator(EventLocators.BUTTON_NEW);
-    this.buttonEdit = page.locator(EventLocators.BUTTON_EDIT);
-    this.buttonDelete = page.locator(EventLocators.BUTTON_DELETE);
+    this.buttonEditOnGrid = page.locator(EventLocators.BUTTON_EDIT_ON_GRID);
+    this.buttonDeleteOnGrid = page.locator(EventLocators.BUTTON_DELETE_ON_GRID);
+    this.buttonChangeOwnerOnGrid = page.locator(EventLocators.BUTTON_CHANGE_OWNER_ON_GRID);
+    this.buttonEditLabelsOnGrid = page.locator(EventLocators.BUTTON_EDIT_LABELS_ON_GRID);
     this.buttonChangeOwner = page.locator(EventLocators.BUTTON_CHANGE_OWNER);
-    this.buttonEditLabels = page.locator(EventLocators.BUTTON_EDIT_LABELS);
     this.buttonImport = page.locator(EventLocators.BUTTON_IMPORT);
+    this.buttonAssignLabel = page.locator(EventLocators.BUTTON_ASIGN_LABEL);
     this.buttonSave = page.locator(EventLocators.BUTTON_SAVE);
     this.buttonSave_New = page.locator(EventLocators.BUTTON_SAVE_NEW);
     this.buttonCancel = page.locator(EventLocators.BUTTON_CANCEL);
@@ -69,6 +74,13 @@ export class EventMasterPage extends BasePage {
     this.iframe = page.frameLocator(SiteLocators.IFRAME);
   }
 
+    /**
+   * Go to Event Master Page
+   */
+  async  goToEventMasterPage() : Promise<void> {
+  await CommonHelpers.navigateToPage(this.page, CommonConstants.PAGE_EVENT_MASTER);
+};
+
   /**
    * Clicks the "New" button to create a new event
    * @throws Error when button is not clickable
@@ -77,12 +89,20 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonNew);
   }
 
-  async clickEditButton(): Promise<void> {
-    await this.click(this.buttonEdit);
+  async clickEditOnGridButton(): Promise<void> {
+    await this.click(this.buttonEditOnGrid);
   }
 
-  async clickDeleteButton(): Promise<void> {
-    await this.click(this.buttonDelete);
+  async clickDeleteOnGridButton(): Promise<void> {
+    await this.click(this.buttonDeleteOnGrid);
+  }
+  
+  async clickChangeOwneronGridButton(): Promise<void> {
+    await this.click(this.buttonChangeOwnerOnGrid);
+  }
+
+  async clickEditLabelOnGridButton(): Promise<void> {
+    await this.click(this.buttonEditLabelsOnGrid);
   }
 
   async clickUnDoButton(): Promise<void> {
@@ -93,8 +113,8 @@ export class EventMasterPage extends BasePage {
     await this.click(this.buttonChangeOwner);
   }
 
-  async clickEditLabelButton(): Promise<void> {
-    await this.click(this.buttonEditLabels);
+  async clickAssignLabelButton(): Promise<void> {
+    await this.click(this.buttonAssignLabel);
   }
 
   async clickImportButton(): Promise<void> {
@@ -200,8 +220,8 @@ export class EventMasterPage extends BasePage {
     sendTo: string
   ): Promise<void> {
     await this.type(this.inputEventMasterName, eventMasterName);
-    await this.selectOptionSmart(this.selectEventType, eventType);
-    await this.selectOptionSmart(this.selectSendTo, sendTo);
+    await this.selectComboboxOptionBy(this.selectEventType, eventType);
+    await this.selectComboboxOptionBy(this.selectSendTo, sendTo);
   }
 
   /**
@@ -245,12 +265,8 @@ export class EventMasterPage extends BasePage {
    * @param expectedData - Object containing column names and expected values
    * @throws Error when expected data is not found
    */
-  async validateDataInGrid(column: string, expectedData: Record<string, string>): Promise<void> {
-    const columnValue = expectedData[column];
-    if (!columnValue) {
-      throw new Error(`Column value for '${column}' is required for grid validation`);
-    }
-    await this.getAllGridRowData(column, columnValue);
+   async getEventRowByName(eventName: string) {
+    return this.getAllGridRowData('Event Master Name', eventName);
   }
 
   /**

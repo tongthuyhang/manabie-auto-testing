@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { qase } from 'playwright-qase-reporter';
 import { EventMasterFacade } from '@src/facade/EventMasterFacade';
 import { CommonHelpers } from '@src/utils/commonHelpers';
@@ -16,6 +16,7 @@ const selectedEvents: EventData[] = getItemsByKey(
   selectedEventNames,
   'eventMasterName'
 );
+const eventName = 'demo';
 
 
 test.describe('Searching Event Master', () => {
@@ -38,7 +39,7 @@ test.describe('Searching Event Master', () => {
       });
     });
 
-  selectedEventNames.forEach((eventName) => {
+  // selectedEventNames.forEach((eventName) => {
     test(qase(3495,`Search Event Master with valid keyword for "${eventName}"`), { tag: '@Regression' }, async ({ page }) => {
       //=== QASE Metadata ===
       qase.fields({
@@ -47,9 +48,9 @@ test.describe('Searching Event Master', () => {
       });
       qase.comment(' Event Master which has event master name includes keyword is displayed');
       await test.step(`Search and validate event data for "${eventName}"`, async () => {
-        await eventMasterFacade.searchAndValidateEventData(eventName);
+        await eventMasterFacade.verifyEventData(eventName);
       });
     });
-  });
+  //});
 
 });

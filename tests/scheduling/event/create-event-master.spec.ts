@@ -21,14 +21,17 @@ const selectedEvents: EventData[] = getItemsByKey(
 
 test.describe('Creating Event Master', () => {
   let eventMasterFacade: EventMasterFacade;
+  let eventMasterPage: EventMasterPage;
+  
 
   test.beforeEach(async ({ page }) => {
-    await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
     eventMasterFacade = new EventMasterFacade(page);
+    eventMasterPage = new EventMasterPage(page);
+      await eventMasterPage.goToEventMasterPage();
   });
 
 
-  test(qase(661, `Create a New Event Master using "Save & New" action`), { tag: "@Regression" }, async ({ page }) => {
+  test(qase(661, `Create a New Event Master using "Save & New" action`), { tag: "@Regression" }, async () => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'Verify that a new Event Master can be created successfully', // description field on QASE
@@ -43,7 +46,7 @@ test.describe('Creating Event Master', () => {
     });
   });
 
-  test(qase(664, `Verify cancel functionality in Event Master creation`), { tag: "@Regression" }, async ({ page }) => {
+  test(qase(664, `Verify cancel functionality in Event Master creation`), { tag: "@Regression" }, async () => {
     //=== QASE Metadata ===
     qase.fields({
       description: `Ensure that clicking 'Cancel' does not save any data.`, // description field on QASE
@@ -53,11 +56,15 @@ test.describe('Creating Event Master', () => {
 
     // === Test Steps ===
     await test.step(`The user clicks on the "Cancel" button`, async () => {
-      await eventMasterFacade.verifyCancelButton(selectedEvents[0]);
+      await eventMasterFacade.cancelData(selectedEvents[0]);
     });
+    await test.step(`The user clicks on the "Cancel" button`, async () => {
+      await eventMasterPage.verifyModalClose(EventLocators.MODAL_TITLE);
+    });
+    
   });
 
-  test(qase(666, `Validate required field "Event Master Name"`), { tag: "@Regression" }, async ({ page }) => {
+  test(qase(666, `Validate required field "Event Master Name"`), { tag: "@Regression" }, async () => {
     //=== QASE Metadata ===
     qase.title(`Ensure that the system prompts the user when the required Event Master Name is not filled.`);
     qase.comment('Message "Complete this field." should be displayed under fields'); // Actual result field on QASE
@@ -71,7 +78,7 @@ test.describe('Creating Event Master', () => {
     });
   });
 
-  test(qase(667, 'Verify description field accepts formatted text'), { tag: '@Validation' }, async ({ page }) => {
+  test(qase(667, 'Verify description field accepts formatted text'), { tag: '@Validation' }, async () => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'Ensures a formatted Description does not block record creation and is stored/rendered properly.', // description field on QASE
@@ -85,7 +92,7 @@ test.describe('Creating Event Master', () => {
     });
   });
 
-  test(qase(785, 'Should validate Event Master Name field maximum length'), { tag: '@Validation' }, async ({ page }) => {
+  test(qase(785, 'Should validate Event Master Name field maximum length'), { tag: '@Validation' }, async () => {
     //=== QASE Metadata ===
     qase.fields({
       description: 'validate Event Master Name field maximum length', // description field on QASE
@@ -98,22 +105,20 @@ test.describe('Creating Event Master', () => {
   });
 
   test(qase(10072, 'Successfully create a new Event Master with type: paid, send to: parent only'), { tag: '@Valiation' }, async ({ page }) => {
-    let eventMasterPage = new EventMasterPage(page);
     //=== QASE Metadata ===
     qase.fields({
       description: 'Create a new Event Master with type: paid, send to: parent only', // description field on QASE
       preconditions: `The user has creation permissions, is on the 'Event Master' page`, // preconditions field on QASE
     });
+    qase.comment('Successfully create a new Event Master with type: paid, send to: parent only'); // Actual result field on QASE
     // === Test Steps ===
     await test.step(`Enter all data, while type = paid, sento = parent only`, async () => {
-      qase.comment('Who Can Reserve = parent only');
       await eventMasterPage.clickNewButton();
       await eventMasterPage.fillEventMasterForm(selectedEvents[1]);
       const valueWhoCanReserve = page.locator(EventLocators.SELECT_WHO_CAN_RESERVE);
       await expect(valueWhoCanReserve).toContainText('Parent Only');
     });
     await test.step(`Click Save`, async () => {
-      qase.comment('Successfully create a new Event Master with type: paid, send to: parent only'); // Actual result field on QASE
       await eventMasterPage.clickSaveButton();
       await eventMasterPage.verifySuccessMessage('was created');
     });

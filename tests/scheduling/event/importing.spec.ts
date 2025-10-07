@@ -14,9 +14,10 @@ test.describe('Importing Event Maste', () => {
   let eventMasterPage: EventMasterPage;
 
   test.beforeEach(async ({ page }) => {
-    await CommonHelpers.navigateToPage(page, CommonConstants.PAGE_EVENT_MASTER);
+  
     eventMasterFacade = new EventMasterFacade(page);
     eventMasterPage = new EventMasterPage(page);
+    await eventMasterPage.goToEventMasterPage();
   });
 
   test(qase(3494, 'Import Event Master with invalid data'), async ({ page }) => {
@@ -37,7 +38,7 @@ test.describe('Importing Event Maste', () => {
       const frame = page.frameLocator(SiteLocators.IFRAME);
       const filePath = path.resolve(__dirname, "../../../src/data/masterEventImportInvalid.csv");
       await eventMasterPage.importEventMaster(SiteLocators.BUTTON_ADD_NEW_RECORDS, filePath);
-      await eventMasterPage.selectOptionSmart(SiteLocators.LABEL_CHARACTER_CODE, 'Unicode (UTF8)');
+      await eventMasterPage.selectComboboxOptionBy(SiteLocators.LABEL_CHARACTER_CODE, 'Unicode (UTF8)');
       await eventMasterPage.clickNextButton();
       const errorLocator = frame.locator('td[title="Unmapped"]');
       await expect(errorLocator).toHaveCount(1, { timeout: 5000 });
@@ -63,7 +64,7 @@ test.describe('Importing Event Maste', () => {
       const frame = page.frameLocator(SiteLocators.IFRAME);
       const filePath = path.resolve(__dirname, "../../../src/data/masterEventImportValid.csv");
       await eventMasterPage.importEventMaster(SiteLocators.BUTTON_ADD_NEW_RECORDS, filePath);
-      await eventMasterPage.selectOptionSmart(SiteLocators.LABEL_CHARACTER_CODE, 'Unicode (UTF8)');
+      await eventMasterPage.selectComboboxOptionBy(SiteLocators.LABEL_CHARACTER_CODE, 'Unicode (UTF8)');
       await eventMasterPage.clickNextButton();
       const errorLocator = frame.locator('td[title="Unmapped"]');
       await expect(errorLocator).toHaveCount(0, { timeout: 5000 });
