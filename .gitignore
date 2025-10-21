@@ -24,3 +24,5 @@ myOrgAuth.json
 server.crt
 server.key
 orgList.json
+playwright-tests.yml
+allure-results

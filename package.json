@@ -20,6 +20,7 @@
     "test:preprod:order": "cross-env ENV=pre-prod npx playwright test --project=order",
     "test:preprod:no-storage": "cross-env ENV=pre-prod npx playwright test --project=no-storage",
     "test:preprod:qase": "cross-env ENV=pre-prod QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=true npx playwright test --project=scheduling",
+    "test:pre-prod:qase:ci": "cross-env ENV=pre-prod QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=$PROJECT --grep @Smoke",
     "test:regression": "cross-env ENV=dev-staging npx playwright test --project=scheduling --grep @Regression",
     "test:regression:qase": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=scheduling --grep @Regression --headless=false",
     "report": "npx playwright show-report",
@@ -34,6 +35,8 @@
   "devDependencies": {
     "@playwright/test": "^1.56.0",
     "@types/node": "^20.0.0",
+    "allure-commandline": "^2.34.1",
+    "allure-playwright": "^3.4.1",
     "cross-env": "^10.0.0",
     "cross-spawn": "^7.0.6",
     "dotenv": "^17.2.2",

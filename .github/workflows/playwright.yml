@@ -6,18 +6,13 @@ on:
   pull_request:
     branches: [ main, develop ]
 
-# Permissions for GitHub Pages
-# permissions:
-#   contents: read
-#   pages: write
-#   id-token: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [scheduling] 
+        environment: [dev-staging]   # ✅ define both envs here
+        project: [scheduling]
     timeout-minutes: 60
 
     steps:
@@ -31,15 +26,6 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: List files and folders in src directory
-        run: |
-          echo "Listing contents of src directory:"
-          ls -la src/
-          echo "\nDirectory structure:"
-          find src/ -type d
-          echo "\nAll files:"
-          find src/ -type f
-
       # 3. Install dependencies
       - name: Install dependencies
         run: npm ci
@@ -47,45 +33,58 @@ jobs:
       # 4. Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-          
-      # # 5. Run Playwright tests without Qase
-      # - name: Run Playwright Tests (Dev-Staging Report Only)
-      #   run: npm run test:dev-staging:report
-      #   env:
-      #     ENV: dev-staging
-      #     USER_TYPE: admin
-      # 5. Run Playwright tests with Qase
-      - name: Run Playwright Tests (Dev-Staging with Qase)
-        run: npm run test:dev-staging:qase:ci
+
+      # 5. Install Salesforce CLI
+      - name: Install Salesforce CLI
+        run: |
+          npm install -g @salesforce/cli@latest
+          sf version --verbose
+          sf plugins --core
+
+      # 6. Setup SFDX Authentication (for each environment)
+      - name: Setup SFDX Authentication
         env:
-          ENV: dev-staging
+          SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
+          SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
+        run: |
+          if [ "${{ matrix.environment }}" = "dev-staging" ]; then
+            echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
+            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias
+            echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
+          elif [ "${{ matrix.environment }}" = "pre-prod" ]; then
+            echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
+            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias mypre-product
+            echo "SFDX_ALIAS=mypre-product" >> $GITHUB_ENV
+          fi
+          rm -f auth_url.txt
+
+      # 7. Run Playwright Tests (with Qase)
+      - name: Run Playwright Tests with Qase
+        run: npm run test:${{ matrix.environment }}:qase:ci
+        env:
+          ENV: ${{ matrix.environment }}
           USER_TYPE: admin
           PROJECT: ${{ matrix.project }}
+          SFDX_ALIAS: ${{ env.SFDX_ALIAS }}
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
+          QASE_TESTOPS_API_HOST: qase.io
 
-      # 6. Upload HTML report
+      # 8. Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.environment }}
           path: playwright-report/
           retention-days: 30
-      # 7. Upload JSON logs + results
+
+      # 9. Upload JSON logs + results
       - name: Upload Test Logs & Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-artifacts
+          name: test-artifacts-${{ matrix.environment }}
           path: |
             test-logs.json
             test-results.json
           retention-days: 30
-
-      # 9. Deploy Playwright Report to GitHub Pages
-      # - name: Deploy to GitHub Pages
-      #   if: always()
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./playwright-report

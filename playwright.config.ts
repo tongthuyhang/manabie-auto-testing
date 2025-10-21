@@ -43,6 +43,67 @@ if (process.env.CI || process.env.DEBUG) {
 const now = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''); // 📅 Format: "2024-01-15 10:30:00"
 console.log('📅 Generated timestamp:', now); // Debug: verify timestamp generation
 
+// ==========================
+// ✅ REPORTER CONFIGURATION
+// ==========================
+const reporters: any[] = [
+  ['list'], // 📝 Always show console output for local & CI
+
+  // ----- Optional HTML (for quick local debugging) -----
+  process.env.HTML_REPORT === 'true' && ['html', { open: 'never' }],
+
+  // ----- Optional JSON output (for CI pipelines) -----
+  process.env.JSON_REPORT === 'true' && ['json', { outputFile: 'test-results.json' }],
+];
+
+// ----- ✅ Allure integration (runs in parallel, no conflict) -----
+if (process.env.ALLURE_MODE !== 'false') {
+  reporters.push(['allure-playwright']);
+}
+
+// ----- ✅ QASE integration -----
+if (process.env.QASE_MODE) {
+  reporters.push([
+    'playwright-qase-reporter',
+    {
+      mode: process.env.QASE_MODE || 'testops', // 📋 'testops' or 'report'
+      environment: process.env.QASE_ENVIRONMENT || ENV,
+      debug: process.env.QASE_DEBUG === 'true',
+      captureLogs: process.env.QASE_CAPTURE_LOGS === 'true',
+
+      testops: {
+        api: {
+          token: process.env.QASE_TESTOPS_API_TOKEN!,
+          host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io',
+        },
+        project: process.env.QASE_TESTOPS_PROJECT!,
+        run: {
+          id: process.env.QASE_TESTOPS_RUN_ID,
+          complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false',
+          title: process.env.QASE_TESTOPS_RUN_TITLE || `Playwright Run - ${ENV} - ${now}`,
+          description:
+            process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated test run',
+        },
+        framework: {
+          browser: {
+            addAsParameter: true,
+            parameterName: process.env.BROWSER_VERSION || 'chromium',
+          },
+        },
+        uploadAttachments: true,
+      },
+
+      report: {
+        driver: 'local',
+        connection: {
+          path: './build/qase-report',
+          format: 'json',
+        },
+      },
+    },
+  ]);
+}
+
 // ===== PLAYWRIGHT CONFIGURATION EXPORT =====
 export default defineConfig({
   testDir: './tests',
@@ -51,57 +112,59 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : 2,
-  reporter: process.env.QASE_MODE ? [
-    // ===== WITH QASE INTEGRATION =====
-    ['list'],                            // 📝 Real-time console output during test execution
-    ['html', { open: 'never' }],         // 📊 Interactive HTML report (don't auto-open browser)
-    ['json', { outputFile: 'test-results.json'}], // 📋 Machine-readable JSON results for CI/CD
-    [
-      'playwright-qase-reporter',        // 📊 QASE TestOps integration reporter
-      {
-        mode: process.env.QASE_MODE || 'testops',           // 📋 Integration mode: 'testops' or 'report'
-        fallback: process.env.QASE_FALLBACK || 'report',    // 🔄 Fallback mode if TestOps fails
-        environment: process.env.QASE_ENVIRONMENT || ENV,   // 🌍 Test environment identifier
-        debug: true,                                        // 🔍 Enable debug logging for troubleshooting
-        captureLogs: process.env.QASE_CAPTURE_LOGS === 'true', // 📝 Capture console logs in QASE
+  // reporter: process.env.QASE_MODE ? [
+  //   // ===== WITH QASE INTEGRATION =====
+  //   ['list'],                            // 📝 Real-time console output during test execution
+  //   ['html', { open: 'never' }],         // 📊 Interactive HTML report (don't auto-open browser)
+  //   ['json', { outputFile: 'test-results.json'}], // 📋 Machine-readable JSON results for CI/CD
+  //   [
+  //     'playwright-qase-reporter',        // 📊 QASE TestOps integration reporter
+  //     {
+  //       mode: process.env.QASE_MODE || 'testops',           // 📋 Integration mode: 'testops' or 'report'
+  //       fallback: process.env.QASE_FALLBACK || 'report',    // 🔄 Fallback mode if TestOps fails
+  //       environment: process.env.QASE_ENVIRONMENT || ENV,   // 🌍 Test environment identifier
+  //       debug: true,                                        // 🔍 Enable debug logging for troubleshooting
+  //       captureLogs: process.env.QASE_CAPTURE_LOGS === 'true', // 📝 Capture console logs in QASE
         
-        testops: {                       // 📊 QASE TestOps API configuration
-          api: {
-            token: process.env.QASE_TESTOPS_API_TOKEN!,      // 🔑 API authentication token (required)
-            host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io', // 🌐 QASE API endpoint
-          },
-          project: process.env.QASE_TESTOPS_PROJECT!,       // 📊 QASE project identifier (e.g., 'PX')
-          run: {
-            id: process.env.QASE_TESTOPS_RUN_ID || undefined,   // 🔗 Attach vào run có sẵn
-            complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false', // ✅ Auto-complete test run
-            title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`, // 📝 Test run title with timestamp
-            description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run', // 📝 Run description
-          },
-          framework: {                   // 🎭 Framework-specific settings
-            browser: {
-              addAsParameter: true,      // 🌐 Add browser info as test parameter
-              parameterName: 'Chrome 138.0.7204.50', // 📝 Browser version identifier
-            },
-          },
-          uploadAttachments: true,       // 📎 Upload screenshots/videos to QASE
-        },
+  //       testops: {                       // 📊 QASE TestOps API configuration
+  //         api: {
+  //           token: process.env.QASE_TESTOPS_API_TOKEN!,      // 🔑 API authentication token (required)
+  //           host: process.env.QASE_TESTOPS_API_HOST || 'api.qase.io', // 🌐 QASE API endpoint
+  //         },
+  //         project: process.env.QASE_TESTOPS_PROJECT!,       // 📊 QASE project identifier (e.g., 'PX')
+  //         run: {
+  //           id: process.env.QASE_TESTOPS_RUN_ID || undefined,   // 🔗 Attach vào run có sẵn
+  //           complete: process.env.QASE_TESTOPS_RUN_COMPLETE !== 'false', // ✅ Auto-complete test run
+  //           title: process.env.QASE_TESTOPS_RUN_TITLE || `Automated Playwright Run - ${ENV} - ${now}`, // 📝 Test run title with timestamp
+  //           description: process.env.QASE_TESTOPS_RUN_DESCRIPTION || 'Playwright automated run', // 📝 Run description
+  //         },
+  //         framework: {                   // 🎭 Framework-specific settings
+  //           browser: {
+  //             addAsParameter: true,      // 🌐 Add browser info as test parameter
+  //             parameterName: 'Chrome 138.0.7204.50', // 📝 Browser version identifier
+  //           },
+  //         },
+  //         uploadAttachments: true,       // 📎 Upload screenshots/videos to QASE
+  //       },
         
-        report: {                        // 📋 Local report configuration (fallback mode)
-          driver: process.env.QASE_REPORT_DRIVER || 'local',           // 💾 Report storage driver
-          connection: {
-            path: process.env.QASE_REPORT_CONNECTION_PATH || './build/qase-report', // 📁 Local report path
-            format: process.env.QASE_REPORT_CONNECTION_FORMAT || 'json',            // 📋 Report format
-          },
-        },
-      },
-    ]
-  ] : [
-    // ===== WITHOUT QASE INTEGRATION =====
-    ['list'],                            // 📝 Console output only
-    ['html', { open: 'never' }],         // 📊 HTML report only
-    ['json', { outputFile: 'test-results.json'}], // 📋 JSON results only
-  ],
+  //       report: {                        // 📋 Local report configuration (fallback mode)
+  //         driver: process.env.QASE_REPORT_DRIVER || 'local',           // 💾 Report storage driver
+  //         connection: {
+  //           path: process.env.QASE_REPORT_CONNECTION_PATH || './build/qase-report', // 📁 Local report path
+  //           format: process.env.QASE_REPORT_CONNECTION_FORMAT || 'json',            // 📋 Report format
+  //         },
+  //       },
+  //     },
+  //   ]
+  // ] : [
+  //   // ===== WITHOUT QASE INTEGRATION =====
+  //   ['list'],                            // 📝 Console output only
+  //   ['html', { open: 'never' }],         // 📊 HTML report only
+  //   ['json', { outputFile: 'test-results.json'}], // 📋 JSON results only
+  // ],
   
+   // 🧩 Apply the dynamic reporters
+  reporter: reporters.filter(Boolean),
   globalSetup: require.resolve('./setup/global-setup'),
   timeout: 10 * 10000,
    use: {

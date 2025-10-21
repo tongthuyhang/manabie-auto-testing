@@ -67,6 +67,72 @@ export async function loadUserByEnv(
  * Ưu tiên alias có envType + type + status = Connected
  * Fallback nếu không có alias khớp.
  */
+// interface OrgEntry {
+//   alias: string;
+//   connectedStatus: string;
+//   instanceUrl?: string;
+//   [key: string]: any;
+// }
+
+// export function getOrgAlias(alias?: string, env?: string): string {
+//   const ENV = (env || process.env.ENV || 'dev-staging').trim();
+//   const orgListPath = path.resolve(process.cwd(), 'src','config', 'orgList.json');
+
+//   // 1. Check orgList.json existence
+//   if (!fs.existsSync(orgListPath)) {
+//     console.warn(`⚠️ orgList.json not found at ${orgListPath}. Falling back to default alias 'myOrgAlias'`);
+//     return 'myOrgAlias';
+//   }
+
+//   // 2. Read and clean file
+//   let parsed: any;
+//   try {
+//     const raw = fs.readFileSync(orgListPath, 'utf8');
+//     const cleaned = raw.replace(/[\x00-\x1F\x7F]+/g, '').trim();
+//     parsed = JSON.parse(cleaned);
+//   } catch (err) {
+//     throw new Error(`Failed to parse orgList.json: ${(err as Error).message}`);
+//   }
+
+//   // 3. Flatten org entries
+//   const result = parsed.result || {};
+//   const orgGroups = ['other', 'nonScratchOrgs', 'devHubs', 'sandboxes', 'scratchOrgs'];
+//   const allOrgs: OrgEntry[] = orgGroups.flatMap((k) => Array.isArray(result[k]) ? result[k] : []);
+
+//   // Helper for alias lookup
+//   const normalize = (a?: string) => (a || '').trim().toLowerCase();
+
+//   // 4. Look up by explicit alias
+//   if (alias) {
+//     const requested = normalize(alias);
+//     const found = allOrgs.find(o => normalize(o.alias) === requested);
+//     if (found && found.connectedStatus === 'Connected') {
+//       console.log(`✅ Using provided alias: ${found.alias}`);
+//       return found.alias.trim();
+//     }
+//     console.warn(`⚠️ Provided alias '${alias}' not found/connected in orgList.json`);
+//   }
+
+//   // 5. Look up by ENV in instanceUrl
+//   const envLower = ENV.toLowerCase();
+//   const byEnv = allOrgs.filter(o => (o.instanceUrl || '').toLowerCase().includes(envLower) && o.connectedStatus === 'Connected');
+//   if (byEnv.length > 0) {
+//     console.log(`✅ Auto-selected alias for ENV='${ENV}': ${byEnv[0].alias}`);
+//     return byEnv[0].alias.trim();
+//   }
+
+//   // 6. Fallback: first connected org
+//   const firstConnected = allOrgs.find(o => o.connectedStatus === 'Connected');
+//   if (firstConnected) {
+//     console.log(`✅ Fallback alias: ${firstConnected.alias}`);
+//     return firstConnected.alias.trim();
+//   }
+
+//   // 7. Final fallback
+//   console.warn(`⚠️ No connected orgs found in orgList.json — using default alias 'myOrgAlias'`);
+//   return 'myOrgAlias';
+// }
+
 interface OrgEntry {
   alias: string;
   connectedStatus: string;
@@ -76,60 +142,89 @@ interface OrgEntry {
 
 export function getOrgAlias(alias?: string, env?: string): string {
   const ENV = (env || process.env.ENV || 'dev-staging').trim();
-  const orgListPath = path.resolve(process.cwd(), 'src','config', 'orgList.json');
+  const orgListPath =
+    process.env.ORG_LIST_PATH ||
+    path.resolve(process.cwd(), 'src', 'config', 'orgList.json');
 
-  // 1. Check orgList.json existence
+  // 1️⃣ Check file existence
   if (!fs.existsSync(orgListPath)) {
-    console.warn(`⚠️ orgList.json not found at ${orgListPath}. Falling back to default alias 'myOrgAlias'`);
+    console.warn(
+      `⚠️ orgList.json not found at "${orgListPath}". Falling back to default alias "myOrgAlias".`
+    );
     return 'myOrgAlias';
   }
 
-  // 2. Read and clean file
-  let parsed: any;
+  // 2️⃣ Read and parse file safely
+  let allOrgs: OrgEntry[] = [];
   try {
     const raw = fs.readFileSync(orgListPath, 'utf8');
     const cleaned = raw.replace(/[\x00-\x1F\x7F]+/g, '').trim();
-    parsed = JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
+    const result = parsed.result || {};
+
+    const orgGroups = [
+      'other',
+      'nonScratchOrgs',
+      'devHubs',
+      'sandboxes',
+      'scratchOrgs',
+    ];
+
+    allOrgs = orgGroups.flatMap((k) =>
+      Array.isArray(result[k]) ? result[k] : []
+    );
   } catch (err) {
-    throw new Error(`Failed to parse orgList.json: ${(err as Error).message}`);
+    console.error(`❌ Failed to parse orgList.json: ${(err as Error).message}`);
+    return 'myOrgAlias';
   }
 
-  // 3. Flatten org entries
-  const result = parsed.result || {};
-  const orgGroups = ['other', 'nonScratchOrgs', 'devHubs', 'sandboxes', 'scratchOrgs'];
-  const allOrgs: OrgEntry[] = orgGroups.flatMap((k) => Array.isArray(result[k]) ? result[k] : []);
-
-  // Helper for alias lookup
   const normalize = (a?: string) => (a || '').trim().toLowerCase();
+  const isConnected = (o: OrgEntry) => o.connectedStatus === 'Connected';
 
-  // 4. Look up by explicit alias
+  // 3️⃣ Lookup by explicit alias
   if (alias) {
-    const requested = normalize(alias);
-    const found = allOrgs.find(o => normalize(o.alias) === requested);
-    if (found && found.connectedStatus === 'Connected') {
+    const found = allOrgs.find(
+      (o) => normalize(o.alias) === normalize(alias) && isConnected(o)
+    );
+    if (found) {
       console.log(`✅ Using provided alias: ${found.alias}`);
+      injectOrgEnv(found);
       return found.alias.trim();
     }
-    console.warn(`⚠️ Provided alias '${alias}' not found/connected in orgList.json`);
+    console.warn(`⚠️ Provided alias '${alias}' not found or disconnected.`);
   }
 
-  // 5. Look up by ENV in instanceUrl
+  // 4️⃣ Lookup by ENV pattern (in instanceUrl)
   const envLower = ENV.toLowerCase();
-  const byEnv = allOrgs.filter(o => (o.instanceUrl || '').toLowerCase().includes(envLower) && o.connectedStatus === 'Connected');
+  const byEnv = allOrgs.filter(
+    (o) =>
+      (o.instanceUrl || '').toLowerCase().includes(envLower) && isConnected(o)
+  );
+
   if (byEnv.length > 0) {
     console.log(`✅ Auto-selected alias for ENV='${ENV}': ${byEnv[0].alias}`);
+    injectOrgEnv(byEnv[0]);
     return byEnv[0].alias.trim();
   }
 
-  // 6. Fallback: first connected org
-  const firstConnected = allOrgs.find(o => o.connectedStatus === 'Connected');
+  // 5️⃣ Fallback: first connected org
+  const firstConnected = allOrgs.find(isConnected);
   if (firstConnected) {
     console.log(`✅ Fallback alias: ${firstConnected.alias}`);
+    injectOrgEnv(firstConnected);
     return firstConnected.alias.trim();
   }
 
-  // 7. Final fallback
-  console.warn(`⚠️ No connected orgs found in orgList.json — using default alias 'myOrgAlias'`);
+  // 6️⃣ Final fallback
+  console.warn(`⚠️ No connected orgs found — using default alias 'myOrgAlias'.`);
   return 'myOrgAlias';
 }
 
+/**
+ * 🔐 Inject org credentials (instanceUrl, alias, token) into process.env
+ */
+function injectOrgEnv(org: OrgEntry) {
+  if (org.instanceUrl) process.env.INSTANCE_URL = org.instanceUrl;
+  process.env.SFDX_ALIAS = org.alias;
+  if (org.accessToken) process.env.ACCESS_TOKEN = org.accessToken;
+}
