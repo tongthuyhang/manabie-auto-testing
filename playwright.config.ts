@@ -1,9 +1,8 @@
 // ===== IMPORTS =====
-import { defineConfig, devices } from '@playwright/test';  // 🎭 Core Playwright configuration
-import * as dotenv from 'dotenv';                          // 🌍 Environment variable loading
-import path from 'path';                                   // 📁 File path utilities
-import { register } from 'tsconfig-paths';                 // 🔗 TypeScript path mapping
-import { StorageHelper } from './src/utils/storageHelper'; // 🔐 Authentication storage management
+import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+import path from 'path';
+import { register } from 'tsconfig-paths';
 
 // ===== TYPESCRIPT PATH MAPPING =====
 // Register @src/* alias for cleaner imports in test files
@@ -17,6 +16,7 @@ register({
 // ===== ENVIRONMENT SETUP =====
 // Determine which environment to use (dev-staging, pre-prod, etc.)
 const ENV = process.env.ENV?.trim() || 'dev-staging';  // 🌍 Default to dev-staging if not specified
+const storageStatePath = path.resolve(__dirname, 'storage', `storageState.${ENV}.json`);
 
 // Load environment-specific configuration (URLs, credentials, etc.)
 dotenv.config({ path: path.resolve(__dirname, `src/config/${ENV}.env`) });  // 📋 Load main environment config
@@ -26,18 +26,7 @@ if (process.env.QASE_MODE) {
   dotenv.config({ path: path.resolve(__dirname, 'src/config/qase.env') });   // 📊 Load QASE TestOps config
 }
 
-// ===== AUTHENTICATION STORAGE =====
-// Check if we have valid authentication storage to skip login
-const storagePath = StorageHelper.shouldRefreshStorageState(ENV, false)     // 🔍 Check if storage is expired
-  ? null                                                                     // ❌ Storage expired, will need fresh login
-  : StorageHelper.loadStorageState(ENV);                                    // ✅ Storage valid, use existing auth
 
-// Log storage status for debugging
-if (storagePath) {
-  console.log(`✅ Using existing storage: ${storagePath}`);                 // 🔐 Using cached authentication
-} else {
-  console.log(`🔄 Storage will be refreshed by global setup`);             // 🔄 Will perform fresh login
-}
 
 // ===== DEBUG LOGGING =====
 // Show environment variables in CI or debug mode (security: only show first 6 chars of token)
@@ -56,17 +45,12 @@ console.log('📅 Generated timestamp:', now); // Debug: verify timestamp genera
 
 // ===== PLAYWRIGHT CONFIGURATION EXPORT =====
 export default defineConfig({
-  // ===== CORE TEST SETTINGS =====
-  testDir: './tests',                    // 📂 Root directory where Playwright looks for *.spec.ts files
-  outputDir: './test-results',           // 📁 Directory for test artifacts (screenshots, videos, traces)
-  
-  // ===== EXECUTION CONTROL =====
-  fullyParallel: true,                   // 🔄 Run tests in parallel across different files (faster execution)
-  forbidOnly: !!process.env.CI,          // 🚫 Prevent test.only() in CI (avoids accidentally running single test)
-  retries: process.env.CI ? 2 : 0,       // 🔄 Retry failed tests: 0 locally (fast feedback), 2 in CI (handle flakiness)
-  workers: process.env.CI ? 1 : undefined, // 👥 Worker processes: 1 in CI (stability), auto-detect locally (performance)
-  // ===== REPORTER CONFIGURATION =====
-  // Conditional reporter loading: QASE integration only when QASE_MODE environment variable is set
+  testDir: './tests',
+  outputDir: './test-results',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 1,
+  workers: process.env.CI ? 1 : 2,
   reporter: process.env.QASE_MODE ? [
     // ===== WITH QASE INTEGRATION =====
     ['list'],                            // 📝 Real-time console output during test execution
@@ -118,60 +102,51 @@ export default defineConfig({
     ['json', { outputFile: 'test-results.json'}], // 📋 JSON results only
   ],
   
-  // ===== GLOBAL SETUP =====
-  globalSetup: require.resolve('./setup/global-setup'), // 🌍 Runs once before all tests (handles authentication)
-  
-  // ===== TIMEOUT CONFIGURATION =====s
-  timeout: 10 * 10000,                  // ⏱️ Global test timeout: 100 seconds (10 * 10000ms)
-  // ===== GLOBAL USE CONFIGURATION =====
-  // These settings apply to all tests unless overridden in project-specific configuration
-  use: {
-    baseURL: process.env.PAGE_URL,       // 🌐 Base URL from environment (allows relative URLs in tests)
-    trace: 'on-first-retry',            // 🔍 Record full trace on first retry (for debugging failures)
-    screenshot: 'only-on-failure',      // 📸 Capture screenshots only when tests fail
-    video: 'retain-on-failure',         // 🎬 Keep videos only for failed tests (saves disk space)
-    headless: process.env.CI ? true : false, // 👁️ Headless in CI (no GUI), visible locally (for debugging)
-  },
+  globalSetup: require.resolve('./setup/global-setup'),
+  timeout: 10 * 10000,
+   use: {
+     baseURL: process.env.PAGE_URL,
+     trace: 'on-first-retry',
+     screenshot: 'only-on-failure',
+     video: 'retain-on-failure',
+     headless: process.env.CI ? true : false,
+     storageState: storageStatePath,
+   },
   
   // ===== PROJECT CONFIGURATIONS =====
   // Multiple projects allow different test configurations (with/without authentication, different browsers, etc.)
-  projects: [
-    {
-      // ===== GENERAL SCHEDULING PROJECT =====
-      name: 'scheduling',             // 📛 Project identifier for scheduling tests
-      testDir: path.resolve(__dirname, 'tests/scheduling'), // 📂 Directory containing scheduling test files
-      testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
-      timeout: 10 * 10000,              // ⏱️ Project-specific timeout: 100 seconds
-      use: {
-        ...devices['Desktop Chrome'],   // 🖥️ Use Chrome browser with desktop viewport
-         //viewport: { width: 1920, height: 1080 }, 
-        storageState: storagePath || undefined, // 🔐 Load authentication cookies/localStorage (if available)
-      },
-    },
-    {
-      // ===== NON-AUTHENTICATED TESTS PROJECT =====
-      name: 'no-storage',               // 📛 Project for tests that handle their own login
-      testDir: path.resolve(__dirname, 'tests/no-storage'), // 📂 Directory for login/permission tests
-      testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
-      use: {
-        ...devices['Desktop Chrome'],   // 🖥️ Use Chrome browser with desktop viewport
-        storageState: undefined,         // 🚫 No pre-authentication (tests start from login page)
-      },
-    },
-    {
-      // ===== GENERAL ORDER PROJECT =====
-       name: 'order',             // 📛 Project identifier for scheduling tests
-      testDir: path.resolve(__dirname, 'tests/order'), // 📂 Directory containing scheduling test files
-      testMatch: '**/*.spec.ts',         // 🔍 File pattern: all .spec.ts files in subdirectories
-      timeout: 10 * 10000,              // ⏱️ Project-specific timeout: 100 seconds
-      use: {
-        ...devices['Desktop Chrome'],   // 🖥️ Use Chrome browser with desktop viewport
-         //viewport: { width: 1920, height: 1080 }, 
-        storageState: storagePath || undefined, // 🔐 Load authentication cookies/localStorage (if available)
-      },
-     
-    },
-  ],
+   projects: [
+     {
+       name: 'scheduling',
+       testDir: path.resolve(__dirname, 'tests/scheduling'),
+       testMatch: '**/*.spec.ts',
+       timeout: 10 * 10000,
+       use: {
+         ...devices['Desktop Chrome'],
+         storageState: storageStatePath,
+       },
+     },
+     {
+       name: 'order',
+       testDir: path.resolve(__dirname, 'tests/order'),
+       testMatch: '**/*.spec.ts',
+       timeout: 10 * 10000,
+       use: {
+         ...devices['Desktop Chrome'],
+         storageState: storageStatePath,
+       },
+     },
+     // Project no-storage vẫn có thể dùng storageState: undefined nếu muốn test login UI
+     {
+       name: 'no-storage',
+       testDir: path.resolve(__dirname, 'tests/no-storage'),
+       testMatch: '**/*.spec.ts',
+       use: {
+         ...devices['Desktop Chrome'],
+         storageState: undefined,
+       },
+     },
+   ],
 });
 
 // ===== CONFIGURATION SUMMARY =====

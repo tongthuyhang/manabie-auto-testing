@@ -5,7 +5,7 @@
       "value": "0:1",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
-      "expires": 1791266015.338353,
+      "expires": 1792550906.429383,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -15,97 +15,27 @@
       "value": "0:1",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
-      "expires": 1791266015.339362,
+      "expires": 1792550906.429613,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "BrowserId",
-      "value": "y3JccKJ4EfCX81uwo-B8WQ",
+      "value": "aeepl64oEfCWPgUi075XwQ",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1791266015.339394,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "CookieConsentPolicy",
-      "value": "0:0",
-      "domain": "login.salesforce.com",
-      "path": "/",
-      "expires": 1791266015.918549,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "LSKey-c$CookieConsentPolicy",
-      "value": "0:0",
-      "domain": "login.salesforce.com",
-      "path": "/",
-      "expires": 1791266015.918705,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "session",
-      "value": "1759730016153",
-      "domain": "login.salesforce.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "inst",
-      "value": "APP_IU",
-      "domain": ".salesforce.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "rememberUn",
-      "value": "false",
-      "domain": ".salesforce.com",
-      "path": "/",
-      "expires": 1764914016.45694,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "com.salesforce.LocaleInfo",
-      "value": "jp",
-      "domain": ".salesforce.com",
-      "path": "/",
-      "expires": 1764914016.457027,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "oinfo",
-      "value": "c3RhdHVzPVRSSUFMJnR5cGU9MiZvaWQ9MDBESVUwMDAwMDNvOFhv",
-      "domain": ".salesforce.com",
-      "path": "/",
-      "expires": 1764914016.457077,
+      "expires": 1792550906.42968,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sfdc_lv2",
-      "value": "KxG83HxRG63GLtWG8tfBYiowHITsQ/gUeNXQ6EGrCsvoodQLkmNnKWqimlqCRJv84=",
+      "value": "KxG83HRK492j0srJ++I5bLoqUoXRSAaioH0JX7WH9YTVkdi0Uhyt0rYtsJrfqVhMA=",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1791266016.630196,
+      "expires": 1792550906.429736,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -125,14 +55,14 @@
       "value": "1",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1764914016.630414,
+      "expires": 1766198906.429828,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sid",
-      "value": "00DIU000003o8Xo!ARUAQMv.MaLFbOmU844ebLnvVmGcLoPRNmqkCJE96y_QmPbOgkL60HY8J2XmylzVOZ7IIRaqpVoiBV.ou3_RvCe1l4ezGzlf",
+      "value": "00DIU000003o8Xo!ARUAQKmBIf4oMCoc3XUFJcRy6Kl4Ph_8i6nbl23P5YIqF0Z5MX_lDlV_XTeGFrXhHZPd3MAYuAq3.2DPD63wXchEcHI8vUCL",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
       "expires": -1,
@@ -152,7 +82,7 @@
     },
     {
       "name": "clientSrc",
-      "value": "115.79.192.13",
+      "value": "113.161.78.29",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
       "expires": -1,
@@ -165,7 +95,7 @@
       "value": "00DIU000003o8Xo",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
-      "expires": 1791266016.630706,
+      "expires": 1792550906.430071,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -175,7 +105,7 @@
       "value": "0:1",
       "domain": "dev-staging.file.force.com",
       "path": "/",
-      "expires": 1791266017.529927,
+      "expires": 1792550906.925049,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -185,24 +115,24 @@
       "value": "0:1",
       "domain": "dev-staging.file.force.com",
       "path": "/",
-      "expires": 1791266017.530136,
+      "expires": 1792550906.925172,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "BrowserId",
-      "value": "zKZvrKJ4EfCSq2ktqPNFhQ",
+      "value": "ajY-lK4oEfCUlAeIx3VVrg",
       "domain": ".force.com",
       "path": "/",
-      "expires": 1791266017.530204,
+      "expires": 1792550906.925229,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sid",
-      "value": "00DIU000003o8Xo!ARUAQHUYnIgOpNsVkrDfehlAGJccN_pQUmMEducLLGrb942kZnBEJiZfW6ebCbj8hHdhxkhZpt9rLGdqXsF.K1n8EFL84HIR",
+      "value": "00DIU000003o8Xo!ARUAQCqvciXeTQLN7N5SsmM65naiHh.kazKGpQfdcEkr6NtJZz1qFfIlyX9fR5nx.Qbkkus5zSe1CxGReljTfKOeYasVlgmd",
       "domain": "dev-staging.file.force.com",
       "path": "/",
       "expires": -1,
@@ -222,7 +152,7 @@
     },
     {
       "name": "clientSrc",
-      "value": "115.79.192.13",
+      "value": "113.161.78.29",
       "domain": "dev-staging.file.force.com",
       "path": "/",
       "expires": -1,
@@ -242,20 +172,30 @@
     },
     {
       "name": "sfdc-aura",
-      "value": "!OIucuF8wiNcUUOEmL3dxNN9+mJsoZ3q/P9Lex7sm+N1coHMaj/KmyDCyvJepRnOVgtW7P74Mn3kZbF8=",
+      "value": "!P127Q4+cIICGfWC/e1NphdtxMBHEabnpqK94+02zi1Cx65q1Q5vFOigUn8tgChRqTUDwaM21X74+iHA=",
       "domain": "dev-staging.file.force.com",
       "path": "/",
-      "expires": 1759816425,
+      "expires": 1761015087.051187,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "session",
+      "value": "1761014907968",
+      "domain": "login.salesforce.com",
+      "path": "/",
+      "expires": -1,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sfdc-aura",
-      "value": "!RdWugVMDt9LhAXO/e1NphdtxMBHEab0XKvlWmthG+P/QECn4o5XF+KCDI9eVd7FwBHXAEOiee8ZilQ==",
+      "value": "!HJWvSVSiOBTlDf4mL3dxNN9+mJsoZ53ETlJuJnIRGiQ/HRUXbCs9W08KDVFpLWnlDT8m512FJ4CiRw==",
       "domain": "dev-staging.my.salesforce.com",
       "path": "/",
-      "expires": 1759816425,
+      "expires": 1761015088.085574,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -265,7 +205,7 @@
       "value": "0:1",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
-      "expires": 1791266019.809496,
+      "expires": 1792550908.555531,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -275,15 +215,15 @@
       "value": "0:1",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
-      "expires": 1791266019.809553,
+      "expires": 1792550908.555599,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "79eb100099b9a8bf",
-      "value": "3:false:.salesforce.com",
-      "domain": ".salesforce.com",
+      "value": "3:false:.my.salesforce.com",
+      "domain": ".my.salesforce.com",
       "path": "/",
       "expires": -1,
       "httpOnly": false,
@@ -292,7 +232,7 @@
     },
     {
       "name": "sid",
-      "value": "00DIU000003o8Xo!ARUAQFNYjI3QIKB69KuotkcsaOSQsyYHWJH4NBP_nJR6VntyxedxH2n5kR6_0.hfHnm8KgQMqiiarCSL0rwKejMopSjcGDwj",
+      "value": "00DIU000003o8Xo!ARUAQBU5RVyK0Rs7bhXde6bR4dEg4M78biG15Ko.9nAf.zUgp5lEFK7Yy5BT7FDmeNPSsiNYhtC_yzoFcQx0nQpMfnq17s0o",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
       "expires": -1,
@@ -312,7 +252,7 @@
     },
     {
       "name": "clientSrc",
-      "value": "115.79.192.13",
+      "value": "113.161.78.29",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
       "expires": -1,
@@ -321,11 +261,21 @@
       "sameSite": "None"
     },
     {
+      "name": "79eb100099b9a8bf",
+      "value": "3:false:.lightning.force.com",
+      "domain": ".lightning.force.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
       "name": "sfdc-aura",
-      "value": "!1uK0wjEpgph8QaiANs1GMcgsfNKftz2wo9+3mESpMekoa0jRh7eNnVuGsA+UKNUgtQqv6IkjXKM8TPs=",
+      "value": "!Vq/wuMQi09UY7tYmL3dxNN9+mJsoZ69gNXNN4wYrFZNfE+AatNXjNVkTj2O6f/TURIXrgq/mvTfAaQ==",
       "domain": "dev-staging.lightning.force.com",
       "path": "/",
-      "expires": 1759816425,
+      "expires": 1761015090.313548,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -337,15 +287,19 @@
       "localStorage": [
         {
           "name": "$AuraClientService.token$one:one",
-          "value": "eyJub25jZSI6IjBCMmtjUm9SV29BSm15RXoxb0EtclE5RkgtTEZaNEZsOGZTSTU3V3J6TU1cdTAwM2QiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6IntcInRcIjpcIjAwRDBJMDAwMDAyTk5LVFwiLFwidlwiOlwiMDJHMEkwMDAwMDBIYWRGXCIsXCJhXCI6XCJjYWltYW5zaWduZXJcIn0iLCJjcml0IjpbImlhdCJdLCJpYXQiOjE3NTk3MzAwMTkyMTYsImV4cCI6MH0=..FbE81q0wxJbSl7f56d4m09aw48rE1kOM4UMGEbK0jZs="
+          "value": "eyJub25jZSI6IkRMdTJJcTZNTF9RX0pVeEEzbjVUSEJmRVloeTJDbUN0SzhjMDVJZllQUzhcdTAwM2QiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6IntcInRcIjpcIjAwRDBJMDAwMDAyTk5LVFwiLFwidlwiOlwiMDJHMEkwMDAwMDBIYWRGXCIsXCJhXCI6XCJjYWltYW5zaWduZXJcIn0iLCJjcml0IjpbImlhdCJdLCJpYXQiOjE3NjEwMTQ5MDczMjYsImV4cCI6MH0=..RZmi5wmg9-PUSUQPzHQIP1IgquL7hcVrFat-sCoL9qM="
         },
         {
           "name": "GlobalValueProviders__MUTEX_X",
-          "value": "2130100000f8b6354c537318|1759730024852"
+          "value": "1219600000977cd736f1e7a|1761014910285"
         },
         {
           "name": "appContextId",
           "value": "06mIU0000026faeYAA"
+        },
+        {
+          "name": "GlobalValueProviders__MUTEX_Y",
+          "value": "1219600000977cd736f1e7a|1761014910298"
         }
       ]
     }

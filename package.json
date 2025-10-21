@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Automated testing with Playwright and TypeScript",
   "scripts": {
-    "test": "cross-env ENV=dev-staging npx playwright test --project=chromium",
+    "test": "npx playwright test --project=scheduling",
     "test:headed": "cross-env ENV=dev-staging npx playwright test --project=chromium --headed",
     "test:debug": "cross-env ENV=dev-staging npx playwright test --project=chromium --debug",
     "test:ui": "cross-env ENV=dev-staging npx playwright test --project=chromium --ui",
@@ -15,7 +15,8 @@
     "test:dev-staging:report": "cross-env ENV=dev-staging npx playwright test --project=scheduling",
     "test:dev-staging:local": "cross-env ENV=dev-staging QASE_MODE=report npx playwright test --project=scheduling",
     "test:preprod": "cross-env ENV=pre-prod npx playwright test --project=chromium",
-    "test:preprod:with-storage": "cross-env ENV=pre-prod npx playwright test --project=scheduling",
+    "test:preprod:with-storage": "cross-env ENV=pre-prod SFDX_ALIAS=mypre-product npx playwright test --project=scheduling",
+    "test:preprod:scheduling:alias": "cross-env ENV=pre-prod SFDX_ALIAS=trungpre-product npx playwright test --project=scheduling",
     "test:preprod:order": "cross-env ENV=pre-prod npx playwright test --project=order",
     "test:preprod:no-storage": "cross-env ENV=pre-prod npx playwright test --project=no-storage",
     "test:preprod:qase": "cross-env ENV=pre-prod QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=true npx playwright test --project=scheduling",
@@ -23,16 +24,18 @@
     "test:regression:qase": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false npx playwright test --project=scheduling --grep @Regression --headless=false",
     "report": "npx playwright show-report",
     "expire-storage": "powershell -ExecutionPolicy Bypass -File ./scripts/expire-storage.ps1 -env dev-staging",
+    "expire-storage-pre-prod": "powershell -ExecutionPolicy Bypass -File ./scripts/expire-storage.ps1 -env pre-prod",
     "refresh:storage": "ts-node scripts/refresh-storage.ts",
     "check:storage": "ts-node scripts/check-storage-expiry.ts",
     "count:cookies": "ts-node scripts/count-cookies.ts",
+    "generate:storage": "ts-node scripts/generate-storageState.ts",
     "test:dev-staging:qase:attach": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_RUN_ID=$RUN_ID QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false QASE_TESTOPS_RUN_COMPLETE=false npx playwright test --project=scheduling"
-    
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
+    "@playwright/test": "^1.56.0",
     "@types/node": "^20.0.0",
     "cross-env": "^10.0.0",
+    "cross-spawn": "^7.0.6",
     "dotenv": "^17.2.2",
     "playwright-qase-reporter": "^2.1.6",
     "qaseio": "^2.4.3",
@@ -41,6 +44,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "axios": "^1.11.0"
+    "axios": "^1.11.0",
+    "csv-writer": "^1.6.0",
+    "xlsx": "^0.18.5"
   }
 }

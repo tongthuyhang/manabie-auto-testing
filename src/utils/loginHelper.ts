@@ -4,11 +4,7 @@ import { loadUserByEnv } from "./configHelpers";
 
 export async function LoginAction(page: Page, userType: string) {
   const loginPage = new LoginPage(page);
-  const storageFile = `src/storage/storageState.${process.env.ENV}.json`;
-  const userInfo = await loadUserByEnv(
-    process.env.ENV,
-    userType || process.env.USER_TYPE
-  );
+  const userInfo = await loadUserByEnv(process.env.ENV,userType);
 
   await page.goto(process.env.PAGE_URL as string);
   console.log(`📝 UserInfo loaded:`, JSON.stringify(userInfo, null, 2));

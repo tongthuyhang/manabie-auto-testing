@@ -30,10 +30,8 @@ export class StorageHelper {
     
     try {
       await page.context().storageState({ path: filePath });
-      
-      // Extend cookie expiration for CI/CD usage
-      this.extendCookieExpiration(filePath);
-      
+        // const username = process.env.SF_USERNAME;;
+        //  console.log(`userName:`, username);
       console.log(`✅ Storage saved successfully: ${filePath}`);
       return filePath;
     } catch (error) {
@@ -43,33 +41,7 @@ export class StorageHelper {
     }
   }
 
-  /**
-   * Extends expiration time for short-lived cookies to make them suitable for CI/CD
-   * @param filePath - Path to the storage state file
-   * @private
-   */
-  private static extendCookieExpiration(filePath: string): void {
-    try {
-      const storageState = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-      const extendedTime = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours from now
-      console.log(' stogare', storageState);
-      
-      if (storageState.cookies) {
-        storageState.cookies.forEach((cookie: any) => {
-          // Extend short-lived cookies (less than 1 hour)
-          if (cookie.expires > 0 && cookie.expires < (Date.now() / 1000) + 3600) {
-            console.log(`🔄 Extending ${cookie.name} cookie expiration`);
-            cookie.expires = extendedTime;
-          }
-        });
-      }
-      
-      fs.writeFileSync(filePath, JSON.stringify(storageState, null, 2));
-      console.log(`✅ Cookie expiration times extended for CI/CD usage`);
-    } catch (error) {
-      console.warn(`⚠️ Failed to extend cookie expiration: ${error}`);
-    }
-  }
+  
 
   /**
    * Loads the storage state file path if it exists
@@ -177,22 +149,22 @@ export class StorageHelper {
    * @param env - Environment (defaults to dev-staging)
    * @param userType - User type for login (defaults to admin)
    */
-  static async checkAndRefreshStorage(
-    page: Page, 
-    env?: string, 
-    userType?: string
-  ): Promise<void> {
-    const environment = env || process.env.ENV?.trim() || 'dev-staging';
-    const user = userType || process.env.USER_TYPE || 'admin';
+  // static async checkAndRefreshStorage(
+  //   page: Page, 
+  //   env?: string, 
+  //   userType?: string
+  // ): Promise<void> {
+  //   const environment = env || process.env.ENV?.trim() || 'dev-staging';
+  //   const user = userType || process.env.USER_TYPE || 'admin';
     
-    if (this.shouldRefreshStorageState(environment)) {
-      console.log('🔄 Storage expired - forcing re-authentication...');
+  //   if (this.shouldRefreshStorageState(environment)) {
+  //     console.log('🔄 Storage expired - forcing re-authentication...');
       
-      await LoginAction(page, user);
-      await page.waitForURL('**/lightning/**', { timeout: 30000 });
-      await this.saveStorageState(page, environment);
+  //     await LoginAction(page, user);
+  //     await page.waitForURL('**/lightning/**', { timeout: 30000 });
+  //     await this.saveStorageState(page, environment);
       
-      console.log('✅ Fresh storage created');
-    }
-  }
+  //     console.log('✅ Fresh storage created');
+  //   }
+  // }
 }

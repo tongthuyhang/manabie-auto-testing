@@ -4,31 +4,33 @@
     "eventMasterName": "test delete",
     "eventType": "Free",
     "sendTo": "Parent only",
-    "reminder": 1,
-    "maxEventPerStudent": 1
-  },
-  {
-    "eventMasterName": "demo",
-    "eventType": "Paid",
-    "sendTo": "Parent only",
-    "reminder": 5,
-    "maxEventPerStudent": 2
+    "reminder": "1",
+    "maxEventPerStudent": "1"
   },
 
   {
     "eventMasterName": "Paid-Parent only",
     "eventType": "Paid",
     "sendTo": "Parent only",
-    "reminder": 5,
-    "maxEventPerStudent": 2
+    "reminder": "5",
+    "maxEventPerStudent": "2"
   },
 
   {
     "eventMasterName": "Sample Event",
     "eventType": "Free",
     "sendTo": "Parent only",
-    "reminder": 5,
-    "maxEventPerStudent": 2,
+    "reminder": "5",
+    "maxEventPerStudent": "2",
+    "description": "This is a test description with <b>bold</b> and <i>italic</i> text."
+  },
+
+  {
+    "eventMasterName": "Student only",
+    "eventType": "Free",
+    "sendTo": "Student only",
+    "reminder": "5",
+    "maxEventPerStudent": "2",
     "description": "This is a test description with <b>bold</b> and <i>italic</i> text."
   }
 

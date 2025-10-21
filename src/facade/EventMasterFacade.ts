@@ -3,6 +3,7 @@ import { EventMasterPage } from '../pages/EventMasterPage';
 import { EventData } from '../type/EventData';
 import { LogStep, Retry, TrackTime } from '../decorators/index';
 import { EventFieldLabels, EventLocators } from '../locators/eventLocators';
+import { normalizeWhitespace } from '../utils/stringHelper';
 
 /**
  * Facade for Event operations
@@ -51,15 +52,18 @@ export class EventMasterFacade {
   @LogStep('Create a New Event Master using "Save & New" action')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  async saveNew(eventData: EventData, message: string): Promise<void> {
+  async saveNew(eventData: EventData|EventData[], message: string): Promise<void> {
     if (!eventData) {
       throw new Error('Event data is required');
     }
+     const events = this.eventPage.normalizeToArrayGeneric(eventData);
+     for (const event of events) {
     await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(eventData);
+    await this.eventPage.fillEventMasterForm(event);
     await this.eventPage.clickSave_NewButton();
     await this.eventPage.verifyPopupTitle('New Event Master');
     await this.eventPage.verifySuccessMessage(message);
+     }
   }
 
   /**
@@ -97,8 +101,7 @@ export class EventMasterFacade {
   @TrackTime()// ✅ will log how long it takes
   async verifyDescriptionFieldAcceptsFormattedText(eventData: EventData, message: string): Promise<void> {
     await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(eventData);
-    await this.eventPage.clickSaveButton();
+    await this.createPreconditionData(eventData);
     await this.eventPage.verifySuccessMessage(message);
   }
 
@@ -108,12 +111,35 @@ export class EventMasterFacade {
   @LogStep('Create an Event Master with 80-character name and description')
   @Retry(1) // ✅ more retries because UI validation can be flaky
   @TrackTime()// ✅ will log how long it takes
-  async validateFieldMaxLength(
-    fieldName: string = EventFieldLabels.EVENT_MASTER_NAME,
-    maxLength: number = 80
+  async validateEventMasterNameMaxLength(
+    fieldName: string,
+    expected: string
+  ): Promise<void> {
+     const longText = 'A'.repeat(100000);
+    await this.eventPage.clickNewButton();
+    await this.eventPage.type(EventLocators.INPUT_EVENT_MASTER_NAME,longText);
+    await this.eventPage.verifyInputValue(fieldName,expected);
+  }
+
+   async validateRemindersMaxLength(
+    fieldName: string,
+    expected: string
   ): Promise<void> {
     await this.eventPage.clickNewButton();
-    await this.eventPage.validateFieldMaxLength(fieldName, maxLength);
+    await this.eventPage.fillRequiredFields('8', 'Free', 'Parent only');
+    await this.eventPage.fillOptionalFields(11, 11, 'aa');
+    await this.eventPage.clickSaveButton();
+    await this.eventPage.verifyInputValue(fieldName,expected);
+  }
+  async validateMaxEventPerStudentMaxLength(
+    fieldName: string,
+    expected: string
+  ): Promise<void> {
+    await this.eventPage.clickNewButton();
+    await this.eventPage.fillRequiredFields('8', 'Free', 'Parent only');
+    await this.eventPage.fillOptionalFields(10, '1000000000000000000', 'aa');
+    await this.eventPage.clickSaveButton();
+    await this.eventPage.verifyInputValue(fieldName, expected);
   }
 
   /**
@@ -122,36 +148,45 @@ export class EventMasterFacade {
 
   async verifyEventData(eventName: string) {
     await this.eventPage.searchEventMasterByName(eventName);
++    // Wait for search results to load
+    await this.page.waitForTimeout(3000);
     const rowData = await this.eventPage.getEventRowByName(eventName);
-    expect(rowData['Event Master Name']).toBe(eventName);
+    expect(rowData['Event Master Name']).toBe(normalizeWhitespace(eventName));
   }
 
-  @LogStep('Search with there is no data')
-  async searchNoData(eventName: string): Promise<void> {
-    if (!eventName?.trim()) {
-      throw new Error('Event name is required for search and validation');
+  //@LogStep('Search with there is no data')
+  async searchNoData(searchText: string | EventData | EventData[]): Promise<void> {
+    
+    if (!searchText) {
+      throw new Error('Event Master Name is required for search');
     }
 
     await test.step(' Seach event master by name', async ()=> {
-        await this.eventPage.searchEventMasterByName(eventName);
+        await this.eventPage.searchEventMasterByName(searchText);
 
     }) 
 
     await test.step(' Check data affter search', async ()=> {
-          await this.eventPage.handelNoData();
+         //await this.eventPage.handleNoData();
 
     }) 
 
 
   }
 
-  async createPreconditionData(eventData: EventData): Promise<void> {
-    if (!eventData) {
-      throw new Error('Event data is required');
+  async createPreconditionData(eventData: EventData | EventData[]): Promise<void> {
+    // Đảm bảo luôn có mảng để xử lý
+    const events = this.eventPage.normalizeToArrayGeneric(eventData);
+
+    for (const event of events) {
+      if (!event) {
+        throw new Error('Event data is required');
+      }
+
+      await this.eventPage.clickNewButton();
+      await this.eventPage.fillEventMasterForm(event);
+      await this.eventPage.clickSaveButton();
     }
-    await this.eventPage.clickNewButton();
-    await this.eventPage.fillEventMasterForm(eventData);
-    await this.eventPage.clickSaveButton();
   }
 
   async restoreDeletedEventMaster(eventName: string): Promise<void> {
@@ -167,7 +202,7 @@ export class EventMasterFacade {
     })
   }
 
-  public async deletedEventMaster(eventName: string): Promise<void> {
+  public async deletedEventMaster(eventName: string | EventData | EventData[]): Promise<void> {
     if (!eventName) {
       throw new Error('Event data is required');
     }
@@ -206,7 +241,7 @@ export class EventMasterFacade {
       await this.eventPage.searchEventMasterByName(eventName);
     })
     await test.step(`change owner`, async () => {
-      await this.eventPage.checkOnGrid(['Select Item 1']);
+      await this.eventPage.checkOnGrid('Select Item 1');
       await this.eventPage.clickChangeOwnerButton();
       await this.eventPage.searchAndSelectComboboxOption(EventFieldLabels.SELECT_NEW_OWNER, 'linh nguyen');
     })

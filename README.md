@@ -3,10 +3,51 @@
 ## Overview
 A comprehensive Playwright TypeScript automation testing framework for Salesforce applications with Page Object Model pattern, storage management, and QASE integration.
 
-## 🚀 Quick Start
+
+## � Credentials & Secrets Management
+
+- **Local development:**  
+  Copy `.env.example` to `.env` and fill in your real credentials.  
+  Never commit your `.env` file.
+- **CI/CD:**  
+  Add all required credentials as repository or pipeline secrets.  
+  The workflow will automatically inject them as environment variables.
+
+**Example required secrets:**
+- (Add more as needed)
+
+### Sample GitHub Actions Workflow
+```yaml
+name: Playwright Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      ENV: dev-staging
+      USER_TYPE: admin
+      QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright Tests
+        run: npm run test:dev-staging:qase
+```
 
 ### Prerequisites
 - Node.js (LTS version)
+- Install Salesforce CLI (SFDX)
 - Git
 - VS Code (recommended)
 
@@ -21,6 +62,14 @@ npm install
 
 # Install Playwright browsers
 npx playwright install
+
+# Install Salesforce CLI (SFDX)
+
+## Method 1: Install via npm
+npm install -g @salesforce/cli
+## Method 2: Download the installer
+- Visit: https://developer.salesforce.com/tools/sfdxcli
+- Download the version suitable for your operating system and install.
 ```
 
 ### Environment Setup
@@ -29,7 +78,9 @@ npx playwright install
    - `pre-prod.env` - Pre-production environment
    - `qase.env` - QASE integration settings
 
-2. Set up user credentials in `src/data/users.json`
+2. Set up user credentials using environment variables:
+  - Copy `.env.example` to `.env` and fill in your real credentials (never commit `.env`)
+  - For CI/CD, set secrets in your pipeline or repository settings
 
 ## 🧪 Running Tests
 
@@ -360,8 +411,7 @@ powershell -Command "(Get-Item 'storage\storageState.dev-staging.json').LastWrit
 
 ```
 
-#### Login Failures
-- Check credentials in `users.json`
+- Check credentials in your environment variables (`.env` or CI/CD secrets)
 - Verify environment URLs
 - Check network connectivity
 

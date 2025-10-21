@@ -137,11 +137,9 @@ export const EventLocators = {
  * Event Master field validation rules
  */
 export const EventValidation = {
-  EVENT_NAME_MAX_LENGTH: 80,
-  REMINDERS_MIN_VALUE: 0,
-  REMINDERS_MAX_VALUE: 999,
-  MAX_EVENT_PER_STUDENT_MIN: 1,
-  MAX_EVENT_PER_STUDENT_MAX: 100
+  EVENT_NAME_MAX_LENGTH: '80',
+  REMINDERS_MAX_VALUE: 'The maximum number of reminder days is 10.',
+  MAX_EVENT_PER_STUDENT_MAX: 'Max Event Per Student'
 } as const;
 
 /**

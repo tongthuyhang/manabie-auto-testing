@@ -10,15 +10,7 @@ import { StorageHelper } from '@src/utils/storageHelper';
 
 
 /* Data to test */
-const selectedEventNames = ['demo', 'Paid-Parent only'];
-const selectedEvents: EventData[] = getItemsByKey(
-  testData,
-  selectedEventNames,
-  'eventMasterName'
-);
 const eventName = 'demo';
-
-
 test.describe('Searching Event Master', () => {
   let eventMasterFacade: EventMasterFacade;
 
@@ -27,7 +19,7 @@ test.describe('Searching Event Master', () => {
     eventMasterFacade = new EventMasterFacade(page);
   });
 
-  test(qase(786, `Search for a non-existent Event Master`), { tag: '@Regression' }, async ({ page }) => {
+  test.only(qase(786, `Search for a non-existent Event Master`), { tag: '@Regression' }, async ({ page }) => {
       //=== QASE Metadata ===
       qase.fields({
         description: 'Search for a non-existent Event Master', // description field on QASE

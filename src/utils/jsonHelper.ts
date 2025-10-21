@@ -83,14 +83,57 @@ export function validateJsonSchema(jsonObj: any, requiredKeys: string[]): boolea
 }
 
 /**
- * Retrieve objects from a JSON array that match specific key values.
+ * Helper function to filter items from an array based on a list of values for a specific key.
+ * - Supports TypeScript autocomplete for the key thanks to `K extends keyof T`.
+ * - Keeps the same order as the `values` array.
+ * @template T - Type of objects in the array (e.g., EventData)
+ * @template K - Type of the key (must be one of the keys of T)
+ * @param items - Original array of objects
+ * @param values - List of values to search by
+ * @param key - Object key to match against
+ * @returns Filtered array of matching objects
+ *
+ *  Example:
+ * ```ts
+ * const testData = [
+  { eventMasterName: 'A', eventType: 'Free' },
+  { eventMasterName: 'B', eventType: 'Paid' },
+  ];
+
+  getItemsByKey(testData, ['B'], 'eventMasterName');
+// Found: return [{eventMasterName: 'B', eventType: 'Paid'}]
+
+ * ```
  */
 export function getItemsByKey<T, K extends keyof T>(
   items: T[],
   values: T[K][],
   key: K
 ): T[] {
-  return values
-    .map(v => items.find(item => item[key] === v))
+  return values.map(v => items.find(item => item[key] === v))
     .filter((item): item is T => item !== undefined);
+  
 }
+
+/**
+ * Helper function to update one or more fields of each object in an array.
+ * - Keeps the original fields using spread syntax (`...item`)
+ * - Merges the new or updated fields returned from the `fieldsToUpdate` function
+ *
+ * @template T - The type of the array elements (e.g., EventData)
+ * @param originalArray - The original array containing objects
+ * @param fieldsToUpdate - A callback function that returns the fields to update,
+ *                         which can depend on the current item and its index
+ * @returns A new array with objects that have their fields updated
+ */
+export function updateObjectFields<T>(
+  originalArray: T[],
+  fieldsToUpdate: (item: T, index: number) => Partial<T>
+): T[] {
+  return originalArray.map((item, index) => ({
+    ...item,
+    ...fieldsToUpdate(item, index),
+  }));
+}
+
+

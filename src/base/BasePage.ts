@@ -1,6 +1,10 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { LocatorOptions } from '@src/type/LocatorOptions';
 import { SiteLocators } from '../locators/siteLocators';
+import { normalizeWhitespace, escapeRegExp, normalizeToString } from '../utils/stringHelper';
+import { normalizeLocator } from '../utils/locatorHelper';
+import { normalizeToArray } from '../utils/arrayHelper';
+
 /**
  * BasePage
  * - Acts as the parent class for all Page Objects
@@ -15,89 +19,19 @@ export class BasePage {
   }
 
   /**
- * Normalize locator input:
- * - If locator is string → parse CSS/XPath/placeholder.
- * - If 'click' in locator → already a Locator → return directly.
- * - If not → treat as LocatorOptions → process according to properties: role, name, id, dataTestId, etc.
- * @throws Error if no valid locator can be built
- */
-  private normalizeLocator(locator: string | Locator | LocatorOptions): Locator {
-    // --- string case ---
-    if (typeof locator === 'string') {
-      const isPlaceholder =
-        (locator.includes(' ') || locator.includes('...')) &&
-        !['.', '#', '[', '//', 'xpath='].some(prefix => locator.startsWith(prefix));
-
-      if (isPlaceholder) return this.page.getByPlaceholder(locator);
-      if (locator.startsWith('//') || locator.startsWith('xpath=')) {
-        return this.page.locator(locator.startsWith('//') ? `xpath=${locator}` : locator);
-      }
-      return this.page.locator(locator); // css fallback
-    }
-
-    // --- already a Locator ---
-    if ('click' in (locator as Locator)) return locator as Locator;
-
-    // --- LocatorOptions ---
-    const opts = locator as LocatorOptions;
-
-    // 1️⃣ Role-based
-    if (opts.role) {
-
-
-      // row scoping
-      if (opts.rowIndex !== undefined || opts.rowText) {
-        let rows = this.page.getByRole('row');
-        if (opts.rowText) rows = rows.filter({ hasText: opts.rowText });
-        const row = opts.rowIndex !== undefined ? rows.nth(opts.rowIndex) : rows.first();
-        return opts.name ? row.getByRole(opts.role, { name: opts.name }) : row.getByRole(opts.role);
-      }
-      // no row scoping
-      return opts.name ? this.page.getByRole(opts.role, { name: opts.name }) : this.page.getByRole(opts.role);
-    }
-
-    // 2️⃣ dataTestId
-    if (opts.dataTestId) {
-      return this.page.locator(
-        `[data-test-id="${opts.dataTestId}"], [data-testid="${opts.dataTestId}"]`
-      );
-    }
-
-    // 3️⃣ id
-    if (opts.id) return this.page.locator(`#${opts.id}`);
-
-    // 4️⃣ placeholder
-    if (opts.placeholder) return this.page.getByPlaceholder(opts.placeholder);
-
-    // 5️⃣ title
-    if (opts.title) return this.page.getByTitle(opts.title);
-
-    // 6️⃣ css
-    if (opts.css) return this.page.locator(opts.css);
-
-    // 7️⃣ xpath
-    if (opts.xpath) {
-      console.warn('[normalizeLocator] Using xpath (not recommended):', opts.xpath);
-      return this.page.locator(`xpath=${opts.xpath}`);
-    }
-
-    throw new Error('[normalizeLocator] No valid locator provided: ' + JSON.stringify(locator));
+   * Normalize locator using utility function
+   */
+  protected normalizeLocator(locator: string | Locator | LocatorOptions): Locator {
+    return normalizeLocator(this.page, locator);
   }
 
   /**
-   * Escapes special characters in a string
-   * so it can be safely used inside a RegExp.
-   *
-   * Example:
-   *  Input: "hello.world"
-   *  Output: "hello\.world"
-   *
-   * @param s The input string
-   * @returns The escaped string safe for regex
+   * Normalize input into an array using utility function
    */
-  public escapeRegExp(s: string): string {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  public normalizeToArrayGeneric<T>(value: T | T[]): T[] {
+    return normalizeToArray(value);
   }
+
   /**
    * Click an element with auto-wait (Click action, EX: new button, save button ...)
    */
@@ -127,13 +61,58 @@ export class BasePage {
  * - Step 3: Ensure element is enabled
  * - Step 4: Clear and replace with new text
  */
-  async type(locator: string | Locator | LocatorOptions, text: string, timeout = 10000): Promise<void> {
+  // async type(locator: string | Locator | LocatorOptions, text: string , timeout = 10000): Promise<void> {
+  //   const loc = this.normalizeLocator(locator);
+  //   await loc.waitFor({ state: 'visible', timeout });
+  //   if (!(await loc.isEnabled())) {
+  //     throw new Error(`[type] Element is not enabled: ${JSON.stringify(locator)}`);
+  //   }
+  //   await loc.fill(text);
+  // }
+
+  async type(locator: string | Locator | LocatorOptions, text: string | number | boolean, timeout = 10000): Promise<void> {
+    const vale = String(text);
     const loc = this.normalizeLocator(locator);
     await loc.waitFor({ state: 'visible', timeout });
+
     if (!(await loc.isEnabled())) {
       throw new Error(`[type] Element is not enabled: ${JSON.stringify(locator)}`);
     }
-    await loc.fill(text);
+
+    // Detect capabilities on the element (runs in browser context)
+    const support: any = await loc.evaluate((el: Element) => {
+      const tag = (el.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+        return { kind: 'native' }; // direct fill
+      }
+      if ((el as HTMLElement).isContentEditable) {
+        return { kind: 'contenteditable' }; // direct fill
+      }
+      const desc = el.querySelector('[contenteditable="true"], [contenteditable]:not([contenteditable="false"])');
+      if (desc) {
+        return { kind: 'descendant', selector: '[contenteditable="true"], [contenteditable]:not([contenteditable="false"])' };
+      }
+      return { kind: 'none' }; // fallback
+    });
+
+    // 🎯 Native fill support
+    if (support.kind === 'native' || support.kind === 'contenteditable') {
+      await loc.fill(vale);
+      return;
+    }
+
+    // 🎯 Nested editable → select child
+    if (support.kind === 'descendant') {
+      const editable = loc.locator(support.selector);
+      await editable.click();
+      await editable.fill(vale);
+      return;
+    }
+
+    // 🎯 Fallback: click then keyboard.type()
+    await loc.click();
+    await this.page.waitForTimeout(100);
+    await this.page.keyboard.type(vale);
   }
 
   // Append text (simulate typing)
@@ -161,16 +140,19 @@ export class BasePage {
   }
 
   /**
-   * 
-   */
+  * entityName: string,   // EX: "Event Master", "Lesson Master"
+  * action: string,       // EX: "Add new records", "Update existing records", "Add new and update existing records"
+  * fileType: string,     // EX: "CSV"
+  * filePath: string      // path file
+  */
   async importFile(
-    entityName: string,   // ví dụ: "Event Master", "Lesson Master"
-    action: string,       // ví dụ: "Add new records", "Update existing records", "Add new and update existing records"
-    fileType: string,     // ví dụ: "CSV"
-    filePath: string      // path file
+    entityName: string,   
+    action: string,
+    fileType: string,
+    filePath: string
   ): Promise<void> {
     const iframe = this.page.frameLocator(SiteLocators.IFRAME);
-    // 1. Chọn entity
+    // 1. option entity
     await this.click(iframe.locator(`a.lv-link:has-text("${entityName}")`));
 
     // 2. select action
@@ -235,11 +217,12 @@ export class BasePage {
     }
   }
 
-  async searchData(locator: string | Locator | LocatorOptions, text: string) {
+  async searchData(locator: string | Locator | LocatorOptions, text: string | string[]) {
     const fieldSearch = this.normalizeLocator(locator);
     await expect(fieldSearch).toBeVisible();
-    await this.type(fieldSearch, text);
-    await fieldSearch.press("Enter");
+    const inputText = normalizeToString(text);
+    await this.type(fieldSearch, inputText);
+    await fieldSearch.press("Enter", { timeout: 5000 });
   }
 
   /**
@@ -257,21 +240,26 @@ export class BasePage {
     const rowLocator = this.page.locator('tr').filter({
       has: this.page.locator(
         `td[data-label="${uniqueColumn}"], th[data-label="${uniqueColumn}"]`
-      ).filter({ hasText: this.escapeRegExp(uniqueValue) })
-    });
+      ).filter({ hasText: escapeRegExp(uniqueValue) })
+    }).first(); // Take only the first matching row
 
-    const rowCount = await rowLocator.count();
-    console.log(`Found ${rowCount} matching rows`);
+    const rowCount = await this.page.locator('tr').filter({
+      has: this.page.locator(
+        `td[data-label="${uniqueColumn}"], th[data-label="${uniqueColumn}"]`
+      ).filter({ hasText: escapeRegExp(uniqueValue) })
+    }).count();
+
+    console.log(`Found ${rowCount} matching rows, using first one`);
     if (rowCount === 0) {
-      // Don't throw, let the test decide → avoid combining responsibilities
       return {};
     }
-    // Get all cells in the row
+
+    // Get all cells in the first matching row only
     const cells = rowLocator.locator('td[data-label], th[data-label]');
     const cellCount = await cells.count();
     const rowData: Record<string, string> = {};
 
-    console.log(`\n📋 Extracting all data from row where [${uniqueColumn}] = "${uniqueValue}"`);
+    console.log(`\n📋 Extracting data from first matching row`);
     console.log(`   Found ${cellCount} columns in the row`);
 
     for (let i = 0; i < cellCount; i++) {
@@ -279,7 +267,7 @@ export class BasePage {
       const columnLabel = await cell.getAttribute('data-label');
       const cellText = (await cell.innerText()).trim();
 
-      if (columnLabel) {
+      if (columnLabel && !rowData[columnLabel]) { // Avoid duplicates
         rowData[columnLabel] = cellText;
         console.log(`   [${columnLabel}]: "${cellText}"`);
       }
@@ -287,7 +275,6 @@ export class BasePage {
 
     console.log(`\n📊 Quality Summary:`);
     console.log(`   Total columns extracted: ${Object.keys(rowData).length}`);
-    console.log(`   Row identification: [${uniqueColumn}] = "${uniqueValue}"`);
     if (Object.keys(rowData).length === 0) {
       throw new Error(
         `❌ Row found but no columns extracted for [${uniqueColumn}] = "${uniqueValue}". Check selectors or loading state.`
@@ -296,13 +283,13 @@ export class BasePage {
     return rowData;
   }
   /** Checkbox on grid */
-  async checkOnGrid(items: string[]) {
-    for (const item of items) {
+  async checkOnGrid(items: string | string[]) {
+    const itemList = this.normalizeToArrayGeneric(items);
+    for (const item of itemList) {
       await this.page
         .locator('td[role="gridcell"]')
         .filter({
-          has: this.page.locator('span.slds-form-element__label', { hasText: new RegExp(`^${this.escapeRegExp(item)}$`) })
-
+          has: this.page.locator('span.slds-form-element__label', { hasText: new RegExp(`^${escapeRegExp(item)}$`) }) // ^ = start of string, $ = end of string
         })
         .locator('span.slds-checkbox_faux')
         .click();
@@ -313,7 +300,7 @@ export class BasePage {
   /**
    * Handel there is no data after search data
    */
-  async handelNoData() {
+  async handleNoData() {
     const messageNodata = this.page.locator('lst-empty-state-illustration div.slds-illustration div p.slds-text-body_regular').first();
     await expect(messageNodata).toContainText("There's nothing in your list yet. Try adding a new record.");
   }
@@ -330,7 +317,6 @@ export class BasePage {
 
   async verifyModalClose(locator: string | Locator | LocatorOptions): Promise<void> {
     const loc = this.normalizeLocator(locator);
-    //await expect(loc).toHaveCount(0);
     await expect(loc).toBeHidden();
   }
 
@@ -347,7 +333,7 @@ export class BasePage {
     }
   }
 
-  async expectConfirmDialogDisible() {
+  async expectConfirmDialogInvisible() {
     const dialog = this.page.locator(SiteLocators.DIALOG_CONFIRM);
     await expect(dialog).toHaveCount(0, { timeout: 5000 });
   }
@@ -383,7 +369,7 @@ export class BasePage {
   async verifySuccessMessage(message: string, timeout = 5000): Promise<void> {
     await this.page.locator(SiteLocators.SUCCESS_TOAST).waitFor({ state: 'visible', timeout });
     const toastmessage = this.page.locator(SiteLocators.SUCCESS_TOAST, {
-      hasText: new RegExp(this.escapeRegExp(message))
+      hasText: new RegExp(escapeRegExp(message))
     });
     await toastmessage.waitFor({ state: 'visible', timeout });
     console.log(`✅ Verified success message: "${message}"`);
@@ -423,37 +409,92 @@ export class BasePage {
   * @param optionValue value want to select
   */
   async selectComboboxOptionBy(
-    labelText: string | Locator | LocatorOptions,
+    locatorOrLabel: string | Locator | LocatorOptions,
     optionValue: string,
     by: 'value' | 'text' = 'value'
   ) {
-    const frame = this.page.frameLocator('iframe[title="accessibility title"]');
+    // Check if it's a CSS selector (contains special characters) or plain label text
+    const isCssSelector = typeof locatorOrLabel === 'string' &&
+      /[\[\]#\.:>~\+\*=\(\)"']/.test(locatorOrLabel);
 
-    // Only use string labelText for iframe approach
-    if (typeof labelText !== 'string') {
-      // Use regular combobox approach for Locator
-      const combobox = this.normalizeLocator(labelText);
-      await combobox.click();
+    // Try normal listbox approach first (for CSS selectors and Locator objects)
+    if (isCssSelector || typeof locatorOrLabel !== 'string') {
+      try {
+        const combobox = this.normalizeLocator(locatorOrLabel);
+        await combobox.waitFor({ state: 'visible', timeout: 2000 });
+        await combobox.click();
 
-      const option = by === 'value'
-        ? this.page.locator(`.slds-listbox__option[data-value="${optionValue}"]`)
-        : this.page.locator('.slds-listbox__option', { hasText: optionValue });
+        const option = by === 'value'
+          ? this.page.locator(`.slds-listbox__option[data-value="${optionValue}"]`)
+          : this.page.locator('.slds-listbox__option', { hasText: optionValue });
 
-      await option.waitFor({ state: 'visible', timeout: 5000 });
+        await option.waitFor({ state: 'visible', timeout: 5000 });
 
-      if ((await option.getAttribute('aria-selected')) !== 'true') {
-        await option.click();
+        if ((await option.getAttribute('aria-selected')) !== 'true') {
+          await option.click();
+        }
+        return;
+      } catch (error) {
+        throw new Error(`Failed to select option "${optionValue}" using normal approach: ${error}`);
       }
+    }
+
+    // Try iframe approach for plain label text
+    try {
+      const frame = this.page.frameLocator('iframe[title="accessibility title"]');
+      const label = frame.locator(`label:has-text("${locatorOrLabel}")`);
+      if (!label) {
+        throw new Error(`Label "${locatorOrLabel}" not found in iframe`);
+      }
+      const selectId = await label.getAttribute('for');
+      // Use attribute selector instead of ID selector to handle special characters
+      const dropdown = frame.locator(`select[id="${selectId}"]`);
+      await dropdown.waitFor({ state: 'visible', timeout: 5000 });
+      await dropdown.selectOption(optionValue);
+      console.log("Selected from iframe dropdown:", optionValue);
+    } catch (error) {
+      throw new Error(`Failed to select option "${optionValue}" using iframe approach: ${error}`);
+    }
+  }
+
+  /**
+    * Auto detect field type and validate:
+    * - Field has maxlength → check maxlength
+    * - If there is a specific message → check text containing expectedValue
+    * - Otherwise → check label/static text containing expectedValue
+  */
+  async verifyInputValue(locatorInput: string | Locator, expectedValue: string) {
+    const locator = this.normalizeLocator(locatorInput);
+    await this.page.waitForTimeout(1000);
+    await expect(locator).toBeVisible({ timeout: 5000 });
+
+    // Detect maxlength attribute -> INPUT/textarea case
+    const maxLengthAttr = await locator.getAttribute('maxlength');
+
+    if (maxLengthAttr !== null) {
+      console.log(`🔍 Detected as INPUT-like field with maxlength = ${maxLengthAttr}`);
+      expect(maxLengthAttr).toBe(expectedValue);
+      console.log(`✅ Maxlength check passed = ${expectedValue}`);
+      return;
+    }
+    // If the element is in a notification container → it is defined as an error message
+    const hasNotificationClass = await locator.evaluate((el) =>
+      el.closest('.errorsList, .toastContainer, .slds-notify')
+    );
+
+    const textContent = (await locator.innerText()).trim();
+
+    if (hasNotificationClass) {
+      console.log(`🔍 Detected ERROR/NOTIFICATION BLOCK -->`, textContent);
+      expect(textContent).toContain(expectedValue);
+      console.log(`✅ Passed error message check`);
       return;
     }
 
-    const label = frame.locator(`label:has-text("${labelText}")`);;
-    const selectId = await label.getAttribute('for');
-    // Use iframe approach with select element
-    const dropdown = frame.locator(`//select[@id="${selectId}"]`);
-    await dropdown.waitFor({ state: 'visible', timeout: 5000 });
-    await dropdown.selectOption(optionValue);
-    console.log("Selected from iframe dropdown:", optionValue);
+    // If not INPUT has maxlength and not NOTIFICATION → Fail clea
+    throw new Error(
+      ` Locator does not match expected patterns (input with maxlength OR notification block): ${locatorInput}`
+    );
 
   }
 

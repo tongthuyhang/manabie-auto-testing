@@ -75,12 +75,12 @@ export type EventData = {
   /** Target audience for the event (All Students, Selected Students, etc.) */
   sendTo: string;
   
-  /** Number of reminder notifications (0-999) */
-  reminder: number;
+  /** Number of reminder notifications (0-10) - UI input is string */
+  reminder: string;
   
-  /** Maximum events per student (1-100) */
-  maxEventPerStudent: number;
+  /** Maximum events per student (Number(18, 0)) - UI input is string */
+  maxEventPerStudent: string;
 
-  /** description (max 80 characters) */
+  /** description (Rich Text Area(32000)) */
   description?: string;
 };

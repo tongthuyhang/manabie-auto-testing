@@ -25,4 +25,5 @@ export const SiteLocators = {
   //message
    SUCCESS_TOAST: '.slds-notify--toast.slds-theme--success',
    ERROR_TOAST: '.slds-notify--toast.slds-theme--error',
+   ERROR_LIST: '[class="errorsList slds-list_dotted slds-m-left_medium"]'
 } as const;

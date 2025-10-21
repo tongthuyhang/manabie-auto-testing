@@ -1,85 +1,91 @@
 import { Page, Locator, FrameLocator, expect } from '@playwright/test';
 import { EventLocators } from '../locators/eventLocators';
 import { BasePage } from '../base/BasePage';
-import { SiteLocators} from '../locators/siteLocators';
+import { SiteLocators } from '../locators/siteLocators';
 import { EventData } from '@src/type/EventData';
 import { CommonHelpers } from '../utils/commonHelpers';
 import { CommonConstants } from '@src/constants/commonConstants';
 /**
- * Page Object for the Event Master page
- * Encapsulates locators and actions for maintainability and reuse
- * Extends BasePage to use common helpers (click, type, verify, dropdown...)
+ * Page Object: Event Master Page
+ * Purpose:
+ * - Manage all locators and UI interactions on the Event Master page.
+ * - Normalize all locator definitions via BasePage.normalizeLocator() 
+ *   for consistent locator parsing and type-safety.
  */
 export class EventMasterPage extends BasePage {
-  // Form input locators
+// Form Input Locators
   readonly inputEventMasterName: Locator;
   readonly inputReminders: Locator;
   readonly inputMaxEventPerStudent: Locator;
   readonly inputDescription: Locator;
   readonly inputSearch: Locator;
-  // Iframe
-  readonly iframe: FrameLocator;
 
-  // Dropdown locators
+  // Dropdown Locators
   readonly selectEventType: Locator;
   readonly selectSendTo: Locator;
 
-  // Button locators
+  // Button Locators
   readonly buttonNew: Locator;
   readonly buttonEditOnGrid: Locator;
   readonly buttonDeleteOnGrid: Locator;
   readonly buttonChangeOwnerOnGrid: Locator;
   readonly buttonEditLabelsOnGrid: Locator;
   readonly buttonImport: Locator;
-  readonly buttonChangeOwner: Locator
-  readonly buttonAssignLabel: Locator
+  readonly buttonChangeOwner: Locator;
+  readonly buttonAssignLabel: Locator;
   readonly buttonSave: Locator;
   readonly buttonCancel: Locator;
   readonly buttonSave_New: Locator;
 
-  // Header and validation locators
+  // Modal / Header Locators
   readonly popupEvent: Locator;
+
+  // Iframe Locator
+  readonly iframe: FrameLocator;
 
   constructor(page: Page) {
     super(page);
 
-    // Initialize form input locators
-    this.inputEventMasterName = page.locator(EventLocators.INPUT_EVENT_MASTER_NAME);
-    this.inputReminders = page.locator(EventLocators.INPUT_REMINDERS);
-    this.inputMaxEventPerStudent = page.locator(EventLocators.INPUT_MAX_EVENT_PER_STUDENT);
-    this.inputDescription = page.locator(EventLocators.INPUT_DESCRIPTION);
-    this.inputSearch = page.locator(SiteLocators.INPUT_SEARCH);
+    //  Use BasePage.normalizeLocator() for all locators
+    // It auto-detects whether the locator is CSS, XPath, placeholder, or role-based.
 
-    // Initialize dropdown locators
-    this.selectEventType = page.locator(EventLocators.SELECT_EVENT_TYPE);
-    this.selectSendTo = page.locator(EventLocators.SELECT_SEND_TO);
+    // --- Form Inputs ---
+    this.inputEventMasterName = this.normalizeLocator(EventLocators.INPUT_EVENT_MASTER_NAME);
+    this.inputReminders = this.normalizeLocator(EventLocators.INPUT_REMINDERS);
+    this.inputMaxEventPerStudent = this.normalizeLocator(EventLocators.INPUT_MAX_EVENT_PER_STUDENT);
+    this.inputDescription = this.normalizeLocator(EventLocators.INPUT_DESCRIPTION);
+    this.inputSearch = this.normalizeLocator(SiteLocators.INPUT_SEARCH);
 
-    // Initialize button locators
-    this.buttonNew = page.locator(EventLocators.BUTTON_NEW);
-    this.buttonEditOnGrid = page.locator(EventLocators.BUTTON_EDIT_ON_GRID);
-    this.buttonDeleteOnGrid = page.locator(EventLocators.BUTTON_DELETE_ON_GRID);
-    this.buttonChangeOwnerOnGrid = page.locator(EventLocators.BUTTON_CHANGE_OWNER_ON_GRID);
-    this.buttonEditLabelsOnGrid = page.locator(EventLocators.BUTTON_EDIT_LABELS_ON_GRID);
-    this.buttonChangeOwner = page.locator(EventLocators.BUTTON_CHANGE_OWNER);
-    this.buttonImport = page.locator(EventLocators.BUTTON_IMPORT);
-    this.buttonAssignLabel = page.locator(EventLocators.BUTTON_ASIGN_LABEL);
-    this.buttonSave = page.locator(EventLocators.BUTTON_SAVE);
-    this.buttonSave_New = page.locator(EventLocators.BUTTON_SAVE_NEW);
-    this.buttonCancel = page.locator(EventLocators.BUTTON_CANCEL);
+    // --- Dropdowns ---
+    this.selectEventType = this.normalizeLocator(EventLocators.SELECT_EVENT_TYPE);
+    this.selectSendTo = this.normalizeLocator(EventLocators.SELECT_SEND_TO);
 
-    // Initialize header and validation locators
-    this.popupEvent = page.locator(EventLocators.MODAL_TITLE);
+    // --- Buttons ---
+    this.buttonNew = this.normalizeLocator(EventLocators.BUTTON_NEW);
+    this.buttonEditOnGrid = this.normalizeLocator(EventLocators.BUTTON_EDIT_ON_GRID);
+    this.buttonDeleteOnGrid = this.normalizeLocator(EventLocators.BUTTON_DELETE_ON_GRID);
+    this.buttonChangeOwnerOnGrid = this.normalizeLocator(EventLocators.BUTTON_CHANGE_OWNER_ON_GRID);
+    this.buttonEditLabelsOnGrid = this.normalizeLocator(EventLocators.BUTTON_EDIT_LABELS_ON_GRID);
+    this.buttonImport = this.normalizeLocator(EventLocators.BUTTON_IMPORT);
+    this.buttonChangeOwner = this.normalizeLocator(EventLocators.BUTTON_CHANGE_OWNER);
+    this.buttonAssignLabel = this.normalizeLocator(EventLocators.BUTTON_ASIGN_LABEL);
+    this.buttonSave = this.normalizeLocator(EventLocators.BUTTON_SAVE);
+    this.buttonSave_New = this.normalizeLocator(EventLocators.BUTTON_SAVE_NEW);
+    this.buttonCancel = this.normalizeLocator(EventLocators.BUTTON_CANCEL);
 
-    // Iframe
+    // --- Popup / Modal ---
+    this.popupEvent = this.normalizeLocator(EventLocators.MODAL_TITLE);
+
+    // --- Iframe ---
     this.iframe = page.frameLocator(SiteLocators.IFRAME);
   }
 
-    /**
-   * Go to Event Master Page
-   */
-  async  goToEventMasterPage() : Promise<void> {
-  await CommonHelpers.navigateToPage(this.page, CommonConstants.PAGE_EVENT_MASTER);
-};
+  /**
+ * Go to Event Master Page
+ */
+  async goToEventMasterPage(): Promise<void> {
+    await CommonHelpers.navigateToPage(this.page, CommonConstants.PAGE_EVENT_MASTER);
+  };
 
   /**
    * Clicks the "New" button to create a new event
@@ -96,7 +102,7 @@ export class EventMasterPage extends BasePage {
   async clickDeleteOnGridButton(): Promise<void> {
     await this.click(this.buttonDeleteOnGrid);
   }
-  
+
   async clickChangeOwneronGridButton(): Promise<void> {
     await this.click(this.buttonChangeOwnerOnGrid);
   }
@@ -127,7 +133,7 @@ export class EventMasterPage extends BasePage {
   async clickMoreActionsButton() {
     //const moreActionsBtn = this.page.locator(SiteLocators.BUTTON_MORE_ACTION, { hasText: 'Show Actions' }).first();
     const moreActionsBtn = this.page.locator(SiteLocators.BUTTON_MORE_ACTION).first();
-     await this.click(moreActionsBtn);
+    await this.click(moreActionsBtn);
   }
 
   /**
@@ -154,7 +160,7 @@ export class EventMasterPage extends BasePage {
     await this.click(SiteLocators.BUTTON_DIALOG_DELETE);
   }
 
-    async clickDialogCancelButton(): Promise<void> {
+  async clickDialogCancelButton(): Promise<void> {
     await this.click(SiteLocators.BUTTON_DIALOG_CANCEL);
   }
 
@@ -214,7 +220,7 @@ export class EventMasterPage extends BasePage {
    * Fills required form fields
    * @private
    */
-  private async fillRequiredFields(
+  public async fillRequiredFields(
     eventMasterName: string,
     eventType: string,
     sendTo: string
@@ -228,21 +234,20 @@ export class EventMasterPage extends BasePage {
    * Fills optional form fields
    * @private
    */
-  private async fillOptionalFields(
-    reminder?: number,
-    maxEventPerStudent?: number,
+  public async fillOptionalFields(
+    reminder?: string | number | boolean,
+    maxEventPerStudent?: string | number | boolean,
     description?: string
   ): Promise<void> {
     if (reminder !== undefined) {
-      await this.type(this.inputReminders, reminder.toString());
+      await this.type(this.inputReminders, reminder);
     }
 
     if (maxEventPerStudent !== undefined) {
-      await this.type(this.inputMaxEventPerStudent, maxEventPerStudent.toString());
+      await this.type(this.inputMaxEventPerStudent, maxEventPerStudent);
     }
 
     if (description !== undefined) {
-      await this.page.locator(EventLocators.FOCUS_DESCRIPTION).click();
       await this.type(this.inputDescription, description);
     }
   }
@@ -252,11 +257,24 @@ export class EventMasterPage extends BasePage {
    * @param eventMasterName - Event name to search for
    * @throws Error when search operation fails
    */
-  async searchEventMasterByName(eventMasterName: string): Promise<void> {
-    if (!eventMasterName?.trim()) {
+  async searchEventMasterByName(eventMasterName: string | EventData | EventData[]): Promise<void> {
+    let searchText = '';
+
+    if (typeof eventMasterName === 'string') {
+      searchText = eventMasterName.trim();
+    } else if (Array.isArray(eventMasterName)) {
+      // ✅ Lấy danh sách tên từ mảng EventData
+      searchText = eventMasterName.map(e => e.eventMasterName).join(' ');
+    } else if (eventMasterName && 'eventMasterName' in eventMasterName) {
+      // ✅ Trường hợp là 1 object EventData
+      searchText = eventMasterName.eventMasterName.trim();
+    }
+
+    if (!searchText) {
       throw new Error('Event Master Name is required for search');
     }
-    await this.searchData(SiteLocators.INPUT_SEARCH, eventMasterName);
+    //await this.searchData('Search this list...', searchText);
+    await this.searchData(this.inputSearch, searchText);
   }
 
   /**
@@ -265,7 +283,7 @@ export class EventMasterPage extends BasePage {
    * @param expectedData - Object containing column names and expected values
    * @throws Error when expected data is not found
    */
-   async getEventRowByName(eventName: string) {
+  async getEventRowByName(eventName: string) {
     return this.getAllGridRowData('Event Master Name', eventName);
   }
 
