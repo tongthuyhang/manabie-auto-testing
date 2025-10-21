@@ -19,7 +19,7 @@ test.describe('Searching Event Master', () => {
     eventMasterFacade = new EventMasterFacade(page);
   });
 
-  test.only(qase(786, `Search for a non-existent Event Master`), { tag: '@Regression' }, async ({ page }) => {
+  test(qase(786, `Search for a non-existent Event Master`), { tag: '@Smoke' }, async ({ page }) => {
       //=== QASE Metadata ===
       qase.fields({
         description: 'Search for a non-existent Event Master', // description field on QASE
