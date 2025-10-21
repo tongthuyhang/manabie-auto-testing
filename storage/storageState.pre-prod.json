@@ -5,7 +5,7 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.my.salesforce.com",
       "path": "/",
-      "expires": 1792491868.934891,
+      "expires": 1792566111.59083,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -15,27 +15,27 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.my.salesforce.com",
       "path": "/",
-      "expires": 1792491868.935135,
+      "expires": 1792566111.591066,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "BrowserId",
-      "value": "9HCMrq2eEfCmMINDSG-wzg",
+      "value": "0c2iMa5LEfCV5rE7duFL4A",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1792491868.935205,
+      "expires": 1792566111.591128,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sfdc_lv2",
-      "value": "KxG83HWz5xoblwMMJ1zXfqCkOYsEK/ZAqFIRoV0DP27Mw01jfMLrmwWde6ekTrpV8=",
+      "value": "KxG83H/EZesY8h3lYrcl1XFkmI/PQY91X1B4gF3xiukfrztWi4SRaWwUIH6dTXmjo=",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1792491868.93526,
+      "expires": 1792566111.591189,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -55,14 +55,14 @@
       "value": "1",
       "domain": ".salesforce.com",
       "path": "/",
-      "expires": 1766139868.935353,
+      "expires": 1766214111.591289,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sid",
-      "value": "00DGA000009JzOD!ARgAQHsO6SkHN6mfKIJE9h3klUSu64D1s3AtfqQDsNCNxO2XJ1n9KxsyZSdWgWHBJojbQyfIZyNMCodAKeczLBeZ2NqVEr8n",
+      "value": "00DGA000009JzOD!ARgAQBwExZHlQz1LO.NIrBbhMBL9.Fg5mIcHqpprQg_r658eAglfbUTyEoucxFoHXy0ugSDaNjhO6L3F4dgXolyNgv9_PB5Y",
       "domain": "pre-prod-manabie.my.salesforce.com",
       "path": "/",
       "expires": -1,
@@ -95,7 +95,7 @@
       "value": "00DGA000009JzOD",
       "domain": "pre-prod-manabie.my.salesforce.com",
       "path": "/",
-      "expires": 1792491868.93559,
+      "expires": 1792566111.591558,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -105,7 +105,7 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.file.force.com",
       "path": "/",
-      "expires": 1792491869.432311,
+      "expires": 1792566112.021734,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -115,24 +115,24 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.file.force.com",
       "path": "/",
-      "expires": 1792491869.432365,
+      "expires": 1792566112.021873,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "BrowserId",
-      "value": "9V5u_a2eEfC1jEXppHl4Pg",
+      "value": "0hUy3K5LEfCXi6eL6FBB-A",
       "domain": ".force.com",
       "path": "/",
-      "expires": 1792491869.432389,
+      "expires": 1792566112.021932,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sid",
-      "value": "00DGA000009JzOD!ARgAQNOwpar9IzTikbiSjDN7YVQOMpbNB0lXJKAThp1Cpgw6sFXg7KaDIFfS15T9ftGmZHo9LesxxXknLF7MY_U2e2gVWA2p",
+      "value": "00DGA000009JzOD!ARgAQBgjkqRNy8maIlSJi30mSe49LH8FD5Idmy2jF5VqRdSWxCm3O8CdET3YcqxMxvig0y9fL_XwVoADaE.6Wr8rrURvtn.F",
       "domain": "pre-prod-manabie.file.force.com",
       "path": "/",
       "expires": -1,
@@ -152,7 +152,7 @@
     },
     {
       "name": "clientSrc",
-      "value": "113.161.78.29",
+      "value": "115.79.192.13",
       "domain": "pre-prod-manabie.file.force.com",
       "path": "/",
       "expires": -1,
@@ -172,20 +172,30 @@
     },
     {
       "name": "sfdc-aura",
-      "value": "!fGDXrNofOEovbOImL3dxNN9+mJsoZyUUWVWlHeFoHvI8//HPTYLQdzJhOVCg8Qdm3XPZA0agFhWc8fk=",
+      "value": "!dV+U/+K3Bowh6CImL3dxNN9+mJsoZ/MMTN28Zg+RNDbhQCnGW/oP1o0rvv7DvXPzC3FdCNNB79POYA==",
       "domain": "pre-prod-manabie.file.force.com",
       "path": "/",
-      "expires": 1760956049.547309,
+      "expires": 1761030292.150572,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "session",
+      "value": "1761030113165",
+      "domain": "login.salesforce.com",
+      "path": "/",
+      "expires": -1,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "sfdc-aura",
-      "value": "!tTpHnxhGQNGU5J/gNOkG1Ky+NqWwRMXSLDau3zmOOY70D8dVpTDXBnY5FI9BjV8o08mBnnhUlrdmHW0=",
+      "value": "!AziY477llHpaDED/ZuMBQi+4DVih7E0M8fi58MH3iM/FhdCqbg3V8njWj8sET93Q3CAJO9Z47ZI5UlA=",
       "domain": "pre-prod-manabie.my.salesforce.com",
       "path": "/",
-      "expires": 1760956050.577902,
+      "expires": 1761030293.28302,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -195,7 +205,7 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.lightning.force.com",
       "path": "/",
-      "expires": 1792491871.041065,
+      "expires": 1792566113.640367,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -205,7 +215,7 @@
       "value": "0:1",
       "domain": "pre-prod-manabie.lightning.force.com",
       "path": "/",
-      "expires": 1792491871.041222,
+      "expires": 1792566113.640499,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -222,7 +232,7 @@
     },
     {
       "name": "sid",
-      "value": "00DGA000009JzOD!ARgAQH.uqzfz8RDE0vnidHsSvwF8EfoUhxxySxjokZ2KE.gT1twLvdLlZujxsvcHD5bbOPMJW9ff9fErWD2oPQ63FJln95h1",
+      "value": "00DGA000009JzOD!ARgAQGk_tGqSoogvfVwEOjLMIyLhc3GVAq5lOec2GBATXHZ9yhKN3FWpUAiy7b_fpH.Y.J3.J4kzCmcDBzLFAZwFoucPy4St",
       "domain": "pre-prod-manabie.lightning.force.com",
       "path": "/",
       "expires": -1,
@@ -242,7 +252,7 @@
     },
     {
       "name": "clientSrc",
-      "value": "113.161.78.29",
+      "value": "115.79.192.13",
       "domain": "pre-prod-manabie.lightning.force.com",
       "path": "/",
       "expires": -1,
@@ -262,10 +272,10 @@
     },
     {
       "name": "sfdc-aura",
-      "value": "!+IaN47YUvJx6TJyIHIXRRBzL+t2OZAOpAoGFPVp+1SY2gJChpVdOEBd1OHK7uibH+5Yn4xhhTupL5A==",
+      "value": "!p5N+BxuIMG0jvbImL3dxNN9+mJsoZ0ti7P7izB+BAPlBcE5jBx/h6h7gYCOejGwoU8eHKi7o5Wvq",
       "domain": "pre-prod-manabie.lightning.force.com",
       "path": "/",
-      "expires": 1760956053.8625,
+      "expires": 1761030296.361313,
       "httpOnly": false,
       "secure": true,
       "sameSite": "None"
@@ -277,15 +287,15 @@
       "localStorage": [
         {
           "name": "$AuraClientService.token$one:one",
-          "value": "eyJub25jZSI6Im1MVXY4M0xKeEF3OXY1ZXRfMmhlVlBNeXU3TzJmdXFxZWtoZjhuWEM4ZlFcdTAwM2QiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6IntcInRcIjpcIjAwRDdGMDAwMDA1cVlNMlwiLFwidlwiOlwiMDJHN0YwMDAwMDBlTWNnXCIsXCJhXCI6XCJjYWltYW5zaWduZXJcIn0iLCJjcml0IjpbImlhdCJdLCJpYXQiOjE3NjA5NTU4NzAyMTQsImV4cCI6MH0=..CY_0vevvILN-l9QvYA3DnL4mHjTkzas6SIbQ2BB-u78="
+          "value": "eyJub25jZSI6InUyNmNLZGs0ZFpSWTFqNXhCN1VGbDJnZ2lGTlpYaHhzUDV5YVdmVWJPWHdcdTAwM2QiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImtpZCI6IntcInRcIjpcIjAwRDdGMDAwMDA1cVlNMlwiLFwidlwiOlwiMDJHN0YwMDAwMDBlTWNnXCIsXCJhXCI6XCJjYWltYW5zaWduZXJcIn0iLCJjcml0IjpbImlhdCJdLCJpYXQiOjE3NjEwMzAxMTM5MzgsImV4cCI6MH0=..irvGngZ7nBVoXGRBspiayP6MCONcu5VFFpCivnknqlE="
         },
         {
           "name": "GlobalValueProviders__MUTEX_X",
-          "value": "147650000060e21cfc89794|1760955874424"
+          "value": "1410000000329fb920f01bf|1761030116904"
         },
         {
           "name": "appContextId",
-          "value": "06mGA000000frf5YAA"
+          "value": "06mGA000003GOylYAG"
         }
       ]
     }
