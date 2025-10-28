@@ -1,89 +1,101 @@
-name: Playwright + Qase CI/CD
+name: Playwright + Qase CI/CD (Team-specific)
 
+# Chạy bằng tay
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment'
+        required: true
+        default: 'dev-staging'
+        type: choice
+        options:
+          - dev-staging
+          - pre-prod
+      project:
+        description: 'Select project/team'
+        required: true
+        default: 'scheduling'
+        type: choice
+        options:
+          - scheduling
+          - order
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [dev-staging]   # ✅ define both envs here
-        project: [scheduling]
     timeout-minutes: 60
 
     steps:
-      # 1. Checkout repo
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      # 3. Install dependencies
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4. Install Playwright browsers
+      # 4️⃣ Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 5. Install Salesforce CLI
+      # 5️⃣ Install Salesforce CLI
       - name: Install Salesforce CLI
         run: |
           npm install -g @salesforce/cli@latest
           sf version --verbose
           sf plugins --core
 
-      # 6. Setup SFDX Authentication (for each environment)
+      # 6️⃣ Setup SFDX Authentication (tùy environment)
       - name: Setup SFDX Authentication
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
           SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
         run: |
-          if [ "${{ matrix.environment }}" = "dev-staging" ]; then
+          ENV="${{ github.event.inputs.environment }}"
+          if [ "$ENV" = "dev-staging" ]; then
             echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
             sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias
             echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
-          elif [ "${{ matrix.environment }}" = "pre-prod" ]; then
+          elif [ "$ENV" = "pre-prod" ]; then
             echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
-            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias mypre-product
-            echo "SFDX_ALIAS=mypre-product" >> $GITHUB_ENV
+            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myPreProd
+            echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
           fi
           rm -f auth_url.txt
 
-      # 7. Run Playwright Tests (with Qase)
+      # 7️⃣ Run Playwright Tests with Qase (tùy project + environment)
       - name: Run Playwright Tests with Qase
-        run: npm run test:${{ matrix.environment }}:qase:ci
+        run: npm run test:${{ github.event.inputs.environment }}:qase:ci
         env:
-          ENV: ${{ matrix.environment }}
+          ENV: ${{ github.event.inputs.environment }}
           USER_TYPE: admin
-          PROJECT: ${{ matrix.project }}
+          PROJECT: ${{ github.event.inputs.project }}
           SFDX_ALIAS: ${{ env.SFDX_ALIAS }}
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
           QASE_TESTOPS_API_HOST: qase.io
 
-      # 8. Upload HTML report
+      # 8️⃣ Upload HTML report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.environment }}
+          name: playwright-report-${{ github.event.inputs.project }}-${{ github.event.inputs.environment }}
           path: playwright-report/
           retention-days: 30
 
-      # 9. Upload JSON logs + results
+      # 9️⃣ Upload JSON logs & results
       - name: Upload Test Logs & Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-artifacts-${{ matrix.environment }}
+          name: test-artifacts-${{ github.event.inputs.project }}-${{ github.event.inputs.environment }}
           path: |
             test-logs.json
             test-results.json
