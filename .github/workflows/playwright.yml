@@ -14,13 +14,18 @@ on:
         description: 'Select test tag to filter'
         required: true
         type: choice
-        options: [@Smoke, @Regression, @All]
-        default: @Smoke
+        options:
+          - "@Smoke"
+          - "@Regression"
+          - "@All"
+        default: "@Smoke"
       parallel_mode:
         description: 'How to parallelize execution'
         required: true
         type: choice
-        options: [by-project, by-environment]
+        options: 
+          - by-project
+          - by-environment  
         default: by-project
 
 jobs:
