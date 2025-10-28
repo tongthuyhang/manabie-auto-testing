@@ -120,7 +120,7 @@ jobs:
             echo "Will create Qase Run with title: $RUN_TITLE"
           fi
 
-      - name: Optional: Setup SFDX auth (if secrets provided)
+      - name: Setup Salesforce Auth (optional, shell-based)
         shell: bash
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
