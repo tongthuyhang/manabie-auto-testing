@@ -1,5 +1,4 @@
-name: 🧪 Playwright + QASE Multi-Env Parallel CI/CD
-
+name: Playwright QASE Multi-Env
 on:
   workflow_dispatch:
     inputs:
