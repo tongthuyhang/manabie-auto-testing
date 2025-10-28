@@ -49,8 +49,7 @@ jobs:
               MATRIX=$(echo "$MATRIX" | jq ".include += [{\"environment\":\"$ENV\",\"project\":\"$PROJ\"}]")
             done
           done
-          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
-          
+       
           echo "Final matrix:"
           echo "$MATRIX" | jq .
 
