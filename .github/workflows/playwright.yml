@@ -1,4 +1,4 @@
-name: Playwright + QASE Multi-Env Parallel CI/CD
+name: 🧪 Playwright + QASE Multi-Env Parallel CI/CD
 
 on:
   workflow_dispatch:
@@ -24,9 +24,9 @@ on:
         description: 'How to parallelize execution'
         required: true
         type: choice
-        options: 
+        options:
           - by-project
-          - by-environment  
+          - by-environment
         default: by-project
 
 jobs:
@@ -43,9 +43,9 @@ jobs:
           IFS=',' read -ra ENVS <<< "${{ github.event.inputs.environments }}"
           MATRIX='{"include":[]}'
           for ENV in "${ENVS[@]}"; do
-            ENV="$(echo $ENV | xargs)"   # trim
+            ENV="$(echo $ENV | xargs)"
             for PROJ in "${PROJS[@]}"; do
-              PROJ="$(echo $PROJ | xargs)" # trim
+              PROJ="$(echo $PROJ | xargs)"
               MATRIX=$(echo "$MATRIX" | jq ".include += [{\"environment\":\"$ENV\",\"project\":\"$PROJ\"}]")
             done
           done
@@ -86,7 +86,7 @@ jobs:
         run: |
           npm install -g @salesforce/cli@latest
           echo "Salesforce CLI version:"
-          sf --version
+          sf --version || true
           sf plugins --core || true
 
       - name: Setup environment variables and run title
@@ -94,10 +94,9 @@ jobs:
           echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
           echo "PROJECT=${{ matrix.project }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-          # Timestamp for QASE run title
           echo "RUN_TITLE=${{ matrix.project }}-${{ matrix.environment }}-$(date '+%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
-      - name: Setup Salesforce Auth (optional)
+      - name: Setup Salesforce Auth (optional, shell-based)
         shell: bash
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
@@ -112,7 +111,7 @@ jobs:
               echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
               rm -f auth_url.txt
             else
-              echo "Missing SFDX_AUTH_URL_DEV secret, skipping auth for dev-staging"
+              echo "⚠️ Missing SFDX_AUTH_URL_DEV secret, skipping auth for dev-staging"
             fi
           elif [ "$ENVIRONMENT" = "pre-prod" ]; then
             if [ -n "$SFDX_AUTH_URL_PREPROD" ]; then
@@ -121,10 +120,10 @@ jobs:
               echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
               rm -f auth_url.txt
             else
-              echo "Missing SFDX_AUTH_URL_PREPROD secret, skipping auth for pre-prod"
+              echo "⚠️ Missing SFDX_AUTH_URL_PREPROD secret, skipping auth for pre-prod"
             fi
           else
-            echo "No Salesforce auth setup for environment: $ENVIRONMENT"
+            echo "ℹ️ No Salesforce auth setup for environment: $ENVIRONMENT"
           fi
 
       - name: Run Playwright Tests
@@ -154,7 +153,7 @@ jobs:
           echo "Listing root recursively..."
           ls -R
 
-      - name: Upload Playwright Report (fallback safe)
+      - name: Upload Playwright Report (fallback)
         if: always()
         uses: actions/upload-artifact@v4
         with:
