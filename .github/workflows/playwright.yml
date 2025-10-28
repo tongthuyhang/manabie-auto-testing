@@ -1,4 +1,5 @@
-name: Playwright QASE Multi-Env
+name: Playwright + QASE Multi-Env Parallel CI/CD
+
 on:
   workflow_dispatch:
     inputs:
@@ -38,7 +39,6 @@ jobs:
         id: build-matrix
         run: |
           echo "Building job matrix..."
-          # split comma separated values, trim whitespace
           IFS=',' read -ra PROJS <<< "${{ github.event.inputs.projects }}"
           IFS=',' read -ra ENVS <<< "${{ github.event.inputs.environments }}"
           MATRIX='{"include":[]}'
@@ -60,15 +60,15 @@ jobs:
     timeout-minutes: 90
 
     steps:
-      - name: 🛎️ Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - name: 📦 Cache node modules
+      - name: Cache node modules
         uses: actions/cache@v4
         with:
           path: ~/.npm
@@ -76,57 +76,58 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: 📥 Install dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: 🌐 Install Playwright browsers
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: 🔧 Install Salesforce CLI (sf)
+      - name: Install Salesforce CLI (sf)
         run: |
           npm install -g @salesforce/cli@latest
           echo "Salesforce CLI version:"
           sf --version
           sf plugins --core || true
 
-      - name: 🌍 Setup environment variables and run title
+      - name: Setup environment variables and run title
         run: |
           echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
           echo "PROJECT=${{ matrix.project }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-          # Timestamp for QASE run title (format: 2025-10-28_18-00)
+          # Timestamp for QASE run title
           echo "RUN_TITLE=${{ matrix.project }}-${{ matrix.environment }}-$(date '+%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
 
-      - name: 🔑 Setup Salesforce Auth (optional, only when secrets provided)
-        if: ${{ secrets.SFDX_AUTH_URL_DEV || secrets.SFDX_AUTH_URL_PREPROD }}
+      - name: Setup Salesforce Auth (optional)
+        shell: bash
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
           SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
         run: |
           echo "Setting up SFDX auth for environment: $ENVIRONMENT"
+
           if [ "$ENVIRONMENT" = "dev-staging" ]; then
-            if [ -z "$SFDX_AUTH_URL_DEV" ]; then
-              echo "SFDX_AUTH_URL_DEV secret not set; skipping auth"
-            else
+            if [ -n "$SFDX_AUTH_URL_DEV" ]; then
               echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
               sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias || true
               echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
               rm -f auth_url.txt
-            fi
-          elif [ "$ENVIRONMENT" = "pre-prod" ] || [ "$ENVIRONMENT" = "pre-prod" ]; then
-            if [ -z "$SFDX_AUTH_URL_PREPROD" ]; then
-              echo "SFDX_AUTH_URL_PREPROD secret not set; skipping auth"
             else
+              echo "Missing SFDX_AUTH_URL_DEV secret, skipping auth for dev-staging"
+            fi
+          elif [ "$ENVIRONMENT" = "pre-prod" ]; then
+            if [ -n "$SFDX_AUTH_URL_PREPROD" ]; then
               echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
               sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myPreProd || true
               echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
               rm -f auth_url.txt
+            else
+              echo "Missing SFDX_AUTH_URL_PREPROD secret, skipping auth for pre-prod"
             fi
           else
-            echo "No SFDX auth needed for environment: $ENVIRONMENT"
+            echo "No Salesforce auth setup for environment: $ENVIRONMENT"
           fi
 
-      - name: 🧪 Run Playwright Tests
+      - name: Run Playwright Tests
         env:
           ENV: ${{ env.ENVIRONMENT }}
           PROJECT: ${{ env.PROJECT }}
@@ -139,14 +140,13 @@ jobs:
           QASE_CAPTURE_LOGS: false
         run: |
           echo "Running tests for PROJECT=${PROJECT} ENV=${ENV} TAG=${TAG}"
-          # If user selected @All, run all tests in project
           if [ "$TAG" = "@All" ]; then
             npx playwright test --project="$PROJECT" || true
           else
             npx playwright test --project="$PROJECT" --grep "$TAG" || true
           fi
 
-      - name: 🔎 Debug - list workspace (always)
+      - name: Debug - list workspace (always)
         if: always()
         run: |
           echo "Listing repo files..."
@@ -154,7 +154,7 @@ jobs:
           echo "Listing root recursively..."
           ls -R
 
-      - name: 📊 Upload Playwright Report (fallback safe)
+      - name: Upload Playwright Report (fallback safe)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -166,7 +166,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-      - name: 📋 Upload JSON results (fallback)
+      - name: Upload JSON results (fallback)
         if: always()
         uses: actions/upload-artifact@v4
         with:
