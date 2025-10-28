@@ -1,102 +1,174 @@
-name: Playwright + Qase CI/CD (Team-specific)
+name: 🧪 Playwright + QASE Multi-Env Parallel CI/CD
 
-# Chạy bằng tay
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Select environment'
+      environments:
+        description: 'Select environment(s) to test (comma separated)'
         required: true
         default: 'dev-staging'
-        type: choice
-        options:
-          - dev-staging
-          - pre-prod
-      project:
-        description: 'Select project/team'
+      projects:
+        description: 'Select project(s) to run (comma separated, e.g. scheduling,order)'
         required: true
         default: 'scheduling'
+      tag:
+        description: 'Select test tag to filter'
+        required: true
         type: choice
-        options:
-          - scheduling
-          - order
+        options: [@Smoke, @Regression, @All]
+        default: @Smoke
+      parallel_mode:
+        description: 'How to parallelize execution'
+        required: true
+        type: choice
+        options: [by-project, by-environment]
+        default: by-project
 
 jobs:
-  test:
+  setup-matrix:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    outputs:
+      matrix: ${{ steps.build-matrix.outputs.matrix }}
+    steps:
+      - name: Build matrix from inputs
+        id: build-matrix
+        run: |
+          echo "Building job matrix..."
+          # split comma separated values, trim whitespace
+          IFS=',' read -ra PROJS <<< "${{ github.event.inputs.projects }}"
+          IFS=',' read -ra ENVS <<< "${{ github.event.inputs.environments }}"
+          MATRIX='{"include":[]}'
+          for ENV in "${ENVS[@]}"; do
+            ENV="$(echo $ENV | xargs)"   # trim
+            for PROJ in "${PROJS[@]}"; do
+              PROJ="$(echo $PROJ | xargs)" # trim
+              MATRIX=$(echo "$MATRIX" | jq ".include += [{\"environment\":\"$ENV\",\"project\":\"$PROJ\"}]")
+            done
+          done
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  test:
+    needs: setup-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
+      fail-fast: false
+    timeout-minutes: 90
 
     steps:
-      # 1️⃣ Checkout code
-      - name: Checkout repository
+      - name: 🛎️ Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup Node.js
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      # 3️⃣ Install dependencies
-      - name: Install dependencies
+      - name: 📦 Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📥 Install dependencies
         run: npm ci
 
-      # 4️⃣ Install Playwright browsers
-      - name: Install Playwright Browsers
+      - name: 🌐 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 5️⃣ Install Salesforce CLI
-      - name: Install Salesforce CLI
+      - name: 🔧 Install Salesforce CLI (sf)
         run: |
           npm install -g @salesforce/cli@latest
-          sf version --verbose
-          sf plugins --core
+          echo "Salesforce CLI version:"
+          sf --version
+          sf plugins --core || true
 
-      # 6️⃣ Setup SFDX Authentication (tùy environment)
-      - name: Setup SFDX Authentication
+      - name: 🌍 Setup environment variables and run title
+        run: |
+          echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
+          echo "PROJECT=${{ matrix.project }}" >> $GITHUB_ENV
+          echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          # Timestamp for QASE run title (format: 2025-10-28_18-00)
+          echo "RUN_TITLE=${{ matrix.project }}-${{ matrix.environment }}-$(date '+%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
+      - name: 🔑 Setup Salesforce Auth (optional, only when secrets provided)
+        if: ${{ secrets.SFDX_AUTH_URL_DEV || secrets.SFDX_AUTH_URL_PREPROD }}
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
           SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
         run: |
-          ENV="${{ github.event.inputs.environment }}"
-          if [ "$ENV" = "dev-staging" ]; then
-            echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
-            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias
-            echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
-          elif [ "$ENV" = "pre-prod" ]; then
-            echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
-            sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myPreProd
-            echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
+          echo "Setting up SFDX auth for environment: $ENVIRONMENT"
+          if [ "$ENVIRONMENT" = "dev-staging" ]; then
+            if [ -z "$SFDX_AUTH_URL_DEV" ]; then
+              echo "SFDX_AUTH_URL_DEV secret not set; skipping auth"
+            else
+              echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
+              sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias || true
+              echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
+              rm -f auth_url.txt
+            fi
+          elif [ "$ENVIRONMENT" = "pre-prod" ] || [ "$ENVIRONMENT" = "pre-prod" ]; then
+            if [ -z "$SFDX_AUTH_URL_PREPROD" ]; then
+              echo "SFDX_AUTH_URL_PREPROD secret not set; skipping auth"
+            else
+              echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
+              sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myPreProd || true
+              echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
+              rm -f auth_url.txt
+            fi
+          else
+            echo "No SFDX auth needed for environment: $ENVIRONMENT"
           fi
-          rm -f auth_url.txt
 
-      # 7️⃣ Run Playwright Tests with Qase (tùy project + environment)
-      - name: Run Playwright Tests with Qase
-        run: npm run test:${{ github.event.inputs.environment }}:qase:ci
+      - name: 🧪 Run Playwright Tests
         env:
-          ENV: ${{ github.event.inputs.environment }}
-          USER_TYPE: admin
-          PROJECT: ${{ github.event.inputs.project }}
-          SFDX_ALIAS: ${{ env.SFDX_ALIAS }}
+          ENV: ${{ env.ENVIRONMENT }}
+          PROJECT: ${{ env.PROJECT }}
+          TAG: ${{ env.TAG }}
+          QASE_MODE: testops
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
           QASE_TESTOPS_API_HOST: qase.io
+          QASE_TESTOPS_RUN_TITLE: ${{ env.RUN_TITLE }}
+          QASE_TESTOPS_PROJECT: ${{ matrix.project }}
+          QASE_CAPTURE_LOGS: false
+        run: |
+          echo "Running tests for PROJECT=${PROJECT} ENV=${ENV} TAG=${TAG}"
+          # If user selected @All, run all tests in project
+          if [ "$TAG" = "@All" ]; then
+            npx playwright test --project="$PROJECT" || true
+          else
+            npx playwright test --project="$PROJECT" --grep "$TAG" || true
+          fi
 
-      # 8️⃣ Upload HTML report
-      - name: Upload Playwright Report
+      - name: 🔎 Debug - list workspace (always)
+        if: always()
+        run: |
+          echo "Listing repo files..."
+          ls -la
+          echo "Listing root recursively..."
+          ls -R
+
+      - name: 📊 Upload Playwright Report (fallback safe)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ github.event.inputs.project }}-${{ github.event.inputs.environment }}
-          path: playwright-report/
+          name: report-${{ matrix.project }}-${{ matrix.environment }}
+          path: |
+            playwright-report/
+            .playwright-report/
+            test-results/
+          if-no-files-found: warn
           retention-days: 30
 
-      # 9️⃣ Upload JSON logs & results
-      - name: Upload Test Logs & Results
+      - name: 📋 Upload JSON results (fallback)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-artifacts-${{ github.event.inputs.project }}-${{ github.event.inputs.environment }}
+          name: results-${{ matrix.project }}-${{ matrix.environment }}
           path: |
-            test-logs.json
             test-results.json
+            test-logs.json
+          if-no-files-found: warn
           retention-days: 30

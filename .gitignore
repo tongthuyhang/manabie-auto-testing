@@ -3,7 +3,11 @@ node_modules/
 .vscode/settings.json
 build/
 logs/
-scripts/
+check-storage-expiry.ts
+count-cookies.ts
+expire-storage.ps1
+generate-storageState.ts
+refresh-storage.ts
 playwright-report/
 test-results/
 test-results.json
