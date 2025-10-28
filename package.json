@@ -32,7 +32,8 @@
     "generate:storage": "ts-node scripts/generate-storageState.ts",
     "test:dev-staging:qase:attach": "cross-env ENV=dev-staging QASE_MODE=testops QASE_TESTOPS_RUN_ID=$RUN_ID QASE_TESTOPS_API_HOST=qase.io QASE_CAPTURE_LOGS=false QASE_TESTOPS_RUN_COMPLETE=false npx playwright test --project=scheduling",
     "test:ci": "node ./scripts/run-ci.js",
-    "test:local": "cross-env ENV=dev-staging PROJECT=scheduling TAG=@Smoke node ./scripts/run-ci.js"
+    "test:local": "cross-env ENV=dev-staging PROJECT=scheduling TAG=@Smoke node ./scripts/run-ci.js",
+    "test:local:qase": "cross-env ENV=dev-staging npx playwright test --project=scheduling --grep @Smoke"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.0",

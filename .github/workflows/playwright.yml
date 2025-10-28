@@ -1,16 +1,20 @@
-name: 🧪 Playwright + QASE Multi-Env Parallel CI/CD
+name: 🧪 Playwright + QASE (PX) - Multi-Module Parallel CI
 
 on:
   workflow_dispatch:
     inputs:
+      qase_project:
+        description: 'Qase Project Code (PX / SX)'
+        required: true
+        default: 'PX'
       environments:
         description: 'Select environment(s) to test (comma separated)'
         required: true
         default: 'dev-staging'
       projects:
-        description: 'Select project(s) to run (comma separated, e.g. scheduling,order)'
+        description: 'Select Playwright projects to run (comma separated)'
         required: true
-        default: 'scheduling'
+        default: 'scheduling,order,invoice,grade,user'
       tag:
         description: 'Select test tag to filter'
         required: true
@@ -20,6 +24,9 @@ on:
           - "@Regression"
           - "@All"
         default: "@Smoke"
+      qase_run_id:
+        description: 'Existing Qase Run ID (optional). If set, results will be attached to this run.'
+        required: false
       parallel_mode:
         description: 'How to parallelize execution'
         required: true
@@ -30,38 +37,40 @@ on:
         default: by-project
 
 jobs:
-  setup-matrix:
+  build-matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.build-matrix.outputs.matrix }}
+      matrix: ${{ steps.make-matrix.outputs.matrix }}
     steps:
-      - name: Build matrix from inputs
-        id: build-matrix
+      - name: Prepare matrix JSON
+        id: make-matrix
+        shell: bash
         run: |
-          echo "Building job matrix..."
-          IFS=',' read -ra PROJS <<< "${{ github.event.inputs.projects }}"
+          echo "Building matrix from inputs..."
+          IFS=',' read -ra UI_PROJS <<< "${{ github.event.inputs.projects }}"
           IFS=',' read -ra ENVS <<< "${{ github.event.inputs.environments }}"
-          MATRIX='{"include":[]}'
+
+          MATRIX='{"include": []}'
           for ENV in "${ENVS[@]}"; do
-            ENV="$(echo $ENV | xargs)"
-            for PROJ in "${PROJS[@]}"; do
-              PROJ="$(echo $PROJ | xargs)"
-              MATRIX=$(echo "$MATRIX" | jq ".include += [{\"environment\":\"$ENV\",\"project\":\"$PROJ\"}]")
+            ENV="$(echo "$ENV" | xargs)"
+            for P in "${UI_PROJS[@]}"; do
+              P="$(echo "$P" | xargs)"
+              # Use P as Playwright project name directly (must match playwright.config.ts)
+              MATRIX=$(echo "$MATRIX" | jq ".include += [{\"environment\":\"$ENV\",\"project\":\"$P\"}]")
             done
           done
-       
-          echo "Final matrix:"
-          echo "$MATRIX" | jq .
 
-          # Escape special characters before exporting
+          echo "Final matrix (pretty):"
+          echo "$MATRIX" | jq .
+          # Compact to one line for GitHub output
           MATRIX_ESCAPED=$(echo "$MATRIX" | jq -c .)
           echo "matrix=$MATRIX_ESCAPED" >> $GITHUB_OUTPUT
 
   test:
-    needs: setup-matrix
+    needs: build-matrix
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
       fail-fast: false
     timeout-minutes: 90
 
@@ -88,51 +97,59 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Install Salesforce CLI (sf)
+      - name: Install Salesforce CLI (sf) - optional, safe
         run: |
           npm install -g @salesforce/cli@latest
-          echo "Salesforce CLI version:"
           sf --version || true
-          sf plugins --core || true
 
-      - name: Setup environment variables and run title
+      - name: Setup env + Qase Run info
+        shell: bash
         run: |
           echo "ENVIRONMENT=${{ matrix.environment }}" >> $GITHUB_ENV
           echo "PROJECT=${{ matrix.project }}" >> $GITHUB_ENV
           echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-          echo "RUN_TITLE=${{ matrix.project }}-${{ matrix.environment }}-$(date '+%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+          echo "QASE_PROJECT=${{ github.event.inputs.qase_project }}" >> $GITHUB_ENV
 
-      - name: Setup Salesforce Auth (optional, shell-based)
+          if [ -n "${{ github.event.inputs.qase_run_id }}" ]; then
+            echo "QASE_TESTOPS_RUN_ID=${{ github.event.inputs.qase_run_id }}" >> $GITHUB_ENV
+            echo "Using existing Qase Run ID: ${{ github.event.inputs.qase_run_id }}"
+          else
+            # Create a descriptive Qase run title; Playwright Qase reporter will use this to create a new run
+            RUN_TITLE="${{ github.event.inputs.qase_project }}-${{ matrix.project }}-${{ matrix.environment }}-$(date '+%Y-%m-%d_%H-%M-%S')"
+            echo "QASE_TESTOPS_RUN_TITLE=$RUN_TITLE" >> $GITHUB_ENV
+            echo "Will create Qase Run with title: $RUN_TITLE"
+          fi
+
+      - name: Optional: Setup SFDX auth (if secrets provided)
         shell: bash
         env:
           SFDX_AUTH_URL_DEV: ${{ secrets.SFDX_AUTH_URL_DEV }}
           SFDX_AUTH_URL_PREPROD: ${{ secrets.SFDX_AUTH_URL_PREPROD }}
         run: |
-          echo "Setting up SFDX auth for environment: $ENVIRONMENT"
-
-          if [ "$ENVIRONMENT" = "dev-staging" ]; then
+          echo "Checking for SFDX auth secrets..."
+          if [ "${{ matrix.environment }}" = "dev-staging" ]; then
             if [ -n "$SFDX_AUTH_URL_DEV" ]; then
               echo "$SFDX_AUTH_URL_DEV" > auth_url.txt
               sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myOrgAlias || true
               echo "SFDX_ALIAS=myOrgAlias" >> $GITHUB_ENV
               rm -f auth_url.txt
             else
-              echo "⚠️ Missing SFDX_AUTH_URL_DEV secret, skipping auth for dev-staging"
+              echo "No SFDX_AUTH_URL_DEV secret found; skipping SFDX login for dev-staging"
             fi
-          elif [ "$ENVIRONMENT" = "pre-prod" ]; then
+          elif [ "${{ matrix.environment }}" = "pre-prod" ]; then
             if [ -n "$SFDX_AUTH_URL_PREPROD" ]; then
               echo "$SFDX_AUTH_URL_PREPROD" > auth_url.txt
               sf org login sfdx-url --sfdx-url-file auth_url.txt --alias myPreProd || true
               echo "SFDX_ALIAS=myPreProd" >> $GITHUB_ENV
               rm -f auth_url.txt
             else
-              echo "⚠️ Missing SFDX_AUTH_URL_PREPROD secret, skipping auth for pre-prod"
+              echo "No SFDX_AUTH_URL_PREPROD secret found; skipping SFDX login for pre-prod"
             fi
           else
-            echo "ℹ️ No Salesforce auth setup for environment: $ENVIRONMENT"
+            echo "No SFDX auth required for ${matrix.environment}"
           fi
 
-      - name: Run Playwright Tests
+      - name: Run Playwright tests (per matrix entry)
         env:
           ENV: ${{ env.ENVIRONMENT }}
           PROJECT: ${{ env.PROJECT }}
@@ -140,11 +157,13 @@ jobs:
           QASE_MODE: testops
           QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TESTOPS_API_TOKEN }}
           QASE_TESTOPS_API_HOST: qase.io
-          QASE_TESTOPS_RUN_TITLE: ${{ env.RUN_TITLE }}
-          QASE_TESTOPS_PROJECT: ${{ matrix.project }}
+          # If QASE_TESTOPS_RUN_ID exists it will be used by reporter; otherwise reporter will create using RUN_TITLE
+          QASE_TESTOPS_RUN_ID: ${{ env.QASE_TESTOPS_RUN_ID }}
+          QASE_TESTOPS_RUN_TITLE: ${{ env.QASE_TESTOPS_RUN_TITLE }}
+          QASE_TESTOPS_PROJECT: ${{ env.QASE_PROJECT }}
           QASE_CAPTURE_LOGS: false
         run: |
-          echo "Running tests for PROJECT=${PROJECT} ENV=${ENV} TAG=${TAG}"
+          echo "Running for project=${PROJECT} env=${ENV} tag=${TAG}"
           if [ "$TAG" = "@All" ]; then
             npx playwright test --project="$PROJECT" || true
           else
@@ -154,30 +173,41 @@ jobs:
       - name: Debug - list workspace (always)
         if: always()
         run: |
-          echo "Listing repo files..."
+          echo "Workspace top:"
           ls -la
-          echo "Listing root recursively..."
-          ls -R
+          echo "Recursive listing:"
+          ls -R || true
 
-      - name: Upload Playwright Report (fallback)
+      - name: Package artifacts (zip) - only on Ubuntu runners
+        if: always()
+        run: |
+          TS=$(date '+%Y-%m-%d_%H-%M-%S')
+          ART_DIR="artifacts/${PROJECT}-${ENV}-${TS}"
+          mkdir -p "$ART_DIR"
+          # copy possible report directories if they exist
+          if [ -d "playwright-report" ]; then cp -r playwright-report "$ART_DIR/"; fi
+          if [ -d ".playwright-report" ]; then cp -r .playwright-report "$ART_DIR/"; fi
+          if [ -d "test-results" ]; then cp -r test-results "$ART_DIR/"; fi
+          if [ -f "test-results.json" ]; then cp test-results.json "$ART_DIR/"; fi
+          if [ -f "test-logs.json" ]; then cp test-logs.json "$ART_DIR/"; fi
+          cd artifacts
+          zip -r "${PROJECT}-${ENV}-${TS}.zip" "${PROJECT}-${ENV}-${TS}" || true
+          echo "artifact_zip=${PROJECT}-${ENV}-${TS}.zip" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Upload artifact to GitHub (fallback)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: report-${{ matrix.project }}-${{ matrix.environment }}
           path: |
+            artifacts/${{ steps.package_artifact.outputs.artifact_zip }}
             playwright-report/
             .playwright-report/
-            test-results/
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 14
 
-      - name: Upload JSON results (fallback)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: results-${{ matrix.project }}-${{ matrix.environment }}
-          path: |
-            test-results.json
-            test-logs.json
-          if-no-files-found: warn
-          retention-days: 30
+      - name: (Optional) Attach report to Qase run via API - SKIPPED by default
+        if: false
+        run: |
+          echo "This step is optional. Use Qase API here to attach zipped artifact to run id if you want."
